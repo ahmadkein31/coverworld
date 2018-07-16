@@ -1,0 +1,271 @@
+<?php 
+	   
+	if(!$block->getRequest()->getParam('find')): 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');   
+	$categoryID = $category->getId();
+	$_page_config = $objectManager->get('Magento\Framework\View\Page\Config');
+   $isRobot = ((strstr(strtolower($_SERVER['HTTP_USER_AGENT']), "googlebot") OR $block->getRequest()->getParam('isRobotTest')))?TRUE:FALSE;
+	$currentPageTitle = preg_replace('/\s+/', ' ',$_page_config->getTitle()->getShort());
+	$currentCategory = $block->getCurrentCategory(); 
+	$categoryTitle = $currentCategory->getName(); 
+	$categoryDescription = $currentCategory->getDescription();  
+	//$categoryLevel = $block->getCurrentCategory()->getLevel(); 
+	$categoryHelper = $block->getCategoryHelper(); 
+	$currentType = $currentCategory->getcontent_subtitle();
+	//$parentCategories = $block->getParentCategories(); 
+	$isPrimaryCategory = ($categoryID==3 || $categoryID==4 || $categoryID==5 || $categoryID==6)?TRUE:FALSE;
+   
+   if (isset($GLOBALS['breadcrumbs'])) {  
+	     //array_pop($GLOBALS['breadcrumbs']);
+	     //var_dump($GLOBALS['breadcrumbs']);
+	     foreach($GLOBALS['breadcrumbs'] as $breadcrumbName => $breadcrumbInfo){
+	     	${$breadcrumbInfo['type']} = $breadcrumbInfo['label'];
+	     }
+	 }
+
+    	 if($categoryID == 3):
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 3;
+		    $finderLabels = 'Make,Model,Year';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription(); 
+    	 
+    	 elseif($categoryID == 5):
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-less';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 3;
+		    $finderLabels = 'Make,Model,Year';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription();
+    	 
+    	 elseif($currentType == 'Make' && $Vehicle == 'Jet Ski Covers'):
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 2;
+		    $finderLabels = 'Model,Year';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription();
+    	 
+    	 elseif($currentType == 'Make' && $Vehicle == 'Boat Covers'):
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 2;
+		    $finderLabels = 'Model,Year';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription();		    
+    	 
+    	 elseif($categoryID == 24 || $categoryID == 27 || $categoryID == 37): 
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 3;
+		    $finderLabels = 'Subcategory,Motor,Dimensions';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription();	    
+    	 
+    	 elseif(    $categoryID == 10  
+    	 			|| $categoryID == 11 
+    	 			|| $categoryID == 25 
+    	 			|| $categoryID == 28
+    	 			|| $categoryID == 29
+    	 			|| $categoryID == 30
+    	 			|| $categoryID == 32
+    	 			|| $categoryID == 33
+    	 			|| $categoryID == 35
+    	 			|| $categoryID == 38
+    	 			|| $categoryID == 40
+    	 		): 
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 2;
+		    $finderLabels = 'Subcategory,Dimensions';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);		    
+		    $currentCategoryDescription = $currentCategory->getDescription();
+    	 
+    	 elseif(($currentType == 'Subcategory' && $Category == 'Aluminum')  
+    	 			|| ($currentType == 'Subcategory' && $Category == 'Deck')
+    	 			|| ($currentType == 'Subcategory' && $Category == 'Runabout')
+    	 			|| $categoryID == 152071
+    	 			|| $categoryID == 152078
+    	 			|| $categoryID == 152079
+    	 			|| $categoryID == 152080
+    	 			|| $categoryID == 152081
+    	 			|| $categoryID == 152100
+    	 			|| $categoryID == 152132
+    	 			|| $categoryID == 152134
+    	 			|| $categoryID == 152140
+    	 			|| $categoryID == 39
+    	 		):
+		 	 $headerTitle = substr("$Category $Vehicle", 0, -1);
+		 	 $headerTitlePadding = ' page-header-title-extra';  
+		    $headerContentPadding = ' page-header-content-extra';		     	 
+		    $showFinder = TRUE;
+		    $finderSearchButton = 1;
+		    $finderLevels = 2;
+		    $finderLabels = 'Motor,Dimensions';
+		    $fincderPageTitle = substr("$Category $Vehicle", 0, -1);	
+		    $currentCategoryDescription = $categoryDescription?$categoryDescription:$currentPageTitle;		    
+    	 
+    	 elseif($currentType == 'Category' || $currentType == 'Subcategory' || $currentType == 'Motor' || $currentType == 'Dimensions'):
+		 	 $headerTitle = substr("$Category $Vehicle", 0, -1);	 
+    	 	 $headerContentPadding = '';
+		 	 $headerTitlePadding = '';      	 
+		    $showFinder = FALSE;	    
+		    $currentCategoryDescription = $currentPageTitle;
+		    
+    	 else:
+		 	 $headerTitle = substr("$currentPageTitle", 0, -1);
+    	 	 $headerContentPadding = '';
+		 	 $headerTitlePadding = '';  
+		    $showFinder = FALSE;  
+		    $currentCategoryDescription = $currentCategory->getDescription();
+		    $classBoatCovers = '';
+    	 endif; 
+		?>
+		 
+    <a name="Category"></a><a name="Subcategory"></a><a name="Motor"></a><a name="Dimensions"></a>
+    <a name="Model"></a><a name="Year"></a><a name="Option"></a>
+    <div class="page-header-title">   	 
+	    <div class="page-header-page-title<?php echo $headerTitlePadding ?>">
+	    	<span class="find-your">Find Your</span>
+	    	<h1 class="categoryh1"><?php echo $headerTitle; ?></h1>
+	    	<div class="quality-statements">Guaranteed to Fit. Only Quality Materials. Made in the USA.</div>
+	    </div>
+	    
+	    <?php if($showFinder): ?>
+		    <div class="page-header-cover-finder">
+		    	 <div class="banner-search-icon">&nbsp;</div>
+				    <?php echo $this->getLayout()->createBlock("MageArray\CategoryFilter\Block\Navigation")
+															    ->setTitle("$fincderPageTitle<br/>Fit Finder™")
+															    ->setLevels("$finderLevels")
+															    ->setSelectLabels("$finderLabels")
+															    ->setLabelsEmbedded("embedded")
+															    ->setRootCategory("category/$categoryID")
+															    ->setTemplate("sidebar.phtml")
+															    ->toHtml();  
+					?>
+				 <div class="banner-search-button<?php echo $finderSearchButton ?>">&nbsp;</div>
+		    </div>
+		 <?php endif; ?>
+	    
+	    <div class="page-header-content<?php echo $headerContentPadding ?>">
+	    <?php if(!$isPrimaryCategory): ?>
+	           <div class="page-header-alignment">
+	             <div class="img-container">
+	                <?php 
+	                		if(!$currentCategory->getImageUrl()){
+	                			$categoryBranch = explode('/', str_replace('1/2/', '', $currentCategory->getPath()));
+	                			$categoryBranch = array_reverse($categoryBranch);
+	                			foreach($categoryBranch AS $categoryBranchID){
+	                				if($finalCategoryImage = $objectManager->create('Magento\Catalog\Model\Category')->load($categoryBranchID)->getImageUrl()){break;}
+	                			}
+	                		}else{
+	                			$finalCategoryImage = $currentCategory->getImageUrl();
+	                		}
+	                ?> 
+	                <img src="<?php echo $finalCategoryImage; ?>" />
+	                </div>
+	           
+	
+	            <div class="page-header-vehicle-type">           
+	               <?php 
+	               $categoryBranch2 = explode('/', str_replace('1/2/', '', $currentCategory->getPath()));
+	               echo $objectManager->create('Magento\Catalog\Model\Category')->load(current($categoryBranch2))->getName();
+	               ?> 
+	            </div>
+	            <div class="page-header-change-category">           
+	                <a href="<?php if($isRobot){echo '#';}else{echo $currentCategory->getParentCategory()->getUrl();} ?>" class="change-category">
+	                    <span class="change-model">Change <?php echo $currentType; ?></span>
+	                </a>
+	            </div>
+	          </div>
+	    <?php endif; ?>
+	            <div class="page-header-material-description">                                 
+									<?php echo $currentCategoryDescription; ?>
+	            </div>
+	    </div> 
+    </div>
+
+    
+            
+    <?php
+	 
+	    if($categoryID==3):
+	    	echo $this->getLayout()->createBlock('Magento\Cms\Block\Block')
+	    								  ->setBlockId('boat-cover-categories')
+										  ->toHtml();
+	    else:    
+        $i = 0;
+        $columnsClass = $block->getColumnsClass();
+        $subCategories = $block->getSubcategories(); 
+        $selectType = $objectManager->create('Magento\Catalog\Model\Category')->load($subCategories->getFirstItem()->getId())->getcontent_subtitle();
+		  $categoryImageURL = $objectManager->create('Magento\Catalog\Model\Category')->load($subCategories->getFirstItem()->getId())->getImageUrl();  
+		    
+		    if($currentType == 'Category' && $categoryImageURL): ?>
+		    		<ul class="category-grid shop-by-category">
+		    <?php elseif($categoryImageURL): ?>
+		    		<ul class="category-grid<?php if($categoryID==5){echo ' category-grid-extratop';} ?>">
+		    <?php else: ?>  
+		    		<ul class="category-grid2">
+		    <?php endif; ?>  
+		                                  
+    			<?php if(!$isPrimaryCategory && count($subCategories)>0): ?>
+    			<h2>Select <?php echo $selectType; ?></h2>
+        <?php endif; ?>
+        
+        <?php          
+        
+        $nowMakes = FALSE;
+        foreach($subCategories as $subCategory):
+            $i++;
+            $subcategoryImageURL = $subCategory->getImageUrl();
+            if($selectType == 'Subcategory' && $subcategoryImageURL){$classItemSubcategory = ' category-item-subcategory';}else{$classItemSubcategory = '';}
+            
+            
+            if($subCategory->getName()=='makes'){
+                echo '</ul>';
+                echo '<ul class="category-grid">';
+                echo '<p class="title">Select Your Manufacturer<a name="Make"></a></p>';
+                $nowMakes = TRUE;
+                continue;
+            }
+            
+            ?>
+            <a href="<?php echo $categoryHelper->getCategoryUrl($subCategory) ?>" class="<?php echo $columnsClass; ?>">
+                <li class="category-item<?php echo $classItemSubcategory; ?>">
+                    <?php if(!$nowMakes): ?>
+                    <div class="name-container"><p class="name"><?php if($isRobot){echo $subCategory->getName().' '.$currentPageTitle;}else{echo $subCategory->getName();} ?></p></div>
+                    <?php endif; ?>   
+                       <?php if($subcategoryImageURL): ?>
+                       <div class="img-container">
+                            <img src="<?php echo $subcategoryImageURL; ?>" alt="<?php echo $subCategory->getName().' '.$currentPageTitle; ?>"/>
+                        </div>
+                        <?php endif; ?>       
+                </li>
+            </a>
+        <?php endforeach; ?>           
+    </ul>
+	<?php endif; ?>
+
+<?php endif; ?>
+
+                                       

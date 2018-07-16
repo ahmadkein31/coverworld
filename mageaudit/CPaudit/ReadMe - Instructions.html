@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Magento Code Audit</title>
+</head>
+
+<body>
+<h1><a href="http://www.CustomerParadigm.com/"><img src="images/596-Customer-Paradigm-Top-Logo.jpg" alt="Customer Paradigm" width="596" height="88" border="0" /></a></h1>
+<h1>Free Magento Code Audit Tool.</h1>
+<h2><a href="Free-Magento-Code-Audit/Magento-Code-Audit-Detailed-View-Full.jpg" target="_blank"><img src="images/200-Magento-Code-Audit-Report.jpg" alt="Free Magento Code Audit Reporting Tool" width="200" height="309" border="0" align="right" /></a>Do you know how well your Magento site was built?</h2>
+<p><strong>Use Customer Paradigm's Magento Code Audit Tool -  a free tool that allows you to quickly evaluate the health of your Magento site.</strong></p>
+<p>Not everyone knows how to build Magento sites in a way that is secure, able to be upgraded easily, and that minimizes conflicts. The Magento Code Audit tool allows you to get a detailed, inside look at how your site was built. Running through all of the various items that the Magento Code Audit Tool checks automatically could take 5-15 hours to do by hand.</p>
+<hr width="80%" noshade="noshade" />
+<h3><a name="WhatIs" id="WhatIs"></a>What is the Magento Code Audit Tool?</h3>
+<p>Customer Paradigm built a Magento Code Audit tool that allows you to quickly evaluate the health of a Magento site.  It looks at whether core Magento files have been changed, what third party extensions you have installed, your current version of Magento, and about two dozen other server settings that affect the performance of your Magento site.</p>
+<p>We built this code audit tool, because we often work on Magento Community and Magento Enterprise sites that we didn't build. Not all Magento solutions companies will work on sites that other people or companies have built, but we're happy to help. Before we jump into a site, our development team likes to know how &quot;clean&quot; the site was built. Have core files been modified or changed? How many third party extensions are running on the site? All of these tools help us understand how much time a Magento Upgrade, Downgrade or emergency site repair might take.</p>
+<p>You just need FTP access in order to upload and run the code audit; the system will email you a link to view the report.</p>
+<table width="335" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><h4><strong>Magento Code Audit Tool FAQs:</strong></h4></td>
+  </tr>
+  <tr>
+    <td width="24">1.&nbsp;</td>
+    <td width="311"><a href="#WhatIs">What is the Code Audit Tool?</a></td>
+  </tr>
+  <tr>
+    <td>2.&nbsp;</td>
+    <td><a href="#WhyFree">Why is this Free?</a></td>
+  </tr>
+  <tr>
+    <td>3.&nbsp;</td>
+    <td><a href="#HowRun">How Do I Run the Code Audit?</a></td>
+  </tr>
+  <tr>
+    <td>4.&nbsp;</td>
+    <td><a href="#SimpleDirections">Simple Directions to Run Audit</a></td>
+  </tr>
+  <tr>
+    <td>5.&nbsp;</td>
+    <td><a href="#DetailedDirections">Detailed Directions to Run Audit</a></td>
+  </tr>
+  <tr>
+    <td>6.&nbsp;</td>
+    <td><a href="#HowDoesCodeAuditWork">How Does the Audit Tool Work?</a></td>
+  </tr>
+  <tr>
+    <td>7.&nbsp;</td>
+    <td><a href="#times">How Many Times Can I Run the Audit?</a></td>
+  </tr>
+  <tr>
+    <td>8.&nbsp;</td>
+    <td><a href="#LiveSite">Will the Code Audit Break My Site?</a></td>
+  </tr>
+  <tr>
+    <td>9.&nbsp;</td>
+    <td><a href="#MagentoError">Code Audit Error Messages</a></td>
+  </tr>
+  <tr>
+    <td>10.&nbsp;</td>
+    <td><p><a href="#CPRunCodeAudit">Can Customer Paradigm Run Code Audit For Me?</a></p></td>
+  </tr>
+  <tr>
+    <td>11.&nbsp;</td>
+    <td><a href="#versions">What Versions of Magento Does the Code Audit Run On?</a></td>
+  </tr>
+  <tr>
+    <td>12.&nbsp;</td>
+    <td><a href="#whatmean">What Do The Code Audit Report  Sections Mean?</a></td>
+  </tr>
+</table>
+<hr width="80%" noshade="noshade" />
+<h3><a name="WhyFree" id="WhyFree"></a>Why is this Free? </h3>
+<p>Customer Paradigm’s Magento Leadership includes developing tools and extensions for the platform. This tool has saved us countless hours of time. We hope that you'll contact Customer Paradigm for Magento support and development needs. </p>
+<p> This is a tool Customer Paradigm created, because we work on pre-existing Magento sites (unlike many other Magento solution partners), and it gives us insight into the overall health of a site, before we dive into a project.</p>
+<hr width="80%" noshade="noshade" />
+<p></p>
+<h3><a name="HowRun" id="HowRun"></a>How Do I Run the Code Audit?</h3>
+<p>All you need to do is create a new directory and upload a file to your site. Then you can run the code audit right from your browser. You'll need FTP access to upload the file. </p>
+<hr width="80%" noshade="noshade" />
+<h3><strong><a name="SimpleDirections" id="SimpleDirections"></a>Simple Directions:</strong></h3>
+<p><strong>Magento Code Audit - Really Simple Directions (for people who hate to read directions):</strong></p>
+<ul>
+  <li><strong>Download the <a href="http://www.customerparadigm.com/download/CPaudit.zip">audit tool file here from Customer Paradigm's site.</a></strong></li>
+  <li><strong>FTP to your Magento site. Create a new folder /mageaudit/, CHMOD 777</strong></li>
+  <li><strong>Upload the mageauditor.php file to /mageaudit/</strong></li>
+  <li><strong> Visit the php file in your browser &amp; fill out the form </strong></li>
+  <li><strong>When done, delete the /mageaudit/ directory</strong></li>
+</ul>
+<p>If you want more detailed directions, this gives you more of a step-by-step approach:</p>
+<hr width="80%" noshade="noshade" />
+<h3><strong><a name="DetailedDirections" id="DetailedDirections"></a>Complete Directions to run the Magento Code Audit:</strong></h3>
+<ol>
+  <li><strong>Download this file:</strong> <a href="http://www.customerparadigm.com/download/CPaudit.zip" target="_blank">http://www.customerparadigm.com/download/CPaudit.zip</a> [3k zip file with the mageauditor.php file]<br />
+    <br />
+    <a href="http://www.customerparadigm.com/download/CPaudit.zip"><img src="images/150-CP-Code-Audit-Zip-File.jpg" alt="Download Magento Code Audit Tool for Free" width="150" height="180" border="0" /></a><br />
+<br />
+  </li>
+  <li><strong>Create a new directory, /mageaudit/</strong> in your Magento site.<br />
+    <br />
+    <br />
+    <img src="images/Magento-Code-Audit-Create-Directory.jpg" width="417" height="113" alt="Create /mageaudit/ directory via FTP" /><br />
+    <br />
+    <br />
+    <br />
+  </li>
+  <ul>
+    <li>If the site is located at:  www.domain.com, then FTP to this directory to create the file.
+      <ul>
+        <li>You will need FTP access to your site to create a new directory.</li>
+        <li>If you don't have FTP access, you may be able to use your Website's control panel system to create this directory and/or upload the file</li>
+      </ul>
+    </li>
+    <li>If the Magento store is at www.domain.com/store/, you'd create a folder in www.domain.com/store/audit/.</li>
+    <li> If it's at www.domain.com, then the folder needs to be created at www.domain.com/audit/.  </li>
+    <li>The name of this directory doesn't matter as long as it's unique.<br />
+      <br />
+    </li>
+  </ul>
+  <li><strong>Give this new directory</strong> <strong>777 permissions</strong>  <br />
+    <br />
+    <img src="images/Magento-Code-Audit-Set-Folder-Permissions-777.jpg" width="298" height="555" alt="Give Directory Proper CHMOD 777 Folder Permissions" /><br />
+    <br />
+    <br />
+  </li>
+  <ul>
+    <li> Most FTP programs allow you to set the file permissions easily.
+      <ul>
+        <li>You may need to right click on the folder.</li>
+        <li>777 file permissions are also known as Read-Write-Execute for ALL users.</li>
+        <li>The code audit will often run with 755 permissions set (but not for everyone).</li>
+      </ul>
+    </li>
+    <li>You will want to change the file permissions back later (Or remove the directory).</li>
+  </ul>
+  <li><strong>Upload the mageauditor.php file into the /mageaudit/ directory. <br />
+    <br />
+    <img src="images/550-Magento-Code-Audit-File-in-Directory.jpg" width="550" height="294" alt="Magento Code Audit File in Directory" /><br />
+    <br />
+    <br />
+  </strong>  </li>
+  <ul>
+    <li>Do NOT upload the mageauditor.php file in the root directory. </li>
+    <li>Make sure you have about 50 MB of free space available on your site.<br />
+      <br />
+    </li>
+  </ul>
+  <li><strong>Visit the page in your browser &amp; fill out the form:</strong><br />
+    <br />
+    <br />
+    <img src="images/550-Magento-Code-Audit-Page-Mageauditor.php.jpg" width="550" height="482" alt="Magento Code Audit - Visit in Browser" /><br />
+    <br />
+  </li>
+  <ul>
+    <li>For example, it might be: <strong>www.domain.com/mageaudit/mageauditor.php </strong></li>
+    <li>Fill out the form, and you'll receive a success message:<br />
+      <br />
+      <br />
+      <img src="images/550-Magento-Code-Audit-Success-Message.jpg" width="550" height="484" /><br />
+      <br />
+    </li>
+    <li>The system will email you the code audit results shortly.<br />
+      <br />
+      <br />
+      <img src="images/550-Magento-Code-Audit-Report-Success-Email.jpg" width="550" height="547" alt="Magento Code Audit - Email Link to Report" /><br />
+      <br />
+<ul>
+  <li>If you do not put in a valid email, you will not be able to view the report.</li>
+    <li>This is done to prevent abuse of the system, and collect research information on how the system is being used.    </li>
+</ul>
+    </li>
+    <li>If you don't see the file in your browser, there may be three things incorrect:
+      <ul>
+        <li>You may have put the /mageauditor.php file in the wrong place (i.e. not in the directory that is in the Magento site).</li>
+        <li>You may have not actually uploaded the file properly (check and see).</li>
+        <li>The directory may not have permissions to display the php file.</li>
+      </ul>
+    </li>
+    <li>One option for troubleshooting: 
+      <ul>
+        <li>Upload a small image to the /mageaudit/ directory (i.e. photo.jpg).</li>
+        <li>If it loads, you're in the right place.<br />
+          <br />
+          <br />
+          <a href="Free-Magento-Code-Audit/Magento-Code-Audit-Detailed-View-Full.jpg" target="_blank"><img src="images/550-Magento-Code-Audit-Report-Screenshot.jpg" alt="View Magento Code Audit Tool" width="550" height="850" border="0" /></a><br />
+<br />
+          <br />
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <li><strong>Delete the /mageaudit/ directory, or change the directory permissions back to 755</strong></li>
+  <ul>
+    <li>Leaving the directory open to 777 is a security vulnerability for your site, but is necessary for the code audit to run.
+      <ul>
+        <li>The Code Audit will often run at 755, but in many cases it will not.</li>
+        <li>Once the code audit is run, we recommend setting the directory permissions down to 755, 644 or even 000.</li>
+      </ul>
+    </li>
+    <li>You can also just delete the directory from the system via FTP.</li>
+  </ul>
+  <hr width="80%" noshade="noshade" />
+  <p>&nbsp;</p>
+</ol>
+<h3><a href="Free-Magento-Code-Audit/Magento-Code-Audit-Detailed-View-Full.jpg" target="_blank"><img src="images/200-Magento-Code-Audit-Report.jpg" alt="Free Magento Code Audit Reporting Tool" width="200" height="309" border="0" align="right" /></a><a name="HowDoesCodeAuditWork" id="HowDoesCodeAuditWork"></a>How Does the Magento Code Audit Work?</h3>
+<p>When you upload the Magento Code Audit file to your site, and run it in your browser, the file contacts one of our application servers for instructions. </p>
+<p>It then compares the standard, stock version of Magento with your system, and checks to see if any files are different. The system also checks additional information like your version of php, mySQL and other server information. The system does collect the information you put into the form to run the report, as well as other system variables, that help us understand how people are using the code audit tool, and prevent abuse of the system. The system will then contact our application server, and then will send you an email with a link to view the Magento Code Audit. </p>
+<p>The report is hosted on the Customer Paradigm site. You will need approximately 50 MB of free space on your server for the code audit to run properly.</p>
+<hr width="80%" noshade="noshade" />
+<h3><a name="times" id="times"></a>Can I Run the Code Audit Multiple Times? </h3>
+<p>It's free, and yes, you can run it as often as you'd like.</p>
+<hr width="80%" noshade="noshade" />
+<p><br />
+</p>
+<h3><a name="LiveSite" id="LiveSite"></a>Will This Break My Live Site? </h3>
+<p>We have run the Magento Code Audit on live, production servers, and the code audit tool is meant to be a non-invasive system test.The system has run on live sites that process more than $100,000 of orders per day, as well as on a small site hosted on Godaddy.</p>
+<p>However, you might have non-standard things set up for your site, and our program may run in unxpected ways. We always recommend you backup your site first, to at least three locations, before you do anything new to the site. If you are nervous about running the tool, then run it on a development copy first, then your staging site, and then your live site. </p>
+<p>This is a free tool, and <strong>Customer Paradigm assumes no responsibility or liability for your site being down, broken or damaged as a result of the code audit. </strong></p>
+<p><em>Please make sure that you follow the instructions above, and make sure that you put the mageauditor.php file into it's own directory.</em></p>
+<hr width="80%" noshade="noshade" />
+<h3><a name="MagentoError" id="MagentoError"></a>The Code Audit Tool Won't Run / Gives An Error / Blank Page:</h3>
+<p>Please make sure that you follow the instructions above, and make sure that you have given the /mageaudit/ directory 777 (Read-Write-Execute) permission.</p>
+<p>Even if you do everything right, your Website might be hosted on a platform that locks down certain functions that could prevent the code audit from running properly. </p>
+<p>One option for troubleshooting: </p>
+<ul>
+  <li>Upload a small image to the /mageaudit/ directory (i.e. photo.jpg).</li>
+  <li>If it loads, you're in the right place.</li>
+</ul>
+<p>Customer Paradigm is available to help you troubleshoot this, if you would like; <a href="http://www.customerparadigm.com/contact-us/">contact us for hourly rates</a>. </p>
+<hr width="80%" noshade="noshade" />
+<h3><a name="CPRunCodeAudit" id="CPRunCodeAudit"></a>Can Customer Paradigm run the Code Audit for me? </h3>
+<p>If you would like us to run the Magento Code Audit on your site, we are happy to do this for you. We will need FTP access to your site, and can run this for you for a fixed price of $95. <a href="http://www.customerparadigm.com/contact-us/">Contact us here</a> for more informaiton.</p>
+<hr width="80%" noshade="noshade" />
+<h3><a name="versions" id="versions"></a>What Versions of Magento Work with the Code Audit Tool? </h3>
+<p>The Magento Code Audit will work with:</p>
+<ul>
+  <li>Magento Community, versions 1.5 and above.</li>
+  <li>Magento Enterprise, versions 1.9 and above.</li>
+</ul>
+<p>The Magento Code Audit will <em>NOT</em> work with:</p>
+<ul>
+  <li>Magento Go (it's a hosted solution, so you can't really upload a file to the system. Plus, Magento cancelled Go recently as well).</li>
+  <li>Magento Professional (Professional is no longer supported by Magento)</li>
+  <li>Older versions of Magento Community, below version 1.5</li>
+  <li>Older versions of Magento Enterprise, below version 1.9</li>
+</ul>
+<hr width="80%" noshade="noshade" />
+<p></p>
+<h3><a name="whatmean" id="whatmean"></a>What Do The Code Audit Report  Sections Mean?</h3>
+<p>&nbsp;</p>
+<p>What we test for, and what it all means:</p>
+<table width="600" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="176">Overall:</td>
+    <td width="424">In the overall category, the Customer Paradigm Code Audit grades your site based on the site performance and upgradability. Site performance is based on how fast the site loads, based on caching methods and various server settings. Upgrade scores are based on how many modifications are made to the system, as well as how many third party extensions are installed. An &quot;A&quot; score for upgradability for your Magento site is based on a clean, fresh installation of Magento Community or Magento Enterprise. A few minor changes will still earn a solid grade. Major core file modifications will decrease your score.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="images/500-Overall-Report-Section-for-Magento-Free-Code-Audit.jpg" width="500" height="54" alt="Magento Code Audit - Overall" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Performance Grade:</td>
+    <td><p>Your site's performance grade is based on various server settings, and include how you are using caching, if you are using all of the Magento base modules, and if your database configuration is set properly. </p>
+      <p>If you are running the Magento Code Audit on a test server, your performance grade may be really low. Most development servers have caching turned off -- because if you make a change to the test site, you want to have it appear on the site without delay. </p>
+      <p>Poor performance grades can usually be fixed with better mySQL settings, and installing caching properly.</p></td>
+  </tr>
+  <tr>
+    <td>Upgradability Grade:</td>
+    <td><p>How easy will it be to upgrade your site? The Upgradability score ranks how &quot;clean&quot; your site's code base is to upgrade to the next version of Magento Enterprise and Community.</p>
+      <p>Customer Paradigm built the code audit tool, because we often work on sites that someone else built. And our code audit tool is a great starting place to figure out how the site was built. And if the previous development company took shortcuts in the process.</p>
+    <p>A site that has no core file modifications, no deleted or added files, and has a minimum number of third party extensions will rank with a score of &quot;A.&quot; A site with 23 third party extensions, and 51 core file overrides is going to rank with a &quot;C&quot; or a &quot;D.&quot;</p>
+    <p>The main issue when upgrading is that if changes have been made to the &quot;core&quot; files, any and all changes made to these core and base files will be wiped out when you upgrade. This means that if your developer changed a core file to display a fancy discount on the site, this change will need to be re-created in an extension or other area in order to preserve the functionality when upgrading.</p>
+    <p>So... why upgrade? Like most products, upgrading the software on your Magento site can give you new functionality, better performance, and patch security vulnerabilities. Certain new features or extensions will only work with the latest version or two of Magento.</p></td>
+  </tr>
+  <tr>
+    <td>Site:</td>
+    <td>This is the name of the site that you ran the Magento code audit on. This allows you to know if you ran it on a live site, or on a test site. (A test site will often have a poor performance grade, as caching may be turned off, and you are likely not spending a lot of money on memory and processors.)</td>
+  </tr>
+  <tr>
+    <td>Date Run:</td>
+    <td>This is the date that the code audit was run. We record this for you, so that if you run the code audit before and after an upgrade, you'll be able to have a date and timestamped report for archiving purposes.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>PHP:</td>
+    <td>This section checks to see if the PHP programming language installed on your server meets the minimum requirements neeeded to run Magento successfully.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="images/550-php-section-of-Free-Magento-Code-Audit.jpg" width="500" height="142" alt="PHP Section for Free Magento Code Audit" /></td>
+  </tr>
+  <tr>
+    <td>PHP Version:</td>
+    <td>This checks the version of PHP on your server; if your version is out of date, certain functions will not work properly. For example, if you are running PHP 5.3.28, this is likely okay for a current version of Magento.</td>
+  </tr>
+  <tr>
+    <td>PHP Modules:</td>
+    <td><p>This checks to make sure that all of the various PHP modules are installed. Most hosting company will have the PHP Modules installed by default, but some of the cloud-based do-it-yourself systems may not have these PHP modules installed at first. </p>
+      <p>Often, we'll find that a missing PHP module can break functionality of a site... and can be a headache to troubleshoot.</p>
+      <p>The system checks for:</p>
+      <ul>
+        <li>curl - a module that allows you to send and receive information using URL syntax. It's often used for URL-friendly rewrites, and works with the .htaccess file on Apache.</li>
+        <li>dom - the dom extension allows Magento to work with XML documents through PHP programming.</li>
+        <li>gd - the GD library allows PHP to create images automatically, and display them in the browser, including JPG, GIF, PNG, SWF, TIFF and others.</li>
+        <li>hash - used for public key / private key encryption. Without hashing, any usernames or passwords in your database are stored as plain text. Not so ideal.</li>
+        <li>iconv - allows php to convert a string into a encoded character. For example, if someone puts in an illegal character (perhaps they are overseas on a foreign language keyboard), the system can put in the proper symbol and translat if for Magento.</li>
+        <li>mcrypt - used as an interface between PHP for supporting encription methods, such as DES, Blowfish and more.</li>
+        <li>pcre - used as a way to handle Perl-compatible regular expressions.</li>
+        <li>pdo - used as a way to have PHP connect to a database.</li>
+        <li>pdo_mysql - used as a way to have PHP connect directly to a mySQL database.</li>
+        <li>simplexml - allows PHP to very simply and easily convert XML to an object in Magento, that can be processed by the system.</li>
+      </ul>
+      <p>(This is a bit more technical, but understanding what modules are not installed for PHP allows you to understand why certain systems are not working properly.)</p></td>
+  </tr>
+  <tr>
+    <td>PHP Safe Mode:</td>
+    <td><p>If PHP Safe mode is on, your site might not function properly. </p>
+    <p>PHP safe mode is often used on shared servers to restrict what PHP scripts can do on a site. It's often used to restrict or lock down specific functions, including moving, opening or executing files. PHP safe mode has been deprecated as a feature in PHP 5.3.0, and has been removed in versions greater than PHP 5.4.0.</p></td>
+  </tr>
+  <tr>
+    <td>APC:</td>
+    <td>Known as the Alternative PHP Cache (APC), it is a free and open code caching system for PHP. The goal is to keep certain requests in memory, and reducing the disk usage and database calls. APC has been used at Facebook, and can increase the speed of a site by 300% or more in some cases.</td>
+  </tr>
+  <tr>
+    <td>PHP Memory Limit:</td>
+    <td>This is the amount of memory that PHP has alloted to run on your site. Too low, and you won't be able to have certain functions run properly. Set too high, it can allow certain processes to run out of control. 256 MB is sufficient for most Magento installations, but 512 MB is preferable, according to Magento.</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Magento:</td>
+    <td>These are the Magento-specific variables the code audit tests for when the code audit runs.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="images/500-Magento-Section-of-Free-Magento-Code-Audit-Report.jpg" alt="Magento Code Audit - Magento Section" width="500" height="318" /></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>Version:</td>
+    <td>This displays the version of your Magento site (either Community or Enterprise). If you are not running the most current version, the system will let you know the most recent version. The code audit tool will work with systems dating back to Magento Community 1.4.1.1. </td>
+  </tr>
+  <tr>
+    <td>Session Handling:</td>
+    <td><p>The way that a Website knows that a customer goes from the home page, to a category page, to a product page and adds something to their cart is done via session management. Without session management, each page you visit is treated as a separate instance. Session handling in Magento is done in two ways:</p>
+      <ul>
+        <li>Files. Session management using files is much faster than using the database method. </li>
+        <li>Database. Magento can keep track of past users in the mySQL database, but this means that each time a visitor requests a page, the system has to write their information into the mySQL database. This is slow, and not best practice.</li>
+        <li>Memcached can speed up the Magento storefront by moving the session files to a highly optimized separate system.</li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td>Cache Backend:</td>
+    <td>If you do not specify the backend caching system, Magento will use the &quot;Zend Cache Backend File&quot; system by default.</td>
+  </tr>
+  <tr>
+    <td>Cache Types:</td>
+    <td><p>In order for your site to load quickly, Magento creates many different caching systems to help reduce the need to look up of information from the database, and compile pricing, discounts and other information.</p>
+    <p>If your site is on a test server or still in development, then it's normal that these caches are turned off. But if your static blocks, layouts and EAV types are disabled on a live site, your site is going to be running a lot slower than it should.</p>
+    <p>Turning on these caches is something you are often able to do in your Magento admin panel. They might be disabled or invalidated if you've made major changes recently to your site.</p>
+    <p>Magento Enterprise has additional caching, including Full Page Caching. This allows you to have extremely fast (i.e. sub-2.0 second) page load times. The fast your site loads, the more sales conversions you are likely to see... as well as see better search rankings as well.</p></td>
+  </tr>
+  <tr>
+    <td>Modules:</td>
+    <td><p>Modules in Magento are both a blessing and a curse.</p>
+    <p>Magento modules are a blessing, because they allow you to have advanced functionality that isn't built into the core Magento platform. </p>
+    <p>Want to integrate with a third party warehouse? Accept alternative payment methods? Display a red image for your t-shirt when the red option is selected on a product page? Extensions can do all of this, and more.</p>
+    <p>Without extensions, a Magento site is limited to only the functionality that is built into the Magento code release. </p>
+    <p>But extensions are often a curse. Because they can conflict with one another, and cause system instability. Our advice: only use the extensions that are absolutely necessary, and do rigoruous testing to make sure that they don't break anything.</p></td>
+  </tr>
+  <tr>
+    <td>Core Overrides:</td>
+    <td><p>The core overrides test checks to see if there have been any overrides in the /app/code/local/Mage/ location:</p>
+      <p>When should you override Magento core files? Honestly, you shouldn't. You can introduce system instability, and wreak havoc on your Magento site. It can make Magento extensions behave strangely. And if you ever want to upgrade, you'll lose any of these changes. </p>
+      <p>Instead, you'll want to make changes that extend core functionality by creating a module.</p>
+      <p>This section of the Magento code audit lets you know if your Magento Programmer has taken shortcuts and changed core files.</p></td>
+  </tr>
+  <tr>
+    <td>Core Modifications:</td>
+    <td>The core modification test checks to see if any of the files in the /core/Mage/ directory have been changed or added to the system. This is not a best practice, and like core overrides, can introduce problems into your system, and have issues during the upgrade.</td>
+  </tr>
+  <tr>
+    <td>Base Modifications:</td>
+    <td><p>This test looks for altered files in the /base/layout, /legacy/base/template, and base/template directories. </p>
+      <p>Magento works from a design &quot;fallback&quot; system, where if a theme doesn't have a specific design option (i.e. the product grid on a category page), it will &quot;fallback&quot; to the base design files.</p>
+      <p>It's much, much better to use a separate design than to go in and hack the base design templates in the system. </p>
+      <p>Again, if you upgrade your site, or even want to implement a new design for your site, your options may be limited if base files have been modified.</p></td>
+  </tr>
+  <tr>
+    <td>Default Modifications:</td>
+    <td>Just like you shouldn't modify base design files, you also shouldn't modify your default design files in the /app/design/frontend/default/default files.  Often people will change the layout or template file in this location, as they don't want to extend the functionality properly.</td>
+  </tr>
+  <tr>
+    <td>Missing Files:</td>
+    <td><p>If there are missing files in the Magento code base, this system will check for them and let you know what files are missing. </p>
+      This is a great way to make sure that when you are copying a site from one location to the next, that you've copied all of the core files. (This won't check for all of your modules or design files, though.)</td>
+  </tr>
+  <tr>
+    <td>Added Files:</td>
+    <td><p>Have you added new files to your site? The system will check to see if there are any new files in the /core/Mage/ file tree, the base/layout area, or in the base/template portion of the site.</p>
+    <p>It's usually not a great idea to add new files to the core directories; Magento has a place for new files to live. Again, you'd likely lose any of these files in an upgrade.</p>
+    <p>Often we'll see a breadcrumbs-copy.phtml, or a bookmarks.xml.backup-01-01-2014 file, which is a server-based copy of a file. This isn't a big deal. It usually means that someone was working on that file, and created a live backup on the server, so that they could quickly revert if they messed something up. </p></td>
+  </tr>
+  <tr>
+    <td>Products:</td>
+    <td><p>This line lists how many products your site has in the catalog. The number of products will include all products, regardless of whether or not they are active or inactive. </p>
+    <p>If the number seems larger than you expect, it may be because this report will show the simple products that are used to make up a configurable product. For example, if you have T-shirt that is sold in four sizes (S, M, L, XL) and three colors (Red, White, Blue), then you would have 4 x 3 = 12 simple products:</p>
+    <ul>
+      <li>Small - Red</li>
+      <li>Small - White</li>
+      <li>Small - Blue</li>
+      <li>Medium - Red</li>
+      <li>Medium - White</li>
+      <li>Medium - Blue</li>
+      <li>Large - Red</li>
+      <li>Large - White</li>
+      <li>Large - Blue</li>
+      <li>X-Large - Red</li>
+      <li>X-Large - White</li>
+      <li>X-Large - Blue</li>
+      </ul>
+    <p>But on the front end of the site, it would be listed as a single configurable product on your Magento storefront.</p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>mySQL:</td>
+    <td>mySQL is the database system that runs your site. It's a free, open source system that can perform extremely well -- but only if you have it configured properly.</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="images/500-mySQL-portion-of-Magento-Code-Audit-Report.jpg" width="500" height="108" alt="mySQL Database System for Magento Code Audit" /></td>
+  </tr>
+  <tr>
+    <td>innodb buffer pool size</td>
+    <td><p>The buffer pool is the memory that is used by your mySQL database. It caches the data and indexes from the database in memory. </p>
+    <p>Magento recommends a value of at least 256 MB. On a dedicated database server, this setting can be 80% of physical RAM. </p>
+    <p>On a server where memory is shared between the database and application, this number should be around 40% physical RAM. Ideally, this value is larger than the size of your database.</p></td>
+  </tr>
+  <tr>
+    <td>innodb thread concurrency</td>
+    <td><p>Do you remember the last time you got a busy signal when you called someone on the phone? With call waiting and voicemail, it's rarely the case these days.</p>
+    <p>Your server is set to run several different threads from PHP and Magento to the system at the same time. If this is set too low, then the site slows down to a crawl, because each person coming to the site essentially has to wait in line for the mySQL database connection.</p>
+    <p>Magento recommends a value of at least 8 threads running at the same time. If possible, this value should be set as high as the maximum (16).</p></td>
+  </tr>
+  <tr>
+    <td>thread cache size</td>
+    <td><p>How big should each mySQL query thread be allowed to use? </p>
+    <p>This should be set to a minimum of 8 (the default is 0). On a server with a large amount of memory, it can be set to 32 or 64. </p>
+    <p>Note, this may be a false positive on Mysql5 installations, as in Mysql 5 a concurrency of 0 is unlimited.</p></td>
+  </tr>
+  <tr>
+    <td>log slow queries</td>
+    <td>On a production server, this setting should be set to OFF as it is considerable overhead on the database</td>
+  </tr>
+  <tr>
+    <td>max connections</td>
+    <td><p>This checks to see how many simultaneous connections the Website can have to the database at any given time. By default, this is set to 100. If this is set too low, the site will be non-responsive. If you set it too high, though, you can have so many connections that the mySQL database will slow down due to too many connections. </p>
+    <p>Magento recommends a setting of at least 100.</p></td>
+  </tr>
+  <tr>
+    <td>sort buffer size</td>
+    <td><p>Magento recommends that this be set to at least 7 MB in size. </p>
+    <p>This is the amount of memory that is allocated per thread. The sort buffer size is a per-session buffer that is allocated each time it's needed by a database connection. The sort buffer is often used when there is no index available in a mySQL database table.</p></td>
+  </tr>
+  <tr>
+    <td>key buffer size</td>
+    <td><p>In order to minimize how many times the mySQL database needs to interact with the disk, the system uses a strategy to cache the most frequently accessed table blocks in memory. If this is set to zero, no key cache is used. This is often used during site search on Magento.</p>
+    <p>We recommend the key buffer size is set to at least 200 MB for optimal site search speed.</p></td>
+  </tr>
+  <tr>
+    <td>innodb additional mem pool size</td>
+    <td><p>This is another setting that is used for caching data and database indexes in memory, instead of having the database have to look up information by accessing the hard drive on the mySQL database server.</p>
+    <p>The larger the buffer pool, the more the database acts like an in-memory database, and avoids having to look up information fro the hard drive. (This speeds up performance.)</p>
+    <p>We recommend this is set to at least 15 MB for best lookup time on your Magento site.</p></td>
+  </tr>
+  <tr>
+    <td>mySQL version</td>
+    <td><p>The Magento Code Audit tool checks to see what version of the mySQL database your Magento site is using. A version that is too old for your site will suffer performance issues, as well as could have missing functionality. </p>
+    <p>A version of mySQL that is too new might be a red flag if you are running a much older version of Magento (i.e. Community 1.4) that wasn't designed to run on a more current version of the mySQL database.</p></td>
+  </tr>
+  <tr>
+    <td>version compile os</td>
+    <td>The system checks to see what operating system is running for your mySQL database server; this is normally not an issue, but can assist with troubleshooting.</td>
+  </tr>
+  <tr>
+    <td>version compile machine</td>
+    <td>This setting checks to see what type of architecture; usually this is fine, but can also assist with troubleshooting if it is a non-standard system.</td>
+  </tr>
+  <tr>
+    <td>dbsize</td>
+    <td><p>This is normally set to '0' - meaning there isn't a limit on the size of the database. </p>
+    <p>The mySQL database is limited by the disk space on the server. If fill up the hard drive, any tables that you're trying to write to will often become corrupted. It's a quick fix to repair those tables, but you'll likely need to run a script to go through every single table in Magento's mySQL database to do this. </p>
+    <p>And Magento, by default, has a lot of tables. Magento Community has approximately 327 mySQL tables, and the Enterprise platform has about 450 mySQL database tables.</p></td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>Need Help With Your Magento Site? Customer Paradigm's team of Magento Experts Can Help!<br />
+Call 303.473.4400 or <a href="http://www.customerparadigm.com/contact-us/">visit here &gt;&gt;</a></p>
+<table width="429" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td><h4><strong>Magento Code Audit Tool FAQs:</strong></h4></td>
+  </tr>
+  <tr>
+    <td width="24">1.&nbsp;</td>
+    <td width="405"><a href="#WhatIs">What is the Code Audit Tool?</a></td>
+  </tr>
+  <tr>
+    <td>2.&nbsp;</td>
+    <td><a href="#WhyFree">Why is this Free?</a></td>
+  </tr>
+  <tr>
+    <td>3.&nbsp;</td>
+    <td><a href="#HowRun">How Do I Run the Code Audit?</a></td>
+  </tr>
+  <tr>
+    <td>4.&nbsp;</td>
+    <td><a href="#SimpleDirections">Simple Directions to Run Audit</a></td>
+  </tr>
+  <tr>
+    <td>5.&nbsp;</td>
+    <td><a href="#DetailedDirections">Detailed Directions to Run Audit</a></td>
+  </tr>
+  <tr>
+    <td>6.&nbsp;</td>
+    <td><a href="#HowDoesCodeAuditWork">How Does the Audit Tool Work?</a></td>
+  </tr>
+  <tr>
+    <td>7.&nbsp;</td>
+    <td><a href="#times">How Many Times Can I Run the Audit?</a></td>
+  </tr>
+  <tr>
+    <td>8.&nbsp;</td>
+    <td><a href="#LiveSite">Will the Code Audit Break My Site?</a></td>
+  </tr>
+  <tr>
+    <td>9.&nbsp;</td>
+    <td><a href="#MagentoError">Code Audit Error Messages</a></td>
+  </tr>
+  <tr>
+    <td>10.&nbsp;</td>
+    <td><p><a href="#CPRunCodeAudit">Can Customer Paradigm Run Code Audit For Me?</a></p></td>
+  </tr>
+  <tr>
+    <td>11.&nbsp;</td>
+    <td><a href="#versions">What Versions of Magento Does the Code Audit Run On?</a></td>
+  </tr>
+  <tr>
+    <td>12.&nbsp;</td>
+    <td><a href="#whatmean">What Do The Code Audit Report  Sections Mean?</a></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p><a href="http://www.CustomerParadigm.com"><img src="images/596-Customer-Paradigm-Top-Logo.jpg" alt="Cusotmer Paradigm" width="596" height="88" border="0" /></a></p>
+<p>&nbsp;</p>
+</body>
+</html>

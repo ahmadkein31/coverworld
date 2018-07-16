@@ -1,0 +1,15 @@
+{
+    "name": "mageworx/module-seosuiteultimate",
+    "version": "2.5.2",
+    "type": "metapackage",
+    "require": {
+        "mageworx/module-htmlsitemap": "2.1.4",
+        "mageworx/module-seobase": "2.3.3",
+        "mageworx/module-seocrosslinks": "2.1.2",
+        "mageworx/module-seoextended": "2.1.1",
+        "mageworx/module-seomarkup": "2.1.2",
+        "mageworx/module-seoredirects": "2.0.1",
+        "mageworx/module-seoxtemplates": "2.1.8",
+        "mageworx/module-xmlsitemap": "2.1.4"
+    }
+}

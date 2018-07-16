@@ -1,0 +1,41 @@
+<?php if ($currentCategory = $block->getCurrentCategory()): ?>
+    <?php $categoryHelper = $block->getCategoryHelper(); ?>
+    <?php 
+                		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                		if(!$currentCategory->getImageUrl()){
+                			$categoryBranch = explode('/', str_replace('1/2/', '', $currentCategory->getPath()));
+                			$categoryBranch = array_reverse($categoryBranch);
+                			
+                			foreach($categoryBranch AS $categoryBranchID){
+                				if($finalCategoryImage = $objectManager->create('Magento\Catalog\Model\Category')->load($categoryBranchID)->getImageUrl()){break;}
+                			}
+                		}else{
+                			$finalCategoryImage = $currentCategory->getImageUrl();
+                		}
+                		if (isset($GLOBALS['breadcrumbs'])) {  
+						     //array_pop($GLOBALS['breadcrumbs']);
+						     $fitmentTitle = '';
+						     //var_dump($GLOBALS['breadcrumbs']));
+						     
+						     foreach ($GLOBALS['breadcrumbs'] as $crumbName => $crumbInfo) { 
+						        $$crumbInfo['type'] = $crumbInfo['label']; 
+						     } 
+						     
+						     $fitmentTitle = isset($Year)?$Year.' ':''; 
+						     $fitmentTitle .= isset($Make)?$Make.' ':''; 
+						     $fitmentTitle .= isset($Model)?$Model.' ':'';
+						     $fitmentTitle .= isset($Option)?$Option.' ':''; 
+						     $fitmentTitle .= isset($Category)?$Category.' ':''; 
+						     
+						 }
+                		
+                ?> 
+    <a href="<?php echo $categoryHelper->getCategoryUrl($currentCategory) ?>">
+        <div class="boat-type">
+            <p class="name"><?php echo $fitmentTitle; ?></p>
+            <div class="img-container">
+                <img src="<?php echo $finalCategoryImage; ?>" />
+            </div>
+        </div>
+    </a>
+<?php endif; ?>

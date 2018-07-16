@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!--
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * http://mageplaza.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://mageplaza.com/)
+ * @license     http://mageplaza.com/license-agreement/
+
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <body>
+        <referenceBlock name="secure-checkout-container">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="payment" xsi:type="array">
+                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment</item>
+                            <item name="visible" xsi:type="boolean">true</item>
+                            <item name="config" xsi:type="array">
+                                <item name="title" xsi:type="string" translate="true">Payment</item>
+                            </item>
+                            <item name="children" xsi:type="array">
+                                <item name="renders" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="children" xsi:type="array">
+                                        <!-- merge payment method renders here -->
+                                        <!--Paypal Payment
+                                        <item name="paypal-payments" xsi:type="array">
+                                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/paypal-payments</item>
+                                            <item name="methods" xsi:type="array">
+                                                <item name="payflowpro" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="payflow_link" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="payflow_advanced" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="hosted_pro" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="paypal_billing_agreement" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                            </item>
+                                        </item>  -->
+                                        <!--Free Payment
+                                        <item name="free-payments" xsi:type="array">
+                                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/payments</item>
+                                            <item name="methods" xsi:type="array">
+                                                <item name="free" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                            </item>
+                                        </item>       -->
+                                        <!--Offline Payment
+                                        <item name="offline-payments" xsi:type="array">
+                                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/offline-payments</item>
+                                            <item name="methods" xsi:type="array">
+                                                <item name="checkmo" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="banktransfer" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="cashondelivery" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="purchaseorder" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                            </item>
+                                        </item>        -->
+                                        <!--Authorizenet-->
+                                        <item name="authorizenet" xsi:type="array">
+                                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/authorizenet</item>
+                                            <item name="methods" xsi:type="array">
+                                                <item name="authorizenet_directpost" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <!--Braintree Payment
+                                        <item name="braintree-payments" xsi:type="array">
+                                            <item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/braintree-methods</item>
+                                            <item name="methods" xsi:type="array">
+                                                <item name="braintree" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="braintree_paypal" xsi:type="array">
+                                                    <item name="isBillingAddressRequired" xsi:type="boolean">false</item>
+                                                </item>
+                                            </item>
+                                        </item>              -->
+                                    </item>
+                                </item>
+                                <item name="additional-payment-validators" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="children" xsi:type="array">
+                                        <!-- merge payment validators here -->
+                                        <item name="email-validator" xsi:type="array">
+                                            <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/email-validator</item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="customer-email" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_Checkout/js/view/form/element/email</item>
+                                    <item name="displayArea" xsi:type="string">customer-email</item>
+                                    <item name="tooltip" xsi:type="array">
+                                        <item name="description" xsi:type="string" translate="true">We'll send your order confirmation here.</item>
+                                    </item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="before-login-form" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="displayArea" xsi:type="string">before-login-form</item>
+                                            <item name="children" xsi:type="array">
+                                                <!-- before login form fields -->
+                                            </item>
+                                        </item>
+                                        <item name="additional-login-form-fields" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="displayArea" xsi:type="string">additional-login-form-fields</item>
+                                            <item name="children" xsi:type="array">
+                                                <!-- additional login form fields -->
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="beforeMethods" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="displayArea" xsi:type="string">beforeMethods</item>
+                                    <item name="children" xsi:type="array">
+                                        <!-- merge additional data before payment methods here -->
+                                    </item>
+                                    <item name="validation" xsi:type="array">
+                                        <item name="validate-select" xsi:type="string">true</item>
+                                    </item>
+                                    <!-- Value of region_id field is filtered by the value of county_id attribute -->
+                                    <item name="filterBy" xsi:type="array">
+                                        <item name="target" xsi:type="string">${ $.provider }:${ $.parentScope }.country_id</item>
+                                        <item name="field" xsi:type="string">country_id</item>
+                                    </item>
+                                </item>
+                                <item name="payments-list" xsi:type="array">
+                                    <!--<item name="component" xsi:type="string">Mageplaza_Osc/js/view/payment/list</item>-->
+                                    <item name="component" xsi:type="string">Magento_Checkout/js/view/payment/list</item>
+                                    <item name="displayArea" xsi:type="string">payment-methods-list</item>
+                                </item>
+                                <!-- merge your payment methods here -->
+                                <item name="afterMethods" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="displayArea" xsi:type="string">afterMethods</item>
+                                    <item name="children" xsi:type="array">
+                                        <!-- merge additional data after payment methods here -->
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @description:
+ *
+ */
+?>
+<?php 
+echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_review')->toHtml();?>
+<?php /*
+    $_items = $block->getReviewsCollection()->getItems();
+    $format = $block->getDateFormat() ?: \IntlDateFormatter::SHORT;
+?>
+<?php if (count($_items)):?>
+<div class="block review-list" id="customer-reviews">
+    <div class="block-content">
+
+        <div class="top-bar">
+            <span class="review-count"><?php echo __('Reviewed by %1 Customer(s)', '<strong>'.$this->getReviewsCollection()->getSize().'</strong>'); ?></span>
+            <div class="toolbar review-toolbar">
+                <?php echo $block->getChildHtml('toolbar') ?>
+            </div>
+        </div>
+
+        <ol class="items review-items">
+        <?php foreach ($_items as $_review):?>
+            <li class="item review-item" itemscope itemprop="review" itemtype="http://schema.org/Review">
+
+                <?php if (count($_review->getRatingVotes())): ?>
+                    <div class="review-ratings">
+                        <?php foreach ($_review->getRatingVotes() as $_vote): ?>
+                            <div class="rating-summary item" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+                                <div class="rating-box">
+                                    <div class="rating" style="width:<?php echo $_vote->getPercent();?>%"></div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                        <p class="review-author">
+                            <span class="review-details-label"><?php echo __('by')?></span>
+                            <strong class="review-details-value" itemprop="author"><?php echo $block->escapeHtml($_review->getNickname()) ?></strong>
+                        </p>
+                    </div>
+                <?php endif; ?>
+
+
+                <div class="review-content">
+                    <div class="review-title" itemprop="name"><?php echo $block->escapeHtml($_review->getTitle()) ?></div>
+
+                    <div class="review-description" itemprop="description">
+                        <?php echo nl2br($block->escapeHtml($_review->getDetail())) ?>
+                    </div>
+                </div>
+            </li>
+        <?php endforeach; ?>
+        </ol>
+    </div>
+</div>
+<?php endif;*/?>

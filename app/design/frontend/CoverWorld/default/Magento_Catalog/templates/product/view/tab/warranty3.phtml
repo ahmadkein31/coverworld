@@ -1,0 +1,36 @@
+<?php 
+
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();  
+
+$warranty = $this->helper('Magento\Catalog\Helper\Output')->productAttribute($_product, $_product->getWarranty(), 'warranty');
+
+if($warranty=='5 Year'){
+    echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_warranty_5year')->toHtml();
+}elseif($warranty=='7 Year'){
+    echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_warranty_7year')->toHtml();
+}else{
+   echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('product_warranty')->toHtml();
+}
+
+?>
+
+<script type="text/javascript" xml="space">// 
+                        // 
+                        require([
+                            'jquery'
+                        ], function ($) {{
+                            $(function() {{
+
+                            $("#best-price-banner").on('click',function(){
+                                $("#best-price-modal").modal("openModal");
+                            });
+
+                        $("#made-in-usa-banner").on('click',function(){
+                                $("#custom-fit-modal").modal("openModal");
+                            });
+
+							}});
+						}});
+                        // 
+                        // </script>

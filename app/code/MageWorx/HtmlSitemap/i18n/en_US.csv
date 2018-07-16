@@ -1,0 +1,24 @@
+In HTML Sitemap,In HTML Sitemap
+This setting was added by MageWorx HTML Sitemap,This setting was added by MageWorx HTML Sitemap
+Use Categories Path,Use Categories Path
+SEO,SEO
+HTML Sitemap,HTML Sitemap
+Show Stores,Show Stores
+Show Categories ▾,Show Categories ▾
+Maximum category depth level,Maximum category depth level
+Leave empty for default (all categories).,Leave empty for default (all categories).
+Show Products ▾,Show Products ▾
+Keep it disabled if you have a big number of products.,Keep it disabled if you have a big number of products.
+According to the category display mode,According to the category display mode
+Product URLs,Product URLs
+Categories/Products Sort Order,Categories/Products Sort Order
+Show CMS Pages,Show CMS Pages
+Show Additional Links ▾,Show Additional Links ▾
+Additional Links,Additional Links
+"A comma-delimited list of links and link labels to append to the sitemap.<br />&nbsp;&nbsp;&nbsp;&nbsp;<b>Example:</b><br />Link without 'http[s]://' as <b>'customer/account/,Customer Account'</b><br /> will be converted to <b>'http[s]://(<i>store_URL_here</i>)/customer/account/'</b><br />Link with 'http[s]://' will be added as it is.","A comma-delimited list of links and link labels to append to the sitemap.<br />&nbsp;&nbsp;&nbsp;&nbsp;<b>Example:</b><br />Link without 'http[s]://' as <b>'customer/account/,Customer Account'</b><br /> will be converted to <b>'http[s]://(<i>store_URL_here</i>)/customer/account/'</b><br />Link with 'http[s]://' will be added as it is."
+Allow Thirdparty Links ▾,Allow Thirdparty Links ▾
+Common Settings For Sitemaps,Common Settings For Sitemaps
+Trailing Slash For Home Page,Trailing Slash For Home Page
+Note: the trailing slash can be added to pages without suffix .html or .htm,Note: the trailing slash can be added to pages without suffix .html or .htm
+Trailing Slash For URLs,Trailing Slash For URLs
+Sitemap,Sitemap

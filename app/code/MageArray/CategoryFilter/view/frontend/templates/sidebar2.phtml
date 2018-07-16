@@ -1,0 +1,51 @@
+<?php
+$config = $this->getConfigJson ();
+$categories = $config['categories'];
+?>
+<div class="block block-categoryfilters">
+    <?php if ($this->getTitle ()): ?>
+        <div class="block-title">
+            <strong><span><?php echo __ ( $this->getTitle () ) ?></span></strong>
+        </div>
+    <?php endif ?>
+
+    <form action="" name="categoryform" method="post">
+        <div id="cd-<?php echo $this->getNameInLayout () ?>" class="block-content">
+            <?php for ($i = 0; $i < $this->getLevels (); $i++): ?>
+                <?php if ($this->getLabelsEmbedded () == 'outside' && $label = $this->getSelectLabel ( $i )): ?>
+                    <label><?php echo $label ?></label>
+                <?php endif ?>
+                <?php $j = $i + 1; ?>
+                <select dataId="<?php echo $j; ?>" id="<?php echo $this->getNameInLayout () ?><?php echo $j; ?>">
+                    <?php if ($this->getLabelsEmbedded () == 'embedded' && $label = $this->getSelectLabel ( $i )): ?>
+                        <option value=""><?php echo $label ?></option>
+                    <?php else: ?>
+                        <option value="">Please Select</option>
+                    <?php endif ?>
+
+                    <?php if ($j == 1): ?>
+                        <?php foreach ($categories as $cat): ?>
+                            <option value="<?php echo $cat['id']; ?>"
+                                    dataUrl="<?php echo $cat['url']; ?>"><?php echo $cat['name']; ?></option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+
+            <?php endfor; ?>
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    requirejs(['jquery', 'categoryFilter'], function (jQuery) {
+
+        var categoryFilters = {
+            'levels': '<?php echo $this->getLevels (); ?>',
+            'nameInLayout': '<?php echo $this->getNameInLayout () ?>',
+            'url': '<?php echo $this->getBaseUrl (); ?>categoryfinder/index/change/'
+        };
+        var mainDivId = '#cd-<?php echo $this->getNameInLayout () ?>';
+        jQuery(mainDivId).categoryfilter(categoryFilters);
+    });
+</script>

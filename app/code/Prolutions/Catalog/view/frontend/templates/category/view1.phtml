@@ -1,0 +1,147 @@
+<?php 
+	   
+	if(!$block->getRequest()->getParam('find')): 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category'); //get current category  
+  $_page_config = $objectManager->get('Magento\Framework\View\Page\Config');
+  
+	$isRobot = ((strstr(strtolower($_SERVER['HTTP_USER_AGENT']), "googlebot") OR $block->getRequest()->getParam('isRobotTest')))?TRUE:FALSE;
+	$currentPageTitle = preg_replace('/\s+/', ' ',$_page_config->getTitle()->getShort());
+	$currentCategory = $block->getCurrentCategory(); 
+	$categoryTitle = $currentCategory->getName();   
+	$categoryLevel = $block->getCurrentCategory()->getLevel(); 
+	$maxChildLevel = $block->getMaxChildLevel(); 
+	$categoryHelper = $block->getCategoryHelper(); 
+	$parentCategories = $block->getParentCategories(); 
+	$categoryID = $category->getId();
+	
+	if (isset($GLOBALS['breadcrumbs'])) {  
+	     //array_pop($GLOBALS['breadcrumbs']);
+	     //var_dump($GLOBALS['breadcrumbs']));
+	     
+	      
+	 }
+
+	$isPrimaryCategory = ($categoryID == 3 || $categoryID == 4 || $categoryID == 5 || $categoryID == 6) ? TRUE : FALSE;    
+	
+    ?>
+    <a name="Category"></a><a name="Model"></a><a name="Year"></a><a name="Option"></a>
+    
+    
+	    
+    <div class="page-header-title">
+    	 <?php 
+    	 $headerContentPadding = '';
+    	 $headerTitlePadding = '';
+    	 if($currentCategory->getcontent_subtitle()=='Make' || $isPrimaryCategory): 
+		    $finderSearchButton = $isPrimaryCategory?1:2;
+		    $finderLevels = $isPrimaryCategory?3:2;
+		    $finderLabels = $isPrimaryCategory?'Select Make,Select Model,Select Year':'Select Model,Select Year';
+		    $fincderPageTitle = substr("$currentPageTitle", 0, -1);
+		    $headerContentPadding = $isPrimaryCategory?' page-header-content-less':' page-header-content-extra';
+		    $headerTitlePadding = ' page-header-title-extra';
+		    ?>
+		    <div class="page-header-cover-finder">
+	    	 <div class="banner-search-icon">&nbsp;</div>
+			    <?php echo $this->getLayout()->createBlock("MageArray\CategoryFilter\Block\Navigation")
+														    ->setTitle("$fincderPageTitle<br/>Fit Finder™")
+														    ->setLevels("$finderLevels")
+														    ->setSelectLabels("$finderLabels")
+														    ->setLabelsEmbedded("embedded")
+														    ->setRootCategory("category/$categoryID")
+														    ->setTemplate("sidebar.phtml")
+														    ->toHtml();  
+				?>
+			 <div class="banner-search-button<?php echo $finderSearchButton ?>">&nbsp;</div>
+		    </div>
+		 <?php endif; ?>
+	    <div class="page-header-page-title<?php echo $headerTitlePadding ?>">
+	    	<span class="find-your">Find Your</span>
+	    	<h1 class="categoryh1"><?php echo substr($currentPageTitle, 0, -1); ?></h1>
+	    	<span class="categoryh1 fit-finder-mobile">Fit Finder™</span>
+	    <div class="quality-statements">Guaranteed to Fit. Only Quality Materials. Made in the USA.</div>
+	    </div>
+	    
+	    <div class="page-header-content<?php echo $headerContentPadding ?>">
+	    <?php if(!$isPrimaryCategory): ?>
+	             <div class="img-container">
+	                <?php 
+	                		if(!$category->getImageUrl()){
+	                			$categoryBranch = explode('/', str_replace('1/2/', '', $category->getPath()));
+	                			$categoryBranch = array_reverse($categoryBranch);
+	                			foreach($categoryBranch AS $categoryBranchID){
+	                				if($finalCategoryImage = $objectManager->create('Magento\Catalog\Model\Category')->load($categoryBranchID)->getImageUrl()){break;}
+	                			}
+	                		}else{
+	                			$finalCategoryImage = $category->getImageUrl();
+	                		}
+	                ?> 
+	                <img src="<?php echo $finalCategoryImage; ?>" />
+	                </div>
+	           
+	
+	            <div class="page-header-vehicle-type">           
+	               <?php 
+	               $categoryBranch2 = explode('/', str_replace('1/2/', '', $currentCategory->getPath()));
+	               echo $objectManager->create('Magento\Catalog\Model\Category')->load(current($categoryBranch2))->getName();
+	               ?> 
+	            </div>
+	            <div class="page-header-change-category">           
+	                <a href="<?php if($isRobot){echo '#';}else{echo $currentCategory->getParentCategory()->getUrl().'#'.$currentCategory->getcontent_subtitle();} ?>" class="change-category">
+	                    <span class="change-model">Change <?php echo $currentCategory->getcontent_subtitle(); ?></span>
+	                </a>
+	            </div>
+	    <?php endif; ?>
+	            <div class="page-header-material-description">                                 
+									<?php echo $currentCategory->getDescription(); ?>
+	            </div>
+	    </div> 
+    </div>
+
+    
+            
+    <?php
+        $i = 0;
+        $columnsClass = $block->getColumnsClass();
+        $subCategories = $currentCategory->getChildrenCategories(); 
+		  //var_dump($subCategories);
+		    
+		     ?>
+        
+        <?php          
+        
+        $nowMakes = FALSE;
+        foreach($subCategories as $subCategory):
+            $i++;
+            
+            if($subCategory->getName()=='makes'){
+                echo '</ul>';
+                echo '<ul class="category-grid">';
+                echo '<p class="title">- OR -</p>';
+                echo '<h2>Select Your Manufacturer<a name="Make"></a></h2>';
+                $nowMakes = TRUE;
+                continue;
+            }
+            
+            ?>
+            <a href="<?php echo $categoryHelper->getCategoryUrl($subCategory) ?>" class="<?php echo $columnsClass; ?>">
+                <li class="category-item ">
+                    <?php if(!$nowMakes): ?>
+                    <div class="name-container"><p class="name"><?php if($isRobot){echo $subCategory->getName().' '.$currentPageTitle;}else{echo $subCategory->getName();} ?></p></div>
+                    <?php endif; ?>   
+                       <?php if($subCategory->getImageUrl()): ?>
+                       <div class="img-container">
+                            <img src="<?php echo $subCategory->getImageUrl(); ?>" alt="<?php echo $subCategory->getName().' '.$currentPageTitle; ?>"/>
+                        </div>
+                        <?php endif; ?>       
+                </li>
+            </a>
+        <?php endforeach; ?>           
+    </ul>
+
+    <?php if($categoryLevel != 2): ?>
+        <?php //echo $block->getInformationTabsHtml(); ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+                                       

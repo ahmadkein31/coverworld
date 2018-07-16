@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="social-login-popup" remove="true" />
+
+        <referenceContainer name="content">
+            <block class="Prolutions\Catalog\Block\Category\View" name="categories.grid" before="-" template="category/view.phtml" />
+        </referenceContainer>
+
+        <referenceContainer name="sidebar.main">
+            <block class="Magento\Cms\Block\Block" name="left.column">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">category_left_column</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="category.products.list">
+            <block class="Prolutions\Catalog\Block\Category\View\Qualifications" name="product.details.qualifications" as="product.details.qualifications" template="product/view/details/qualifications.phtml" />
+        </referenceBlock>
+
+        <referenceBlock name="page.main.title" remove="true" />
+        <referenceBlock name="catalog.leftnav" remove="true" />
+        <referenceBlock name="catalog.compare.sidebar" remove="true" />
+        <referenceBlock name="wishlist_sidebar" remove="true" />
+
+        <referenceBlock name="category.image" remove="true" />
+        <referenceBlock name="category.description" remove="true" />
+    </body>
+</page>

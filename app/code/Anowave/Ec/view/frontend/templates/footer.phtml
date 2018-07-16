@@ -1,0 +1,110 @@
+<script>
+
+	if (typeof dataLayer !== "undefined")
+	{
+		<?php foreach ([$block->getHelper()->getContactEvent(), $block->getHelper()->getNewsletterEvent(), $block->getHelper()->getCartUpdateEvent()] as $event): ?>
+
+			<?php if ($event): ?>
+			
+			(function(dataLayer, data)
+			{
+				dataLayer.push(data);
+				
+			})(dataLayer,<?php echo $event ?>);
+
+			<?php endif ?>
+		
+		<?php endforeach ?>
+
+		for (a = 0, b = EC.length; a < b; a++)
+		{
+			EC[a].apply(this,[dataLayer]);
+		}
+
+		/* AdWords Remarketing */
+		if (window.google_tag_params)
+		{
+			dataLayer.push(
+			{  
+				'event':				'fireRemarketingTag',
+				'google_tag_params': 	window.google_tag_params
+			});
+		}
+
+		if (typeof FB !== 'undefined') 
+		{
+			FB.Event.subscribe('edge.create',function(href) 
+		 	{
+				dataLayer.push(
+				{
+					'event': 			'socialInt',
+					'socialNetwork': 	'Facebook',
+					'socialAction': 	'Like',
+					'socialTarget': 	href
+				});
+			});
+		}
+
+		window.sendPlus = function(g)
+		{
+		    dataLayer.push(
+			{
+		        'event': 			'socialInt',
+		        'socialNetwork': 	'Google',
+		        'socialAction': 	'+1',
+		        'socialTarget': 	g.href
+		    });
+		};
+
+		if (typeof twttr !== 'undefined') 
+		{
+			twttr.ready(function (twttr) 
+			{
+				twttr.events.bind('click', function()
+				{
+					dataLayer.push(
+					{
+						'event': 			'socialInt',
+						'socialNetwork': 	'Twitter',
+						'socialAction': 	'tweet',
+						'socialTarget': 	window.location.href
+					});
+				}); 
+			});
+		}
+	}
+	else
+	{
+		log('dataLayer[] is not intialized. Check if GTM is installed properly');
+	}
+</script>
+<style type="text/css">
+	
+	/* .whats_sidebar{
+    	float:right;
+    }
+
+    .login-container .block-new-customer { margin-top: 0; }
+
+    .page-layout-2columns-left .sidebar-main {
+	margin-top: 0px !important;
+}
+
+.columns .column.main {
+	margin-top: 40px;
+}
+
+
+.copyright .sale-graphic {
+	     display: block;    bottom: 15px;right: 15px;left: auto;margin: auto; width: 6%; 
+}
+.header-banner .row2 span{color: #fff;
+    font-size: 2.4rem;
+    margin-left: 112px;
+    padding-top: 38px;
+    text-transform: uppercase;
+    display: block;
+    font-weight: bold;}
+
+.sales-guest-form .page-title span.base {    display: none;}*/
+</style>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * http://mageplaza.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://mageplaza.com/)
+ * @license     http://mageplaza.com/license-agreement/
+
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <body>
+        <referenceBlock name="secure-checkout-container">
+            <block class="Magento\Framework\View\Element\Template" name="secure-checkout-one-column-top"
+                   as="column.top"
+                   template="Mageplaza_Osc::checkout-1column/top.phtml"
+                    />
+            <block class="Magento\Framework\View\Element\Template" name="secure-checkout-one-column-middle"
+                   as="column.middle"
+                   template="Mageplaza_Osc::checkout-1column/middle.phtml"
+                    />
+            <block class="Magento\Framework\View\Element\Template" name="secure-checkout-one-column-bottom"
+                   as="column.bottom"
+                   template="Mageplaza_Osc::checkout-1column/bottom.phtml"
+                    />
+        </referenceBlock>
+    </body>
+</page>

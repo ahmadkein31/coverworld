@@ -1,0 +1,78 @@
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.social" remove="true" />
+        <referenceContainer name="product.info.sku" remove="true" />
+        <referenceContainer name="product.info.review" remove="true" />
+        <referenceContainer name="product.info.overview" remove="true" />
+        <referenceContainer name="product.attributes" remove="true" />
+        <referenceContainer name="social-login-popup" remove="true" />
+
+        <referenceContainer name="product.info.main">
+            <container name="swatches.price.addform.container" label="Swatches Price and Add Form container" htmlTag="div" htmlClass="swatches-price-addform-container" after="product.info.title">
+                <container name="price.addform.container" label="Price and Add Form container" htmlTag="div" htmlClass="price-addform-container" after="product.info.title" />
+            </container>
+            <block class="Magento\Catalog\Block\Product\View" name="whats.included" after="price.addform.container" template="product/view/whats_included.phtml">
+                <block class="Magento\Cms\Block\Block" name="whats.included.cms" />
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\View" name="product.info.title" template="product/view/title.phtml" before="product.info.main" />
+        </referenceContainer>
+
+        <referenceContainer name="product.info.stock.sku">
+            <block class="Magento\Framework\View\Element\Template" name="shipping.date" after="product.info.sku" template="product/view/shipping_date.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="free.shipping" after="shipping.date" template="product/view/free_shipping.phtml"/>
+        </referenceContainer>
+
+        <referenceBlock name="product.info.description">
+            <block class="Prolutions\Catalog\Block\Product\View\Details" name="product.category.image" template="product/view/category_image.phtml" />
+            <block class="Prolutions\Catalog\Block\Product\View\Material" name="product.details.material.description" template="product/view/details/material.phtml" />
+        </referenceBlock>
+
+        <referenceBlock name="product.info.details">
+            <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.tab.warranty" as="tab.warranty" template="product/view/tab/warranty.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Warranty</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.tab.installation" as="tab.installation" template="product/view/tab/installation.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Installation</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.tab.cleaning" as="tab.cleaning" template="product/view/tab/cleaning.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Cleaning</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.tab.shipping" as="tab.shipping" template="product/view/tab/shipping.phtml" group="detailed_info">
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Shipping</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceBlock name="product.info.description">
+            <block class="Prolutions\Catalog\Block\Product\View\Qualifications" name="product.details.qualifications" as="product.details.qualifications" template="product/view/details/qualifications.phtml" />
+            <block class="Prolutions\Catalog\Block\Product\View\Material" name="product.details.features" as="product.details.features" template="product/view/details/features.phtml" />
+        </referenceBlock>
+
+        <referenceBlock name="product.review.form">
+            <block class="Magento\Cms\Block\Block" name="reviews.customer.quotes" before="product.info.product_additional_data">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">reviews_customer_quotes</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <move element="product.info.options.wrapper" destination="swatches.price.addform.container" before="-" />
+        <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final" />
+        <move element="product.info.media" destination="content" before="product.info.title" />
+
+        <move element="product.info.price" destination="price.addform.container" before="-" />
+        <move element="product.info" destination="price.addform.container" after="product.info.price" />
+
+        <move element="catalog.product.related" destination="product.info.description" />
+    </body>
+</page>

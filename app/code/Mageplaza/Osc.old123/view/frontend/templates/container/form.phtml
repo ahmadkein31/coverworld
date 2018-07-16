@@ -1,0 +1,65 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<script>
+    //<![CDATA[
+    window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+    window.secureCheckoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getOscConfig()); ?>;
+    // Create aliases for customer.js model from customer module
+    window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+    window.customerData = window.checkoutConfig.customerData;
+</script>
+<script>
+    require([
+        'mageplaza/osc/form',
+        'mageplaza/osc/payment/information'
+    ], function (MageplazaOscForm,getPaymentInformation) {
+        MageplazaOsc.setPaymentInformation(getPaymentInformation);
+        MageplazaOsc.setBlocks({
+            blocks: <?php echo $block->getBlockSection()?>
+        });
+        new MageplazaOscForm({
+            checkoutForm: 'one-step-checkout-form',
+            //Shipping Method
+            shippingMethodWrapper: '#one-step-checkout-shipping-method',
+            shippingMethodInput: 'shipping_method',
+            shippingMethodAdvice: '#one-step-checkout-shipping-method .validation-advice.shipping-method',
+            shippingValidationMessage: "<?php echo __('Please specify shipping method.'); ?>",
+            //Payment Method
+            paymentMethodWrapper: '#one-step-checkout-payment-method',
+            paymentMethodInput: 'payment[method]',
+            paymentMethodAdvice: '#one-step-checkout-payment-method .validation-advice.payment-method',
+            paymentValidationMessage: "<?php echo __('Please specify a payment method.');?>",
+            //Place Order
+            placeOrderButton: 'place-order-button',
+            reviewCartContainer: '#one-step-checkout-review-items',
+            placeOrderUrl: '<?php echo $block->getPlaceOrderUrl()?>',
+            successUrl: '<?php echo $block->getCheckoutSuccessUrl();?>',
+            showGrandTotalAmount:<?php echo $block->showGrandTotal()?1:0?>,
+            grandTotalAmount: '.one-step-checkout-place-order-amount',
+            grandTotalAmountProcess: '.one-step-checkout-place-order-process',
+            pleaseWaitNotice: '.one-step-checkout-place-order-please-wait',
+            disabledClassName: 'place-order-button-disabled',
+            overlayClassName: 'one-step-checkout-place-order-overlay'
+        })
+    });
+    //]]>
+</script>

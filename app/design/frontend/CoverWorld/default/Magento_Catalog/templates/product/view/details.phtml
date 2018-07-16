@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$sessionManager = $objectManager->create('\Magento\Framework\Session\SessionManagerInterface');
+$sessionManager->setNotInCache(true);
+?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):?>
+    <div class="product info detailed">
+        <?php $layout = $block->getLayout(); ?>
+        <div class="product data items" data-mage-init='{"tabs":{"openedState":"active"}}'>
+            <?php foreach ($detailedInfoGroup as $name):?>
+                <?php
+                    $html = $layout->renderElement($name);
+                    if (!trim($html)) {
+                        continue;
+                    }
+                    $alias = $layout->getElementAlias($name);
+                    $label = $block->getChildData($alias, 'title');
+                ?>
+                <div class="data item title"
+                     aria-labeledby="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title"
+                     data-role="collapsible" id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>">
+                    <a class="data switch"
+                       tabindex="-1"
+                       data-toggle="switch"
+                       href="#<?php /* @escapeNotVerified */ echo $alias; ?>"
+                       id="tab-label-<?php /* @escapeNotVerified */ echo $alias;?>-title">
+                        <?php /* @escapeNotVerified */ echo $label; ?>
+                    </a>
+                </div>
+                <div class="data item content" id="<?php /* @escapeNotVerified */ echo $alias; ?>" data-role="content">
+                    <?php /* @escapeNotVerified */ echo $html; ?>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+<?php endif; ?>
+<script type="text/javascript">
+require(['jquery'], function(jQuery) {
+    jQuery(document).ready(function(){
+        var backurl = document.referrer;
+        var breadcrumbStr = '';
+        var n = backurl.indexOf("&find=");
+        if(n>0){
+            var arr = backurl.split('&find=');
+            if(arr.length>=2){
+                var filterStr = arr[1];
+                var filteArr = filterStr.split('-');
+                if(filteArr.length>=4){
+                    for(var i=0; i<filteArr.length-1; i++){
+                        breadcrumbStr = breadcrumbStr + filteArr[i]+" ";    
+                    }
+                }
+            }
+            if(breadcrumbStr.length>0){
+                if(jQuery('.breadcrumbs').length)
+                {
+                    var liCount = jQuery('.breadcrumbs ul li').size()-1;
+                    jQuery('.breadcrumbs ul li:eq('+liCount+')').before("<li class='item filterStr'><a href='"+backurl+"'>"+capitalise(breadcrumbStr)+"</a></li>");
+                }
+            }
+        }
+    });
+});
+function capitalise(text) {
+    var split = text.split(" "),
+    res = [],
+    i,
+    len,
+    component;
+    jQuery(split).each(function (index, element) {
+        component = (element + "").trim();
+        var first = component.substring(0, 1).toUpperCase();
+        var remain = component.substring(1).toLowerCase();
+        res.push(first);
+        res.push(remain);
+        res.push(" "); 
+    });
+    return res.join("");
+}
+
+</script>
+<script type="text/javascript">
+    require(["jquery"],function($) {
+        $(document).ready(function() {
+            var customurl = "<?php echo $this->getUrl('newsletter/success/index')?>";
+            $.ajax({
+                url: customurl,
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    cachecheeck: true,
+                },
+            complete: function(response) {             
+                    if(response.responseJSON.incache){
+                        location.reload();
+                    }
+                },
+                error: function (xhr, status, errorThrown) {
+                    console.log('Error happens. Try again.');
+                }
+            });
+        });
+    });
+</script>

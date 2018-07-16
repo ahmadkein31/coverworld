@@ -1,0 +1,75 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php $_canShow = $block->canShow(); ?>
+<?php if ($_canShow): ?>
+    <?php $_helper = $block->getHelperConfig(); ?>
+    <?php if ($_helper->isCoupon()): ?>
+        <?php $_currentCoupon = $block->getCouponCode(); ?>
+        <div class="block-wrapper">
+            <div class="coupon-message"></div>
+            <div id="discount-code" class="discount-form">
+                <label for="coupon_code"><?php echo __('Coupon Code:') ?></label>
+
+                <div class="input-box">
+                    <input type="text" id="coupon_code" class="input-text" name="coupon_code"
+                           value="<?php echo $_currentCoupon ? $_currentCoupon : ''; ?>"/>
+                </div>
+                <div class="ac-button">
+                    <?php if ($_helper->isApplyCouponButton()) : ?>
+                        <button id="one-step-checkout-coupon-code-cancel-btn" type="button" class="button"
+                                onclick="return false;"<?php if (!$_currentCoupon) : ?> style="display:none;"<?php endif; ?>
+                                title="<?php echo __('Cancel Coupon'); ?>"
+                            >
+                            <span><span><?php echo __('Cancel Coupon'); ?></span></span>
+                        </button>
+                        <button type="button" id="one-step-checkout-coupon-code-apply-btn" class="button"
+                                onclick="return false;"<?php if ($_currentCoupon) : ?> style="display:none;"<?php endif; ?>
+                                title="<?php echo __('Apply Coupon'); ?>"
+                            >
+                            <span><span><?php echo __('Apply Coupon'); ?></span></span>
+                        </button>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <script>
+        //<![CDATA[
+        require(['mageplaza/osc/review/coupon'], function (MageplazaOscReviewCoupon) {
+            new MageplazaOscReviewCoupon({
+                couponContainer: '#one-step-checkout-review-coupon',
+                couponInput: 'coupon_code',
+                applyCouponUrl: '<?php echo $block->getApplyCouponAjaxUrl()?>',
+                isAppliedCoupon: <?php echo $block->getCouponCode() ? 1 : 0; ?>,
+                showApplyButton: <?php echo $block->getShowApplyButton()?1:0 ?>,
+                applyCouponButton: '#one-step-checkout-coupon-code-apply-btn',
+                cancelCouponButton: '#one-step-checkout-coupon-code-cancel-btn',
+                messageContainer: '.coupon-message',
+                errorClass: 'one-step-checkout-error-msg',
+                successClass: 'one-step-checkout-success-msg'
+            })
+        })
+
+        //]]>
+    </script>
+<?php endif; ?>

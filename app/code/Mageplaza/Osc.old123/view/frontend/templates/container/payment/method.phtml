@@ -1,0 +1,66 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<div class="col-wrapper">
+    <?php $blockNumber = $block->getNumbering(); ?>
+    <?php if ($blockNumber): ?>
+        <div class="onestep-title-number">
+            <span class="one-step-checkout-number"><?php echo $blockNumber; ?></span>
+
+            <h2>
+                <?php echo __('PAYMENT METHOD'); ?></h2>
+        </div>
+    <?php else: ?>
+        <div class="onestep-title">
+            <h2>
+                <i class="fa fa-credit-card"></i>
+                <?php echo __('PAYMENT METHOD'); ?></h2>
+        </div>
+    <?php endif; ?>
+    <div id="one-step-checkout-payment-methods" class="one-step-checkout-payment-methods" data-bind="scope: 'payment' ">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+</div>
+<?php echo $block->getChildHtml('extra'); ?>
+
+<script type="text/javascript">
+    //<![CDATA[
+    require(['prototype'], function () {
+        window.payment = window.payment || {};
+        window.payment.switchMethod = Prototype.emptyFunction;
+        //paypal payment advanced support
+        window.checkout = {
+            setLoadWaiting: Prototype.emptyFunction,
+            accordion: {
+                container: {
+                    readAttribute: Prototype.emptyFunction
+                }
+            },
+            steps: [],
+            gotoSection: Prototype.emptyFunction
+        };
+        var checkoutReviewBtn = new Element('div', {'id': 'checkout-review-submit', 'style': 'display:none'});
+        var iframeWaiting = new Element('div', {'id': 'iframe-warning', 'style': 'display:none'});
+        window.document.body.appendChild(checkoutReviewBtn);
+        window.document.body.appendChild(iframeWaiting);
+    });
+    //]]>
+</script>

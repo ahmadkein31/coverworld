@@ -1,0 +1,46 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php if ($this->canShow()): ?>
+    <?php $_helperConfig = $this->getHelperConfig() ?>
+    <div id="one-step-checkout-login">
+        <div id="one-step-checkout-login-wrapper">
+            <div class="one-step-checkout-login-link">
+                <a href="#one-step-checkout-login-popup" data-effect="<?php echo $block->getPopupEffect(); ?>"
+                   class="secure-checkout-login">
+                    <?php echo __('Already have an account? Click here to login'); ?>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="one-step-checkout-login-popup" class="one-step-checkout-popup white-popup mfp-with-anim mfp-hide">
+        <?php echo $this->getChildHtml('auth.form.popup') ?>
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        require(['mageplaza/osc/popup'], function (MageplazaOscPopup) {
+            new MageplazaOscPopup({
+                selector: ".one-step-checkout-login-link"
+            })
+        });
+        //]]>
+    </script>
+<?php endif; ?>

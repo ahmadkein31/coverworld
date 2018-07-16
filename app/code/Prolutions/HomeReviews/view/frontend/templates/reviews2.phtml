@@ -1,0 +1,22 @@
+<p class="title"><?php echo __('Actual Customer Reviews (typos & all)...') ?></p>
+<ul class="reviews">
+    <?php
+    for($i=0;$i<2;$i++):
+        ?>
+        <li class="review-item <?php if($i == 1): ?>last<?php endif; ?>">
+            <table>
+                <tr>
+                    <td>
+                        <div class="photo-container"><img src="<?php echo $this->getViewFileUrl('images/grey-circle.png'); ?>" /></div>
+                    </td>
+                    <td>
+                        <p class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="author">Steven B.</p>
+                        <div class="stars"><img src="<?php echo $this->getViewFileUrl('images/stars-sample.png'); ?>" /></div>
+                    </td>
+                </tr>
+            </table>
+        </li>
+    <?php endfor;
+    ?>
+</ul>

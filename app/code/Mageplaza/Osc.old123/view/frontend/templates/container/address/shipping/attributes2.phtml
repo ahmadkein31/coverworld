@@ -1,0 +1,270 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php $_attributes = $block->getAttributes(); ?>
+<div
+    id="shipping-address-fields"<?php if ($block->customerHasAddresses()): ?> style="display:none;overflow: hidden;height: 0px;"<?php endif; ?>>
+    <div class="row-mg">
+        <?php $i = 1; ?>
+        <?php foreach ($_attributes as $attribute): ?>
+            <?php $fieldOption = $attribute->getFieldOption(); ?>
+            <?php if ($fieldOption == 'hidden') continue; ?>
+            <?php $field_colspan = $attribute->getColspan() == 2 ? 'mg-lg-12 mg-md-12 mg-sm-12 mg-xs-12' : 'mg-lg-6 mg-md-6 mg-sm-6 mg-xs-6'; ?>
+            <?php $label_required_class = $attribute->getFieldOption() == 'req' ? 'required' : ''; ?>
+            <?php $input_required_class = $attribute->getFieldOption() == 'req' ? 'required-entry' : ''; ?>
+            <?php switch ($attribute->getAttributeCode()):
+                case 'firstname':
+                    ?>
+                    <div
+                        class="col-mg
+                            <?php echo $field_colspan ?>
+                            ">
+                        <?php echo $block->getWidgetHtml('name', 'shipping', 'firstname', $fieldOption); ?>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'lastname':
+                    ?>
+                    <div
+                        class="col-mg
+                            <?php echo $field_colspan ?>
+                            ">
+                        <?php echo $block->getWidgetHtml('name', 'shipping', 'lastname', $fieldOption); ?>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'street':
+                    ?>
+                    <?php $_streetValidationClass = $input_required_class; ?>
+                    <?php $streetValues = $block->getShippingDataFromSession('street'); ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="shipping:street1" class="required"><em>*</em><?php echo __('Address') ?>
+                        </label>
+
+                        <div class="input-box">
+                            <input type="text" title="<?php echo __('Street Address') ?>"
+                                   name="shipping[street][]"
+                                   id="shipping:street1" class="input-text <?php echo $_streetValidationClass ?>"
+                                   value="<?php echo (isset($streetValues[0])) ? $streetValues[0] : ''; ?>"/>
+                        </div>
+                    </div>
+                    <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+                    <?php for ($_i = 2, $_n = \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Customer\Helper\Address')->getStreetLines(); $_i <= $_n; $_i++): ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <div class="input-box">
+                            <input type="text" title="<?php echo __('Street Address %s', $_i) ?>"
+                                   name="shipping[street][]" id="shipping:street<?php echo $_i ?>"
+                                   class="input-text <?php echo $_streetValidationClass ?>"
+                                   value="<?php echo (isset($streetValues[$_i - 1])) ? $streetValues[$_i - 1] : ''; ?>"/>
+                        </div>
+                    </div>
+                <?php endfor; ?>
+                    <?php break; ?>
+                    <?php
+                case 'vat_id':
+                    ?>
+                    <?php if ($block->isVatAttributeVisible()) : ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="shipping:vat_id"><?php echo __('VAT Number') ?></label>
+
+                        <div class="input-box">
+                            <input type="text" id="shipping:vat_id" name="shipping[vat_id]"
+                                   title="<?php echo __('VAT Number') ?>"
+                                   class="input-text <?php echo $block->getAttributeValidationClass('vat_id'); ?>"
+                                   value="<?php echo $block->getShippingDataFromSession('vat_id'); ?>"/>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                    <?php break; ?>
+                    <?php
+                case 'country_id':
+                    ?>
+                    <div
+                        class="col-mg <?php echo $field_colspan ?>">
+                        <?php if ($label_required_class == 'required'): ?>
+                            <label for="shipping:country_id"
+                                   class="required"><em>*</em><?php echo __('Country') ?>
+                            </label>
+                        <?php else: ?>
+                            <label for="shipping:country_id"><?php echo __('Country') ?>
+                            </label>
+                        <?php endif; ?>
+                        <div class="input-box">
+                            <?php echo $block->getWidgetHtml('country', 'shipping') ?>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'city':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <?php if ($label_required_class == 'required'): ?>
+                            <label for="shipping:city" class="required"><em>*</em><?php echo __('City') ?>
+                            </label>
+                        <?php else: ?>
+                            <label for="shipping:city"><?php echo __('City') ?>
+                            </label>
+                        <?php endif; ?>
+
+                        <div class="input-box">
+                            <input type="text" title="<?php echo __('City') ?>" name="shipping[city]"
+                                   class="input-text <?php echo $input_required_class; ?>"
+                                   id="shipping:city" value="<?php echo $block->getShippingDataFromSession('city') ?>"/>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'postcode':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <?php if ($label_required_class == 'required'): ?>
+                            <label for="shipping:postcode"
+                                   class="required"><em>*</em><?php echo __('Zip/Postal Code') ?>
+                            </label>
+                        <?php else: ?>
+                            <label for="shipping:postcode"><?php echo __('Zip/Postal Code') ?>
+                            </label>
+                        <?php endif; ?>
+
+                        <div class="input-box">
+                            <input type="text" title="<?php echo __('Zip/Postal Code') ?>"
+                                   name="shipping[postcode]" id="shipping:postcode"
+                                   class="input-text validate-zip-international <?php echo $input_required_class ?>"
+                                   value="<?php echo $block->getShippingDataFromSession('postcode') ?>"/>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'region':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="billing:region_id"
+                               class="required"
+                               style="display: none;"
+                            >
+                            <em>*</em>
+                            <?php echo __('State/Province') ?>
+                        </label>
+                        <label for="billing:region" style="display: none;">
+                            <?php echo __('State/Province') ?>
+                        </label>
+
+                        <div class="input-box">
+                            <select id="shipping:region_id" name="shipping[region_id]"
+                                    title="<?php echo __('State/Province') ?>" class="validate-select"
+                                    style="display:none;">
+                                <option
+                                    value=""><?php echo __('Please select region, state or province') ?></option>
+                            </select>
+                            <input type="text" id="shipping:region" name="shipping[region]"
+                                   title="<?php echo __('State/Province') ?>"
+                                   class="input-text <?php echo $block->getAttributeValidationClass('region') ?>"
+                                   style="display:none;"
+                                   value="<?php echo $block->getShippingDataFromSession('region') ?>"/>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'telephone':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="shipping:telephone" class="required"><em>*</em><?php echo __('Telephone') ?>
+                        </label>
+
+                        <div class="input-box">
+                            <input type="text" name="shipping[telephone]" title="<?php echo __('Telephone') ?>"
+                                   class="input-text <?php echo $block->getAttributeValidationClass('telephone') ?>"
+                                   id="shipping:telephone"
+                                   value="<?php echo $block->getShippingDataFromSession('telephone'); ?>"/>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'fax':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="shipping:fax"><?php echo __('Fax') ?></label>
+
+                        <div class="input-box">
+                            <input type="text" name="shipping[fax]" title="<?php echo __('Fax') ?>"
+                                   class="input-text <?php echo $block->getAttributeValidationClass('fax') ?>"
+                                   id="shipping:fax" value="<?php echo $block->getShippingDataFromSession('fax'); ?>"/>
+                        </div>
+                    </div>
+                    <?php break; ?>
+                    <?php
+                case 'company':
+                    ?>
+                    <div class=" col-mg <?php echo $field_colspan ?>">
+                        <label for="shipping:company"><?php echo __('Company') ?></label>
+
+                        <div class="input-box">
+                            <input type="text" id="shipping:company" name="shipping[company]"
+                                   title="<?php echo __('Company') ?>"
+                                   class="input-text <?php echo $block->getAttributeValidationClass('company') ?>"
+                                   value="<?php echo $block->getShippingDataFromSession('company'); ?>"/>
+                        </div>
+                    </div>
+                    <?php
+                default:
+                    ?>
+                <?php endswitch; ?>
+            <?php if ($i % 2 == 0 || $attribute->getColspan() == 2): ?>
+                <div class="mc-clear"></div>
+            <?php endif; ?>
+            <?php
+            if ($attribute->getColspan() == 2 && $i % 2 != 0) {
+                $i += 2;
+            } else $i++;
+            ?>
+        <?php endforeach; ?>
+        <script type="text/javascript">
+            //<![CDATA[
+            var shippingRegionUpdater;
+            require(['mageplaza/osc/address/region-updater', 'prototype'], function (RegionUpdater) {
+                if ($('shipping:region_id') && $('shipping:country_id')) {
+                    $('shipping:region_id').setAttribute('defaultValue', "<?php echo $block->getShippingDataFromSession('region_id') ?>");
+                    var postcode = '';
+                    if ($('shipping:postcode').hasClassName('required-entry')) {
+                        postcode = 'shipping:postcode';
+                    }
+                    shippingRegionUpdater = new RegionUpdater('shipping:country_id', 'shipping:region', 'shipping:region_id', <?php echo \Magento\Framework\App\ObjectManager::getInstance()->get('Magento\Directory\Helper\Data')->getRegionJson() ?>, undefined, postcode);
+                }
+            })
+            //]]>
+        </script>
+    </div>
+    <?php if ($block->isCustomerLoggedIn() && $block->customerHasAddresses()): ?>
+        <div class="secure-checkout-form-field">
+            <div class="control">
+                <input type="checkbox" name="shipping[save_in_address_book]" value="1"
+                       title="<?php echo __('Save in address book') ?>"
+                       id="shipping:save_in_address_book"<?php if ($block->getShippingDataFromSession('save_in_address_book')): ?> checked="checked"<?php endif; ?>
+                       class="checkbox"/>
+                <label
+                    for="shipping:save_in_address_book"><?php echo __('Save in address book') ?></label>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    <?php else: ?>
+        <div class="no-display"><input type="hidden" name="shipping[save_in_address_book]" value="1"/></div>
+    <?php endif; ?>
+</div>

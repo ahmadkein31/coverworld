@@ -1,0 +1,11 @@
+div.debug {
+    border: 1px solid #000;
+    background: #f8f8f8;
+    padding:10px;
+    overflow-y: auto;
+    height:320px;
+}
+
+.admin__field-success {
+    color:#79a22e;
+}

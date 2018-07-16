@@ -1,0 +1,231 @@
+& when (@media-common = true) {
+  .customer-account-login {
+    .page-title {
+      text-transform: uppercase;
+    }
+    .login-container {
+      margin-top: 20px;
+      .block-new-customer, .block-customer-login {
+        border: solid 1px @light_grey;
+        padding: 20px;
+        min-height: 242px;
+        .block-title {
+          color: @link_blue;
+          font-size: 20px;
+          border: none;
+          strong {
+            font-weight: 600;
+          }
+        }
+      }
+      .block-customer-login {
+        margin-right: 30px;
+        .fieldset {
+          .field {
+            margin: 0 0 15px;
+          }
+          .control {
+            width: 100%;
+          }
+          .actions-toolbar {
+            margin-left: 0;
+            .primary {
+              text-transform: uppercase;
+              button {
+                margin-right: 15px;
+                padding: 10px 50px;
+                font-size: 16px;
+                background: @link_blue;
+                &:hover {
+                  background: @link_blue_darker;
+                }
+              }
+            }
+            .secondary {
+              float: left;
+            }
+          }
+          &:after {
+            content: none;
+          }
+        }
+      }
+      .block-new-customer {
+        float: left !important;
+        .actions-toolbar {
+          a {
+            text-transform: uppercase;
+            background: @link_blue;
+            &:hover {
+              background: @link_blue_darker;
+            }
+          }
+        }
+      }
+    }
+  }
+  .customer-account-create {
+    .form-create-account {
+      width: 100% !important;
+      margin-top: 20px;
+      .fieldset {
+        float: left;
+        border: solid 1px @light_grey;
+        padding: 20px;
+        margin-bottom: 20px;
+        &.info {
+          margin-right: 30px;
+        }
+        .control {
+          width: 100%;
+        }
+        legend {
+          color: @link_blue;
+          font-size: 20px;
+          margin: 0 0 15px;
+          span {
+            font-weight: 600;
+          }
+        }
+        .field {
+          margin: 0 0 15px;
+        }
+      }
+      .actions-toolbar {
+        margin: 0 !important;
+        .primary {
+          text-transform: uppercase;
+          button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+  .customer-account-index {
+    .block-dashboard-info, .block-dashboard-addresses {
+      border: solid 1px @light_grey;
+      padding: 20px;
+      .block-title {
+        color: @link_blue;
+        font-size: 20px;
+        border: none;
+        margin-bottom: 15px;
+        strong {
+          font-weight: 600;
+        }
+      }
+      .block-content {
+        .box {
+          border: solid 1px @light_grey;
+          padding: 15px;
+          width: 44% !important;
+          .box-title {
+            color: @link_blue;
+          }
+        }
+      }
+    }
+  }
+  .account {
+    .account-nav {
+      .item.current {
+        strong {
+          border-color: @link_blue_darker;
+          color: @link_blue;
+        }
+      }
+    }
+    .form-edit-account {
+      max-width: 600px;
+      .fieldset {
+        border: solid 1px @light_grey;
+        padding: 20px;
+        .legend {
+          color: @link_blue;
+          font-size: 20px;
+          margin: 0 0 15px;
+          span {
+            font-weight: 600;
+          }
+        }
+        .field {
+          margin: 0 0 15px;
+        }
+      }
+      .choices {
+        margin-bottom: 30px;
+      }
+      .actions-toolbar {
+        margin: 0 !important;
+        .primary {
+          text-transform: uppercase;
+          button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .customer-account-create {
+    .register-sociallogin {
+      .social-login-authentication-channel {
+        margin-bottom: 0;
+      }
+    }
+    .form-create-account {
+      margin-bottom: 20px;
+      .fieldset {
+        width: 86%;
+      }
+    }
+  }
+  .customer-account-login {
+    .login-container {
+      .block-new-customer, .block-customer-login {
+        width: 86%;
+      }
+      .block-new-customer {
+        margin-bottom: 0;
+      }
+    }
+    #group-button {
+      float: none;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+  }
+}
+
+//
+//  Tablet
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .customer-account-create {
+    .form-create-account {
+      .fieldset {
+        width: 35%;
+        min-height: 180px;
+      }
+    }
+  }
+  .customer-account-login {
+    .login-container {
+      .block-new-customer, .block-customer-login {
+        width: 430px;
+      }
+    }
+  }
+}

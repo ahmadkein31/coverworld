@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * http://mageplaza.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://mageplaza.com/)
+ * @license     http://mageplaza.com/license-agreement/
+
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="1column">
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Home</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Quick Secure Checkout</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Quick Secure Checkout</item>
+                    <item name="label" xsi:type="string">Quick Secure Checkout</item>
+                    <item name="link" xsi:type="string">/osc</item>
+                </argument>
+            </action>
+        </referenceBlock>
+        <!--Build header structure-->
+        <referenceContainer name="header-wrapper">
+            <container name="header-wrapper-right" label="Page Header" as="header-wrapper-right" htmlTag="div" htmlClass="content-right">
+            </container>
+            <container name="header-wrapper-left" label="Page Header" as="header-wrapper-left" htmlTag="div" htmlClass="content-left" after="header-wrapper-right">
+                <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
+                    <arguments>
+                        <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                        <argument name="logo_img_width" xsi:type="number">225</argument>
+                        <argument name="logo_img_height" xsi:type="number">45</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <move element="navigation.sections" destination="header-wrapper-left" after="logo" />
+        <move element="minicart" destination="header-wrapper-right" after="-" />
+    </body>
+</page>

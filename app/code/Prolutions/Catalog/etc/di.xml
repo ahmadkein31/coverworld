@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Catalog\Helper\Category" type="Prolutions\Catalog\Helper\Category" />
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="importJetSkiCommand" xsi:type="object">Prolutions\Catalog\Console\ImportJetSkiCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,165 @@
+<?php
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if (!$_productCollection->count()): ?>
+    <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
+<?php else: ?>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+    ?>
+    <div class="products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+        <ol class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info" data-container="product-grid">
+                    <?php
+                    $productImage = $block->getImage($_product, $image);
+                    if ($pos != null) {
+                        $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                            . 'top:' . $productImage->getHeight() . 'px;"';
+                    }
+
+                    $warranty = $this->helper('Magento\Catalog\Helper\Output')->productAttribute($_product, $_product->getWarranty(), 'warranty');
+
+                    if($warranty=='5 Year'){
+                        $wclass="fiveyearw";
+                    }elseif($warranty=='7 Year'){
+                        $wclass="sevenyearw";
+                    }else{
+                        $wclass="";
+                    }
+
+                    ?>
+                    <?php // Product Image ?>
+                    <div class="container-left">
+                        <div class="title-container">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getMaterialFinalName(), 'material_final_name'); ?>
+                                </a>
+                            </strong>
+                            </br>
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description'); ?>
+                        </div>
+                        <div class="image-and-info">
+                            <div class="content-right">
+                                <div class="product-info-price">
+                                    <div class="price-box price-final_price" data-role="priceBox" data-product-id="99">
+                                    <span class="special-price">
+                                        <span class="price-container price-final_price tax weee" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                                            <span id="product-price-99" data-price-amount="50" data-price-type="finalPrice" class="price-wrapper " itemprop="price">
+                                                <span class="price">$<?php echo number_format($_product->getFinalPrice(),2) ?></span>
+                                            </span>
+                                            <meta itemprop="priceCurrency" content="USD">
+                                        </span>
+                                    </span>
+                                        <?php if($_product->getPrice()): ?>
+                                            <span class="old-price">
+                                            <span class="price-container price-final_price tax weee">
+                                                <span class="price-label">Regular Price</span>
+                                                <span id="old-price-99" data-price-amount="63" data-price-type="oldPrice" class="price-wrapper ">
+                                                    <span class="price">$<?php echo number_format($_product->getPrice(),2) ?></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                            <span>You Save: </span>
+                                            <?php $saving = $_product->getPrice() - $_product->getFinalPrice();  ?>
+                                            <span class="price-saved">$<?php echo number_format($saving,2); ?> (<?php echo number_format(($saving/$_product->getPrice())*100,2); ?>%)</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="product-info-stock-sku">
+                                        <div class="stock available" title="Availability">
+                                            <span>In stock</span>
+                                        </div>
+                                        <div class="shipping-dates">
+                                            <span class="ship-label">Ships: </span><span class="dates">6/17/16 - 6/25/16</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="view-details" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>"><div></div></a>
+
+                                <?php
+
+                                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$freeShippingPrice =  $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('carriers/freeshipping/free_shipping_subtotal');
+
+                                ?>
+
+                                <?php if($_product->getFinalPrice() > $freeShippingPrice): ?>
+                                <div class="free-shipping">
+                                    <img src="<?php echo $this->getViewFileUrl('images/free-shipping.png'); ?>">
+                                </div>
+                                 <?php endif; ?>
+                            </div>
+                            <div class="image-container <?php echo $wclass;?>">
+                                <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" class="product photo product-item-photo" tabindex="-1">
+                                    <?php echo $productImage->toHtml(); ?>
+                                </a>
+<!--                                <div class="swatches">-->
+<!--                                    --><?php //echo $block->getProductDetailsHtml($_product); ?>
+<!--                                </div>-->
+                            </div>
+                        </div>
+                        <div class="product details product-item-details">
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getDescription(), 'description'); ?>
+
+                            <div class="material-description">
+                                <?php echo $_product->getMaterialDescription(); ?>
+                            </div>
+
+                            <?php if($block->getChildBlock('product.details.qualifications')): ?>
+                                <p><b><?php echo __('Product Performance') ?></b> (1-5)</p>
+                                <?php echo $block->getChildBlock('product.details.qualifications')->setProduct($_product); ?>
+                                <?php echo $block->getChildHtml('product.details.qualifications', false); ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo($iterator == count($_productCollection)+1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>

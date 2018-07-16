@@ -1,0 +1,371 @@
+<?php
+use Magento\Framework\App\Action\Action;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @var $block \Magento\Catalog\Block\Product\ListProduct
+ */
+?>
+<?php
+$_productCollection = $block->getLoadedProductCollection();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+?>
+<?php if (!$_productCollection->count()): ?>
+    
+<?php else: ?>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php echo $block->getAdditionalHtml() ?>
+    <?php
+    
+    // Get ?find Param
+    //echo '<br /><br />find: '.$block->getRequest()->getParam('find').'<br /><br />';
+    if($block->getRequest()->getParam('find')){ 
+    	$currentFindParam = $block->getRequest()->getParam('find');
+	}else{
+		$currentFindParam = FALSE;
+	}
+	
+	// Transform URL Param Presentation for Product Title
+	if($currentFindParam){            
+        $fitmentTitle = '';
+        $fitmentTitleArray = explode('-',$currentFindParam);
+        array_pop($fitmentTitleArray);   
+        
+        if((strlen(end($fitmentTitleArray)) == 4) && (is_numeric(end($fitmentTitleArray))) && (end($fitmentTitleArray) != '1100')){$skipCount = 1;}else{$skipCount = 2;} // Is the last element YYYY
+        if($skipCount == 1){
+            $fitmentTitle = end($fitmentTitleArray);
+            for($i = 0; $i < count($fitmentTitleArray) - 1; ++$i) {
+                $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+            }
+		}else{
+            for($i = 0; $i < count($fitmentTitleArray); ++$i) {
+                $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+            }
+            //$fitmentTitle .= 'All Years '.$fitmentTitle;										
+		}
+		$fitmentTitle = ucwords($fitmentTitle).' ';
+    }else{
+    	$fitmentTitle = FALSE;
+    } 
+    
+    if ($block->getMode() == 'grid') {
+        $viewMode = 'grid';
+        $image = 'category_page_grid';
+        $showDescription = false;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
+    } else {
+        $viewMode = 'list';
+        $image = 'category_page_list';
+        $showDescription = true;
+        $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::FULL_VIEW;
+    }
+    /**
+     * Position for actions regarding image size changing in vde if needed
+     */
+    $pos = $block->getPositioned();
+                                                                                        
+    ?>
+    <?php if($currentFindParam): ?>
+    <style type="text/css">
+    .category-view {
+	    display: none;
+	}
+	.page-products .products-grid .product-items .product-item {
+		border-bottom: solid 1px #d5dee2;
+		padding-bottom: 15px;
+	}
+	.page-products .products-grid .product-items .product-item .product-item-info {
+		border: unset;
+	}
+	.products {
+		margin: unset;
+	}
+	.page-products .products-grid .product-items .product-item .product-item-info .container-left {
+		margin: 15px 0 0 0; 
+	}
+	.page-wrapper .page-main h1 {
+		border-bottom: solid 1px #d5dee2;
+		padding-bottom: 10px;
+	}
+	.page-layout-2columns-left .column.main {
+		border-left: unset;
+	}
+	.finder-change-model {
+		float: right;
+	}
+	.finder-change-model .change-model {
+		margin-right: 20px;
+	}
+	.page-layout-2columns-left .sidebar-main {
+		display: none;
+	}
+	.page-layout-2columns-left .column.main {
+		width: 100% !important;
+		float: unset;
+	}
+	.made-in-usa {               
+		padding: 0 5px 0 0;
+	} 
+	@media all and (max-width: 767px) {   
+		.page-wrapper .page-main h1 {
+			padding: 10px;
+			border-bottom: unset;
+			font-size: 2.1rem;
+		}
+		.made-in-usa {
+			display: none;
+		}  
+		.column.main .product-items {
+			margin-left: unset;
+		} 
+		.finder-change-model {
+			    float: unset;
+    			margin-top: 10px;
+		}  
+	
+	}       
+    </style>                        
+    <h1><?php echo $fitmentTitle.' Covers'; ?>
+	            <div class="made-in-usa">
+	                <img src="<?php echo $this->getViewFileUrl('images/made-in-usa.png'); ?>" />
+	            </div>
+                <div class="finder-change-model">
+	        	<a href="/jet-ski-covers.html" class="action primary">
+	                <span class="change-model">Change Model</span>
+	            </a>           
+	            </div>
+    </h1>    
+    <?php endif; ?>      
+    <div class="products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
+        <?php $iterator = 1; ?>
+        <ol class="products list items product-items">
+            <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php /* @escapeNotVerified */ echo($iterator++ == 1) ? '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
+                <div class="product-item-info" data-container="product-grid">                                                                                                                
+                    <?php
+                    $productImage = $block->getImage($_product, $image);
+                    if ($pos != null) {
+                        $position = ' style="left:' . $productImage->getWidth() . 'px;'
+                            . 'top:' . $productImage->getHeight() . 'px;"';
+                    }
+
+                    $warranty = $this->helper('Magento\Catalog\Helper\Output')->productAttribute($_product, $_product->getWarranty(), 'warranty');
+                    
+                    if($warranty=='5 Year'){
+                        $wclass="fiveyearw";
+                    }elseif($warranty=='7 Year'){
+                        $wclass="sevenyearw";
+                    }else{
+                        $wclass="";
+                    }
+
+                    ?>
+                    <?php // Product Image ?>
+                    <div class="container-left">
+                        <div class="title-container">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?><?php if($currentFindParam): ?><?php echo '?fitment='.$currentFindParam; ?><?php endif; ?>">
+                                    
+                                    	
+                                    <?php /* @escapeNotVerified */ 
+                                    	echo $_helper->productAttribute($_product, $_product->getMaterialFinalName(), 'material_final_name');  ?>
+                                </a>
+                            </strong>
+                            </br>
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description'); ?>
+                        </div>
+                        <div class="image-and-info">
+                            <div class="content-right">
+                                <div class="product-info-price">
+                                    <div class="price-box price-final_price" data-role="priceBox" data-product-id="99">
+                                    <span class="special-price">
+                                        <span class="price-container price-final_price tax weee" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">
+                                            <span id="product-price-99" data-price-amount="50" data-price-type="finalPrice" class="price-wrapper " itemprop="price">
+                                                <span class="price">$<?php echo number_format($_product->getFinalPrice(),2) ?></span>
+                                            </span>
+                                            <meta itemprop="priceCurrency" content="USD">
+                                        </span>
+                                    </span>             
+                                          
+                                        <?php if($_product->getPriceInfo()->getPrice('regular_price')->getValue()): ?>
+                                            <span class="old-price">
+                                            <span class="price-container price-final_price tax weee">
+                                                <span class="price-label">Regular Price</span>
+                                                <span id="old-price-99" data-price-amount="63" data-price-type="oldPrice" class="price-wrapper ">
+                                                    <span class="price">$<?php echo number_format($_product->getPriceInfo()->getPrice('regular_price')->getValue(),2) ?></span>
+                                                </span>
+                                            </span>
+                                        </span>
+                                            <span>You Save: </span>
+                                            <?php $saving = $_product->getPriceInfo()->getPrice('regular_price')->getValue() - $_product->getFinalPrice();  ?>
+                                            <span class="price-saved">$<?php echo number_format($saving,2); ?> (<?php echo number_format(($saving/$_product->getPriceInfo()->getPrice('regular_price')->getValue())*100,0); ?>%)</span>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="product-info-stock-sku">
+                                        <div class="stock available" title="Availability">
+                                            <span>Custom Made</span>
+                                        </div>
+                                        <div class="shipping-dates">
+                                            <!--<span class="ship-label">Ships: </span><span class="dates">6/17/16 - 6/25/16</span> -->
+                                            <span class="ship-label">Ready By: </span><span class="dates"><?php echo addWorkingDays(date("c"), 4); ?> - <?php echo addWorkingDays(date("c"), 5); ?></span> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="view-details" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?><?php if($currentFindParam): ?><?php echo '?fitment='.$currentFindParam; ?><?php endif; ?>"><div></div></a>
+                                <div class="mobile-view-details" style="display:none;">
+	        					<a href="<?php echo $_product->getProductUrl(); ?><?php if($currentFindParam): ?><?php echo '?fitment='.$currentFindParam; ?><?php endif; ?>" class="action primary mobileproduct">
+					                <span class="change-model">View Details</span>
+					            </a>
+					            </div>
+                                <?php
+
+                                    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+											  $freeShippingPrice =  $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface')->getValue('carriers/freeshipping/free_shipping_subtotal');
+
+                                ?>
+
+                                <?php if($_product->getFinalPrice() > $freeShippingPrice): ?>
+                                <div class="free-shipping">
+                                    <img src="<?php echo $this->getViewFileUrl('images/free-shipping.png'); ?>">
+                                    <img class="carver-cover" src="<?php echo $this->getViewFileUrl('images/carver-logo.png'); ?>">
+                                </div>
+                                 <?php endif; ?>
+                            </div>
+                            <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?><?php if($currentFindParam): ?><?php echo '?fitment='.$currentFindParam; ?><?php endif; ?>" class="product photo product-item-photo" tabindex="-1">
+	                            <div class="image-container <?php echo $wclass;?>">                                                                                      
+	                                    <?php echo $productImage->toHtml(); ?>  
+	<!--                                <div class="swatches">-->
+	<!--                                    --><?php //echo $block->getProductDetailsHtml($_product); ?>
+	<!--                                </div>-->
+	                            </div>
+                            </a>
+                        </div>
+                        <div class="product details product-item-details">
+                            <?php if($currentFindParam): ?><strong>Fits: <?php echo $fitmentTitle; ?></strong><?php endif; ?> 
+                            <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getDescription(), 'description'); ?>
+
+                            <div class="material-description">  
+                                <?php echo $_product->getMaterialDescription(); ?>
+                            </div>
+
+                            <?php if($block->getChildBlock('product.details.qualifications')): ?>
+                                <div class="qualificationsblock">
+                                <p><b><?php echo __('Product Performance') ?></b> (1-5)</p>
+                                <?php echo $block->getChildBlock('product.details.qualifications')->setProduct($_product); ?>
+                                <?php echo $block->getChildHtml('product.details.qualifications', false); ?>
+                                </div
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php echo($iterator == count($_productCollection)+1) ? '</li>' : '' ?>
+            <?php endforeach; ?>
+        </ol>
+    </div>
+    <?php echo $block->getToolbarHtml() ?>
+    <?php if (!$block->isRedirectToCartEnabled()) : ?>
+        <script type="text/x-magento-init">
+        {
+            "[data-role=tocart-form], .form.map.checkout": {
+                "catalogAddToCart": {}
+            }
+        }
+        </script>
+    <?php endif; ?>
+<?php endif; ?>
+                 
+<?php
+
+function addWorkingDays($startDate,$numWorkingDays){   
+	$timestamp = time();                
+	date_default_timezone_set('America/Chicago');
+    $endDate = strtotime($startDate);
+
+    // Cutoff Time: 5:00 PM = 17:00 
+    if(date("G", $timestamp) < 17){$t = 0;}else{$t = -1;}
+    //return date("G", $timestamp);
+    
+    // Calcuate the ending date for the number of working days
+    for ($i = $t; $i < $numWorkingDays; $i++){
+        $endDate = addHolidays($endDate);
+        $endDate = addWeekend($endDate);
+        $endDate += 86400;
+    }
+    $endDate = addHolidays($endDate);
+    $endDate = addWeekend($endDate);
+
+    $endDate = date("m/d",$endDate);
+
+    return $endDate;
+}
+
+
+function addHolidays($thisDate){     
+	$timestamp = time();                           
+	
+    // add 1 day for each holiday     
+    $holidays = array(                                                               
+                    date("Y", $timestamp)."-02-20",           // President's day
+                    date("Y", $timestamp)."-04-14",           // Good Friday                      
+                    date("Y", $timestamp)."-05-29",           // Memorial Day
+                    date("Y", $timestamp)."-07-04",           // Independence Day
+                    date("Y", $timestamp)."-09-04",           // Labor Day
+                    date("Y", $timestamp)."-11-23",           // Thanksgiving
+                    date("Y", $timestamp)."-11-24",           // Thanksgiving
+                    date("Y", $timestamp)."-12-23",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-24",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-25",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-26",           // Cumulative Holiday      
+                    date("Y", $timestamp)."-12-31");          // New Year's Eve
+    $nextNewYears = array(
+                    (date("Y", $timestamp) + 1)."-01-01");     // New Year
+    $thisNewYears = array(
+                    date("Y", $timestamp)."-01-01");           // New Year                      
+
+    if(date("M", $timestamp) == "Jan"){
+        $allHolidays = array_merge($holidays,$thisNewYears);
+    }else{
+        $allHolidays = array_merge($holidays,$nextNewYears);
+    }
+
+    $thisDateFormated = date("Y-m-d",$thisDate);
+    if(in_multi_array($thisDateFormated, $allHolidays)){
+        $thisDate += 86400;
+        $thisDate = addHolidays($thisDate);
+    }
+return $thisDate;
+}
+
+function addWeekend($thisDate){
+     // add 1 day for each weekend day
+     $dateDOW = date("D",$thisDate);
+     if ($dateDOW == "Sat"){
+        $thisDate += 86400;
+        $thisDate = addWeekend($thisDate);
+     }elseif($dateDOW == "Sun"){
+        $thisDate += 86400;
+     }
+return $thisDate;
+}
+
+function in_multi_array($value, $array){
+    foreach ($array as $key => $item){
+        if (!is_array($item)){
+            if ($item == $value) return true;
+        }
+        else{
+            if (in_array($value, $item)) return $item;
+            else if (in_multi_array($value, $item)) return $item;
+        }
+    }
+    return false;
+}
+
+?>

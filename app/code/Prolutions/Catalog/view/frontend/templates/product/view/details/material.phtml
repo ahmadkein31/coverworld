@@ -1,0 +1,19 @@
+<div class="material-description">
+  <?php 
+  if($block->getProduct()->getmotor()){
+       echo '<p><strong>Motor Type: </strong>'.$block->getProduct()->getmotor().'</p>';
+  }
+  if($block->getProduct()->getbeam_width()){
+       echo '<p><strong>Beam Width: </strong>'.$block->getProduct()->getbeam_width().'"</p>';
+  }
+  if($block->getProduct()->getcenterline()){
+       echo '<p><strong>Centerline Length: </strong>'.$block->getProduct()->getcenterline().'\'</p>';
+  }
+  if($block->getProduct()->getheight()){
+       echo '<p><strong>Height: </strong>'.$block->getProduct()->getheight().'"</p>';
+  }
+    
+  ?>
+<?php //echo $block->getProduct()->getMaterialDescription(); ?>
+<?php echo $block->getMaterialDescription(); ?>
+</div>

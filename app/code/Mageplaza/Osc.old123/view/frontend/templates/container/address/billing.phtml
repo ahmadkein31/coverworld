@@ -1,0 +1,71 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+
+<div class="col-wrapper">
+    <?php $blockNumber = $block->getNumbering(false); ?>
+    <?php if ($blockNumber): ?>
+        <div class="onestep-title-number">
+            <span class="one-step-checkout-number"><?php echo $blockNumber; ?></span>
+
+            <h2>
+                <?php echo __('BILLING ADDRESS'); ?></h2>
+        </div>
+    <?php else: ?>
+        <div class="onestep-title">
+            <h2>
+                <i class="fa fa-home"></i>
+                <?php echo __('BILLING ADDRESS'); ?></h2>
+        </div>
+    <?php endif; ?>
+    <div class="form-list">
+        <?php $hasAddress = $block->customerHasAddresses(); ?>
+        <?php if ($hasAddress): ?>
+            <div class="secure-checkout-form-field">
+                <label
+                    for="billing-address-select"><?php echo __('Select a billing address from your address book or enter a new address.') ?></label>
+                <?php $billingHtml = $block->getAddressesHtmlSelect('billing'); ?>
+                <div class="input-box">
+                    <?php echo $billingHtml; ?>
+                </div>
+                <div class="mc-clear"></div>
+            </div>
+        <?php endif; ?>
+        <?php echo $block->getChildHtml('billing.attributes'); ?>
+        <?php if ($block->allowShipToDifferent() && $block->canShip()): ?>
+            <div id="one-step-checkout-billing-use-for-shipping" class="secure-checkout-form-field">
+                <div class="control">
+                    <input type="checkbox" name="billing[use_for_shipping]" value="1"
+                           title="<?php echo __('Ship to same address') ?>"
+                           id="billing:use_for_shipping" <?php if ($block->allowShipToDifferentChecked()): ?>
+                        checked="checked"<?php endif; ?>
+                           class="checkbox"/> <label
+                        for="billing:use_for_shipping"><?php echo __('Ship to same address') ?></label>
+                </div>
+                <div class="mc-clear"></div>
+            </div>
+        <?php else : ?>
+            <div class="no-display"><input type="hidden" name="billing[use_for_shipping]" value="1"/></div>
+        <?php endif; ?>
+    </div>
+</div>
+<?php echo $block->getChildHtml('extra'); ?>
+

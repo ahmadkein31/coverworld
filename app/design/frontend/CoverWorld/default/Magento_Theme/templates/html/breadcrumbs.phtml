@@ -1,0 +1,248 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$isRobot = ((strstr(strtolower($_SERVER['HTTP_USER_AGENT']), "googlebot") OR $block->getRequest()->getParam('isRobotTest')))?TRUE:FALSE;
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$baseUrl = $storeManager->getStore()->getBaseUrl();
+// Get ?find Param                    
+if($block->getRequest()->getParam('find')){ 
+    $currentFindParam = $block->getRequest()->getParam('find');
+}else{
+	$currentFindParam = FALSE;
+} 
+
+// Transform URL Param Presentation for Product Title
+if($currentFindParam){                
+	// Category Name
+	$requestURI = $block->getRequest()->getRequestUri();
+	$currentPage = substr($requestURI, 0, (strrpos($requestURI,'?')));
+	switch ($currentPage) {
+	    case '/jet-ski-covers':
+	        $currentTitle = 'Jet Ski Covers';
+	        break; 
+	}  
+    
+    // Fitment Title
+    $fitmentTitle = '';
+    $fitmentTitleArray = explode('-',$currentFindParam);
+    array_pop($fitmentTitleArray);
+    if(strlen(end($fitmentTitleArray)) > 4){$skipCount = 2;}else{$skipCount = 1;} // Is the last element YYYY
+    if($skipCount == 1){
+        $fitmentTitle = end($fitmentTitleArray);
+        for($i = 0; $i < count($fitmentTitleArray) - 1; ++$i) {
+            $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+        }
+	}else{
+        for($i = 0; $i < count($fitmentTitleArray); ++$i) {
+            $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+        }
+        //$fitmentTitle .= 'All Years '.$fitmentTitle;										
+	}
+	$fitmentTitle = ucwords($fitmentTitle).' ';
+	
+	$crumbs = array();
+	$crumbs[0] = array('label' => 'Home', 'title' => 'Go to Home Page', 'link' => $baseUrl);
+	$crumbs[1] = array('label' => $currentTitle, 'title' => NULL, 'link' => $baseUrl.$currentPage);
+	$crumbs[2] = array('label' => $fitmentTitle.' Covers', 'link' => NULL, 'last' => TRUE); 
+} 
+
+//var_dump($crumbs);
+
+
+
+?>
+<?php if ($crumbs && is_array($crumbs)) :
+array_shift($crumbs);
+$GLOBALS['breadcrumbs'] = $crumbs;
+$defualtLabel = ' ';
+$Category = ' ';
+$pageTile = "";
+$currentPage = "";
+ ?>
+<div class="breadcrumbs">
+    <ul class="items">
+    
+    	<?php if ($isRobot) : ?>
+       <li class="item home">
+         <a href="<?php echo $baseUrl?>" title="Go to Home Page">Vehicle Covers</a>
+       </li>
+       <?php else: ?>
+    	<li class="item home">
+         <a href="<?php echo $baseUrl?>" title="Go to Home Page">Home</a>
+       </li>
+       <?php endif; ?>
+       
+        <?php foreach ($crumbs as $crumbName => $crumbInfo) : if(!isset($crumbInfo['type'])) $crumbInfo['type'] = "";?>
+            <li class="item <?php /* @escapeNotVerified */ echo $crumbName ?>">
+            <?php if ($isRobot && $crumbInfo['link']) : 
+                switch($crumbInfo['type']){
+                	
+                	case 'Vehicle':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$block->escapeHtml($crumbInfo['label']).'</a>';
+                		$Vehicle = $crumbInfo['label'];
+                	break;
+                	
+                	case 'Make':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Make = $crumbInfo['label'];
+                	break;
+                	
+                	case 'Model':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$Make.' '.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Model = $crumbInfo['label'];
+                	break;
+                	
+                	case 'Year':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$block->escapeHtml($crumbInfo['label']).' '.$Make.' '.$Model.' '.$Vehicle.'</a>';
+                		$Year = $crumbInfo['label'];
+                	break;
+                	
+                	case 'Option':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$Year.' '.$Make.' '.$Model.' '.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Option = $crumbInfo['label'];
+                	break;
+                	
+                	case 'Category':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Category .= $crumbInfo['label'].' ';
+                	break;
+                	case 'Subcategory':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$Category.' '.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Subcategory .= $crumbInfo['label'].' ';
+                	break;
+                	case 'Motor':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$Category.' '.$Subcategory.' '.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Motor .= $crumbInfo['label'].' ';
+                	break;
+                	case 'Dimensions':
+                		echo '<a href="'.$crumbInfo['link'].'">'.$Category.' '.$Subcategory.' '.$Motor.' '.$block->escapeHtml($crumbInfo['label']).' '.$Vehicle.'</a>';
+                		$Dimensions .= $crumbInfo['label'].' ';
+                	break;
+                	
+                	default:
+                		echo '<a href="'.$crumbInfo['link'].'">'.$block->escapeHtml($crumbInfo['label']).$defualtLabel.$Vehicle.'</a>';
+                		$defualtLabel .= $crumbInfo['label'].' ';
+                }
+                ?>
+            <?php elseif ($crumbInfo['link']) : ?>
+                <a href="<?php /* @escapeNotVerified */ echo $crumbInfo['link'] ?>" title="<?php echo $block->escapeHtml($crumbInfo['title']) ?>">
+                    <?php echo $block->escapeHtml($crumbInfo['label']) ?></a>
+                 <?php 
+                 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                 $requestInterface = $objectManager->get('Magento\Framework\App\RequestInterface');
+
+                 if($requestInterface->getRouteName() == 'contact'):
+             
+                    $pageTile = $block->escapeHtml($crumbInfo['label']);
+
+              endif;
+
+        if($requestInterface->getActionName() == 'login'):
+             
+                    $pageTile = 'LOGIN OR CREATE AN ACCOUNT';
+
+              endif;
+
+            elseif ($crumbInfo['last']) : ?>
+                <strong><?php echo $block->escapeHtml($crumbInfo['label']) ?></strong>
+            <?php 
+             $pageTile = $block->escapeHtml($crumbInfo['label']);
+
+            else: ?>
+                <?php echo $block->escapeHtml($crumbInfo['label']) ?>
+            <?php endif; ?>
+            </li>
+            
+        <?php endforeach; ?>
+    </ul>
+</div>
+
+
+	 <?php 
+	     foreach ($crumbs as $crumbName => $crumbInfo) : 
+	        if(array_key_exists('type', $crumbInfo)){${$crumbInfo['type']} = $crumbInfo['label'];} 
+	     endforeach;
+	     
+          $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		  $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+
+
+
+    
+    $storeManager = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+    $storeUrl = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_WEB);
+
+
+
+		  $imageLocation = $storeUrl.'pub/static/frontend/CoverWorld/default/en_US/images/banners/';
+          $bannerImageName = '';
+        //$currentCategory = $category->getCurrentCategory();
+        //var_dump($block);
+        //echo $category->getcontent_title();
+        
+
+        if(is_array($category) || is_object($category)){
+	    		if(!$category->getcontent_title()){
+	    			$categoryBranch = explode('/', str_replace('1/2/', '', $category->getPath()));
+	    			//var_dump($categoryBranch);
+	    			$categoryBranch = array_reverse($categoryBranch);
+	    			//var_dump($categoryBranch);
+	    			foreach($categoryBranch AS $categoryBranchID){
+	    				if($bannerImageName = $objectManager->create('Magento\Catalog\Model\Category')->load($categoryBranchID)->getcontent_title()){break;}
+	    			}
+	    		}else{
+	    			$bannerImageName = $category->getcontent_title();
+	    		}
+		}     
+	?>
+ 	<!-- custom code to manipulate bannerImageName -->
+	<?php if (strpos($bannerImageName, 'carolina-skiff') !== false) {
+				if($category->getUrlKey() != 'carolina-skiff'){
+					$NewbannerImageName = explode(".",$bannerImageName);
+					$categoryUrlPath = explode("/",$category->getUrlPath());
+					$key = array_search('carolina-skiff', $categoryUrlPath);
+					$newCatPath = $categoryUrlPath[$key+1];
+					if(strpos($newCatPath, 'offshore') !== false){
+						$newTempPath = explode('-',$newCatPath);
+						$bannerImage = $newTempPath[0].'-'.$newTempPath[1].'-'.$newTempPath[2].'-'.$newTempPath[3];
+					}elseif(strpos($newCatPath, 'cc') !== false){
+						$newTempPath = explode('-',$newCatPath);
+						$bannerImage = $newTempPath[0].'-'.$newTempPath[1].'-'.$newTempPath[2];
+					}elseif(strpos($newCatPath, 'console') !== false){
+						$newTempPath = explode('-',$newCatPath);
+						$bannerImage = $newTempPath[0].'-'.$newTempPath[1].'-'.$newTempPath[2];
+					}elseif(strpos($newCatPath, 'standard') !== false){
+						$newTempPath = explode('-',$newCatPath);
+						$bannerImage = $newTempPath[0].'-'.$newTempPath[1];
+					}else{
+						$bannerImage = $newCatPath;
+					}
+					$updatedBannerImageName = $NewbannerImageName[0].'-'.$bannerImage.'.jpg';
+					$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+					$directory = $objectManager->get('\Magento\Framework\Filesystem\DirectoryList');
+					$rootPath  =  $directory->getRoot().'/pub/static/frontend/CoverWorld/default/en_US/images/banners/';
+					if(file_exists($rootPath.$updatedBannerImageName)){
+						$bannerImageName = $updatedBannerImageName;
+					}
+				}	
+		} ?>
+	<!-- custom code to manipulate bannerImageName -->
+	<?php if($bannerImageName == ''): ?> 
+		<div class="hero header-banner">
+		<div class="row2"><span><?php echo $pageTile ; ?></span></div>
+		</div>
+	<?php else: ?>
+		<div class="hero header-banner">
+		<div class="row1"><img id="header-banner-image" src="<?php echo $imageLocation.$bannerImageName; ?>" /></div>
+		<div class="row2"><?php //echo $pageTile ; ?></div>
+		</div>
+	<?php endif; ?>
+	
+	
+<?php endif; ?>

@@ -1,0 +1,52 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<div id="one-step-checkout-place-order">
+    <button class="button" type="button"
+            title="<?php echo __('Place Order Now'); ?>"
+            id="place-order-button">
+        <?php if ($block->showGrandTotal()): ?>
+            <span class="one-step-checkout-place-order-grand-total">
+				<span class="total-span">
+                   <p
+                       class="one-step-checkout-place-order-label"><?php echo __('Grand Total'); ?>
+                       <span
+                           class="one-step-checkout-place-order-amount"><?php echo $block->getGrandTotal(); ?></span>
+                   </p>
+                    <span class="one-step-checkout-place-order-process"
+                          style="display:none;">
+					<img
+                        src="<?php echo $block->getSkinUrl('css/mageplaza/osc/images/ajax-loader.gif') ?>"/>
+					</span>
+				</span>
+            </span>
+        <?php endif; ?>
+
+        <span
+            class="one-step-checkout-place-order-title"><?php echo __('Place Order'); ?></span>
+    </button>
+    <div class="one-step-checkout-place-order-please-wait"
+         style="display: none">
+        <img
+            src="<?php echo $block->getViewFileUrl('Mageplaza_Osc::css/themes/default/images/notice-loader.gif') ?>"/>
+        <?php echo __('Please wait, processing your order...') ?>
+    </div>
+</div>

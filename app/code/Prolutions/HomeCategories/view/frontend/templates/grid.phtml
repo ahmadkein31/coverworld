@@ -1,0 +1,28 @@
+<?php
+$categories = $this->getCategoryCollection();
+$categoryHelper = $this->getCategoryHelper();
+?>
+<ul class="category-grid">
+    <?php
+    $i = 0;
+    $categoriesCount = $categories->getSize();
+    foreach($categories as $category):
+        $i++;
+        ?>
+        <a href="<?php echo $categoryHelper->getCategoryUrl($category) ?>">
+            <li class="category-item <?php if($i == 1): ?>first<?php endif; ?><?php if($i == $categoriesCount): ?>last<?php endif; ?>">
+
+
+                <p class="name"><?php echo $category->getName() ?></p>
+                <div class="img-container">
+                    <img src="<?php echo $this->getMediaUrl().$category->getImage(); ?>" />
+                    <p class="shop-now"><?php echo __('Shop Now'); ?></p>
+                </div>
+
+
+                <div class="blue-bottom-tab"></div>
+            </li>
+        </a>
+    <?php endforeach;
+    ?>
+</ul>

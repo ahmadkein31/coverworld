@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mageplaza\Osc\Api\CheckoutManagementInterface" type="Mageplaza\Osc\Model\CheckoutManagement" />
+    <preference for="Mageplaza\Osc\Api\GuestCheckoutManagementInterface" type="Mageplaza\Osc\Model\GuestCheckoutManagement" />
+
+    <type name="Magento\Customer\Model\Address">
+        <plugin name="setShouldIgnoreValidation" type="Mageplaza\Osc\Model\Plugin\Customer\Address"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Cart\TotalsConverter">
+        <plugin name="addGiftWrapInitialAmount" type="Mageplaza\Osc\Model\Plugin\Quote\GiftWrap"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Cart\Totals\ItemConverter">
+        <plugin name="oscItemConvert" type="Mageplaza\Osc\Model\Plugin\Cart\Totals\ItemConverter"/>
+    </type>
+    <type name="Magento\Sales\Model\Order\Item">
+        <plugin name="oscItem" type="Mageplaza\Osc\Model\Plugin\Order\Item"/>
+    </type>
+	<type name="Magento\OfflineShipping\Model\Carrier\Freeshipping">
+        <plugin name="mageworx_validate_subtotal_with_discount" type="Mageplaza\Osc\Plugin\Customshipping"/>
+    </type>
+</config>

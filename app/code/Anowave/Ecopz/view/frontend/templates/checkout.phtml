@@ -1,0 +1,187 @@
+<script>
+
+	<?php
+	/**
+	 * Get data
+	 */
+	?>
+	var info = <?php echo $block->getCheckoutPush() ?>, data = info.push;
+
+	(function(google_tag_params)
+	{
+		window.google_tag_params.ecomm_pagetype 	= 'cart';
+		window.google_tag_params.ecomm_prodid 		= google_tag_params.ecomm_prodid;
+		window.google_tag_params.ecomm_pvalue		= google_tag_params.ecomm_pvalue;
+		window.google_tag_params.ecomm_pname		= google_tag_params.ecomm_pname;
+		window.google_tag_params.ecomm_totalvalue 	= google_tag_params.ecomm_totalvalue;
+		window.google_tag_params.returnCustomer 	= <?php echo $block->getHelper()->getIsReturnCustomer() ?>;
+		
+	})(info.google_tag_params);
+		
+	AEC.Checkout.osc = (function(data)
+	{
+		return {
+			always: false, //Track all steps always. If set to false, steps will be tracked when option occurs
+			steps:[],
+			step: function(previous, current, currentCode)
+			{
+				data.ecommerce.checkout.actionField.step = 1 + current;
+
+				dataLayer.push(data);
+
+				return this;
+			},
+			stepOption: function(step, option)
+			{
+				if (!option.toString().length)
+				{
+					return this;
+				}
+				
+				/**
+				 * Track steps
+				 */
+				if (-1 == AEC.Checkout.osc.steps.indexOf(step) && !AEC.Checkout.osc.always)
+				{
+					/**
+					 * Set step index
+					 */
+					data.ecommerce.checkout.actionField.step = step;
+
+					/**
+					 * Push step
+					 */
+					dataLayer.push(data);
+
+					/**
+					 * Queue step
+					 */
+					AEC.Checkout.osc.steps.push(step);
+				}
+				
+				var push = 
+				{
+					'event': 'checkoutOption',
+    				'ecommerce': 
+    				{
+    					'checkout_option': 
+    					{
+    						'actionField': 
+    						{
+    							'step': step,
+    							'option': option
+    						}
+    					}
+    				}
+				};
+
+				/**
+				 * Shift payment step (2 -> 3)
+				 */
+				if (step == AEC.Const.CHECKOUT_STEP_PAYMENT)
+				{
+					push.ecommerce.checkout_option.actionField.step = AEC.Const.CHECKOUT_STEP_PAYMENT;
+				}
+
+				/**
+				 * Shift shipping step
+				 */
+				if (step == AEC.Const.CHECKOUT_STEP_SHIPPING)
+				{
+					push.ecommerce.checkout_option.actionField.step = AEC.Const.CHECKOUT_STEP_SHIPPING;
+				}
+
+				/**
+				 * Push option
+				 */
+				dataLayer.push(push);
+
+				return this;
+			}
+		}
+	})(data);
+
+	AEC.Checkout.step 		= AEC.Checkout.osc.step;
+	AEC.Checkout.stepOption = AEC.Checkout.osc.stepOption;
+
+	
+
+	<?php
+	/**
+	 * Shift steps
+	 */
+	?>
+	
+	data.ecommerce.checkout.actionField.step = AEC.Const.CHECKOUT_STEP_CHECKOUT;
+
+	<?php
+	/**
+	 * Deep clone
+	 */
+	?>
+	
+	var next = JSON.parse(JSON.stringify(data));
+	var last = JSON.parse(JSON.stringify(data));
+
+	<?php
+	/**
+	 * Change checkout step
+	 */
+	?>
+	
+	next.ecommerce.checkout.actionField.step = AEC.Const.CHECKOUT_STEP_SHIPPING;
+
+	<?php
+	/**
+	 * Change last step
+	 */
+	?>
+
+	last.ecommerce.checkout.actionField.step = AEC.Const.CHECKOUT_STEP_PAYMENT;
+
+	<?php
+	/**
+	 * Track first step
+	 */
+	?>
+	(function(data)
+	{
+		if (AEC.Checkout.osc.always)
+		{
+			dataLayer.push(data);
+			dataLayer.push(next);
+			dataLayer.push(last);
+		}
+	})(data);
+	
+
+	<?php
+	/**
+	 * Track Facebook Pixel Initiate Checkout
+	 */
+	?>
+	<?php if ($block->getHelper()->facebook()):?>
+	
+		if ("undefined" !== typeof fbq)
+		{
+			var content_ids = [], content_length = data.ecommerce.checkout.products.length;
+
+			for (i = 0, l = data.ecommerce.checkout.products.length; i < l; i++)
+			{
+				content_ids.push(data.ecommerce.checkout.products[i].id);
+			}
+
+			fbq("track", "InitiateCheckout", 
+			{
+				value:			info.total,
+				content_type:	'product',
+				content_name: 	'checkout',
+				content_ids:	content_ids,
+				num_items:		content_length,
+				currency: 		'<?php echo $block->getHelper()->getCurrency() ?>'
+			});
+		}
+	
+	<?php endif ?>
+
+</script>

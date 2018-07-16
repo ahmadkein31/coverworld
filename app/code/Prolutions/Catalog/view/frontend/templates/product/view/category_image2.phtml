@@ -1,0 +1,11 @@
+<?php if ($currentCategory = $block->getCurrentCategory()): ?>
+    <?php $categoryHelper = $block->getCategoryHelper(); ?>
+    <a href="<?php echo $categoryHelper->getCategoryUrl($currentCategory) ?>">
+        <div class="boat-type">
+            <p class="name"><?php echo $currentCategory->getName(); ?></p>
+            <div class="img-container">
+                <img src="<?php echo $currentCategory->getImageUrl(); ?>" />
+            </div>
+        </div>
+    </a>
+<?php endif; ?>

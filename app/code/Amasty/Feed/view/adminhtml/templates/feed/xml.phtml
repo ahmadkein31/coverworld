@@ -1,0 +1,143 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+?>
+<?php $_value       = $block->getElement()->getValue()?>
+<?php $_htmlId      = $block->getElement()->getHtmlId() ?>
+<?php $_htmlClass   = $block->getElement()->getClass() ?>
+<?php $_htmlName    = $block->getElement()->getName() ?>
+<?php $_readonly    = $block->getElement()->getReadonly() ?>
+<div class="field" id="attribute-<?php echo $_htmlId?>-container">
+        <label class="label"><span><?php echo $block->getElement()->getLabel(); ?></span></label>
+
+        <div class="control">
+        <textarea id="<?php echo $_htmlId;?>" name="<?php echo $_htmlName;?>" rows="20" cols="15" class="textarea <?php echo $_htmlClass;?>"><?php echo $_value;?></textarea>
+        <table class="admin__control-table amasty-xml-table" id="xml_table">
+                <thead>
+                    <tr>
+                        <th class="amasty-header"><?php echo __('Tag')?></th>
+                        <th class="amasty-attribite"><?php echo __('Attribute')?></th>
+                        <th class="amasty-format"><?php echo __('Format')?></th>
+                        <th class="amasty-parent"><?php echo __('Parent')?></th>
+                    </tr>
+                </thead>
+                <tbody id="<?php echo $_htmlId; ?>_container">
+                <tr>
+                    <td>
+                        <input id="<?php echo $_htmlId;?>_tag" class=" input-text admin__control-text"/>
+                    </td>
+                    <td>
+                        <select id="<?php echo $_htmlId;?>_attribute" class=" select admin__control-select">
+                            <optgroup label="<?php echo __("Basic"); ?>">
+                                <?php foreach ($block->getBasicAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Product"); ?>">
+                                <?php foreach ($block->getProductAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Inventory"); ?>">
+                                <?php foreach ($block->getInventoryAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            + '<optgroup label="<?php echo __("Price"); ?>">'
+                            <?php foreach ($block->getPriceAttributes() as $_attributeId => $_attributeName): ?>
+                            + '<option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>'
+                            <?php endforeach; ?>
+                            + '</optgroup>'
+                            <optgroup label="<?php echo __("Category"); ?>">
+                                <?php foreach ($block->getCategoryAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Category Paths"); ?>">
+                                <?php foreach ($block->getCategoryPathsAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Image"); ?>">
+                                <?php foreach ($block->getImageAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Gallery"); ?>">
+                                <?php foreach ($block->getGalleryAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                            <optgroup label="<?php echo __("Url"); ?>">
+                                <?php foreach ($block->getUrlAttributes() as $_attributeId => $_attributeName): ?>
+                                    <option value="<?php echo $_attributeId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_attributeName)); ?></option>
+                                <?php endforeach; ?>
+                            </optgroup>
+                        </select>
+
+                    </td>
+                    <td>
+                        <select id="<?php echo $_htmlId;?>_format" class=" select admin__control-select">
+                            <?php foreach ($block->getFormats() as $_formatId => $_formatName): ?>
+                            <option value="<?php echo $_formatId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_formatName)); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </td>
+                    <td>
+                        <select id="<?php echo $_htmlId;?>_parent" class=" select admin__control-select">
+                            <?php foreach ($block->getParentsVars() as $_formatId => $_formatName): ?>
+                            <option value="<?php echo $_formatId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_formatName)); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
+                    </td>
+                </tr>
+                <tr class>
+                    <td class="amasty-modify-cell" colspan="4">
+                        <table id="<?php echo $_htmlId;?>_modify_container">
+
+                        </table>
+                        <a class="amasty-modify-link" href="#" onclick="window.xmlEditor.modifyItem(this); return false;"><?php echo __("add modifier") ?></a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                     <tr>
+                        <td colspan="4" class="col-actions-add"><?php echo $block->getInsertButtonHtml(); ?><?php echo $block->getUpdateButtonHtml(); ?></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+    </div>
+
+</div>
+<script>
+
+require([
+    "xmlEditor",
+    'mage/template',
+], function(xmlEditor, mageTemplate){
+//<![CDATA[
+    var modifyTemplate = '<tr>'
+    + '<td class="amasty-modify">'
+    + '<select onchange="return xmlEditor.changeModifier(this);" id="field_row_<%- data.index %>_modify" class="<?php echo $_htmlClass; ?> required-entry">'
+    <?php foreach ($block->getModiftVars() as $_modifyId => $_modifyName): ?>
+    + '<option value="<?php echo $_modifyId; ?>"><?php echo $block->escapeJsQuote($block->escapeHtml($_modifyName)); ?></option>'
+    <?php endforeach; ?>
+    + '</select>'
+    + '<input style="display: none;" id="field_row_<%- data.index %>_arg0" class="<?php echo $_htmlClass; ?>"/>'
+    + '<input style="display: none;" id="field_row_<%- data.index %>_arg1" class="<?php echo $_htmlClass; ?>"/>'
+    + '<button title="<?php echo __('Delete'); ?>" type="button" class="action- scalable delete icon-btn delete-product-option" id="field_row_<%- data.index %>_delete_button" onclick="return window.xmlEditor.deleteItem(event);" >'
+    + '<span><?php echo __('Delete'); ?></span></button>'
+    + '</td>'
+    + '</tr>';
+
+    xmlEditor.init(mageTemplate(modifyTemplate), <?php echo json_encode(array_keys($this->getModiftVars()))?>, <?php echo json_encode($this->getArgs())?>);
+
+    window.xmlEditor = xmlEditor;
+//]]>
+})
+</script>

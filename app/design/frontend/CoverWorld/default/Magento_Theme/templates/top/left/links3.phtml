@@ -1,0 +1,58 @@
+<a href="javascript::void(0)" class="bold best-price"><?php echo __('FAST FREE SHIPPING') ?></a>
+<span class="separator">|</span>
+<a href="javascript::void(0)" class="bold custom-fit"><?php echo __('CUSTOM MADE') ?></a>
+<span class="separator">|</span>
+<img class="link-usa" src="<?php echo $this->getViewFileUrl('images/usa-flag.png'); ?>" alt="Made in the USA" />
+
+
+<div id="best-price-modal" style="display:none;">
+    <?php echo $block->getChildHtml('best-price-popup'); ?>
+</div>
+<div id="custom-fit-modal" style="display:none;">
+    <?php echo $block->getChildHtml('custom-fit-popup'); ?>
+</div>  
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var bestPriceOptions = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Fast Free Shipping!',
+                modalClass: 'best-price-popup',
+                buttons: [{
+                }]
+            };
+
+            var bestPricePopup = modal(bestPriceOptions, $('#best-price-modal'));
+            $(".best-price").on('click',function(){
+                $("#best-price-modal").modal("openModal");
+            });
+
+
+            var customFitOptions = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Custom Made!',
+                modalClass: 'custom-fit-popup',
+                buttons: [{
+                }]
+            };
+
+            var customFitPopup = modal(customFitOptions, $('#custom-fit-modal'));
+            $(".custom-fit").on('click',function(){
+                $("#custom-fit-modal").modal("openModal");
+            });
+
+        }
+    );
+</script>

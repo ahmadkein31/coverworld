@@ -1,0 +1,100 @@
+<?php 
+
+$URLelements = explode('/', $block->getRequest()->getRequestUri());
+if($block->getRequest()->getParam('fitment')){ 
+    $currentFindParam = $block->getRequest()->getParam('fitment');  
+    
+    // Transform URL Param Presentation for Product Title
+	if($currentFindParam){            
+        $fitmentTitle = '';
+        $fitmentTitleArray = explode('-',$currentFindParam);
+        array_pop($fitmentTitleArray);
+        if((strlen(end($fitmentTitleArray)) == 4) && (is_numeric(end($fitmentTitleArray))) && (end($fitmentTitleArray) != '1100')){$skipCount = 1;}else{$skipCount = 2;} // Is the last element YYYY
+        if($skipCount == 1){
+            $fitmentTitle = end($fitmentTitleArray);
+            for($i = 0; $i < count($fitmentTitleArray) - 1; ++$i) {
+                $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+            }
+		}else{
+            for($i = 0; $i < count($fitmentTitleArray); ++$i) {
+                $fitmentTitle .=  ' '.$fitmentTitleArray[$i];
+            }
+            //$fitmentTitle .= 'All Years '.$fitmentTitle;										
+		}
+		$fitmentTitle = ucwords($fitmentTitle).' ';
+    }else{
+    	$fitmentTitle = FALSE;
+    } 
+}else{
+	$currentFindParam = TRUE;	
+     
+     if (isset($GLOBALS['breadcrumbs'])) {  
+	     $fitmentTitle = '';
+	     $fitmentDescription = '';
+	     //var_dump($GLOBALS['breadcrumbs']);
+	     
+	     foreach ($GLOBALS['breadcrumbs'] as $crumbName => $crumbInfo) { 
+	        if(array_key_exists('type', $crumbInfo)){${$crumbInfo['type']} = $crumbInfo['label'];}  
+	     } 
+	     
+	     $fitmentTitle = isset($Year)?$Year.' ':''; 
+	     $fitmentTitle .= isset($Make)?$Make.' ':''; 
+	     $fitmentTitle .= isset($Model)?$Model.' ':'';
+	     $fitmentTitle .= isset($Option)?$Option.' ':''; 
+	     $fitmentTitle .= isset($Category)?$Category.' ':''; 
+	     
+	     $fitmentDescription = isset($Category) && !isset($Subcategory)?$Category.' ':''; 
+	     $fitmentDescription .= isset($Subcategory)?$Subcategory.' ':''; 
+	     $fitmentDescription .= isset($Motor)?$Motor.' ':''; 
+	     $fitmentDescription .= isset($Dimensions)?'('.$Dimensions.')':''; 		     
+	     
+	     
+	     array_pop($GLOBALS['breadcrumbs']);
+	     //var_dump($GLOBALS['breadcrumbs']);
+	     
+	 }
+	                         
+}
+
+
+if($URLelements[1] == 'pwc-covers'):
+
+function modelTextCorrect($modelText){
+	$modelTextArray = explode('-', $modelText); 
+	$newModel = '';                
+		
+	foreach ($modelTextArray as $modelValue){   
+		if (preg_match('/[a-z]+[0-9]+/', $modelValue) || preg_match('/[0-9]+[a-z]+/', $modelValue)){$newModel .= ' '.strtoupper($modelValue);
+		}elseif (preg_match('/\b\w{1,3}\b/', $modelValue)){$newModel .= ' '.strtoupper($modelValue);
+		}else {$newModel .= ' '.ucwords($modelValue);}
+	}
+	return $newModel;
+}
+
+$yearURL = ucwords(str_replace('-', ' ', $URLelements[2])); // Sometimes year = all-years
+$makeURL = ucwords(str_replace('-', ' ', $URLelements[3]));
+$modelURL = modelTextCorrect($URLelements[4]);
+
+?>          
+	<div class="title-container">
+	    <h1><?php echo $yearURL.' '.$makeURL.' '.$modelURL.' '.$this->getProduct()->getMaterialFinalName() ?></h1>
+	    <p class="subtitle"><?php echo $this->getProduct()->getShortDescription(); ?></p>
+	</div>
+
+<?php elseif($currentFindParam): ?> 
+	<div class="title-container">
+	    <h1><?php echo $fitmentTitle.' '.$this->getProduct()->getMaterialFinalName() ?></h1>
+	    <?php if($fitmentDescription != ''){ ?>
+	    	<?php echo '<p class="subtitle"><img src="https://smhttp-71223-coverworld.nexcesscdn.net/pub/static/frontend/CoverWorld/default/en_US/images/check-white.png" height="13" width="13"> 
+	    					Fits: '.$fitmentDescription.'</p>'; ?>
+	    	<?php }else{ ?>
+	    <p class="subtitle"><?php echo $this->getProduct()->getShortDescription(); ?></p>
+	    <?php } ?>
+	</div>
+	   
+<?php else: ?>   
+	<div class="title-container">
+	    <h1><?php echo $this->getProduct()->getMaterialFinalName(); ?></h1>
+	    <p class="subtitle"><?php echo $this->getProduct()->getShortDescription(); ?></p>
+	</div>
+ <?php endif; ?>

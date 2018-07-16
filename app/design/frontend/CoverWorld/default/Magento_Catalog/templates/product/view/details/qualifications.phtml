@@ -1,0 +1,27 @@
+<?php
+
+$qualifications = $block->getProductQualifications();
+$qualifications = array(
+    'rating_overall' => 100,
+    'rating_weather' => 80,
+    'rating_strength' => 70
+);
+?>
+<div class="qualifications">
+    <ul>
+        <?php foreach($qualifications as $key => $qualification): ?>
+
+            <li class="">
+                <div class="img-container">
+                    <img src="<?php echo $this->getViewFileUrl('images/qualifications/'.$qualification['code'].'.png'); ?>">
+                    <p class="name"><?php echo __($qualification['code']) ?></p>
+                </div>
+                <div class="rating-box">
+                    <div class="rating" style="width:<?php echo $qualification['value'];?>%"></div>
+                </div>
+            </li>
+
+        <?php endforeach; ?>
+
+    </ul>
+</div>

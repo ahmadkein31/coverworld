@@ -1,0 +1,69 @@
+<?php  if(($block->getRequest()->getRequestUri() != '/onestepcheckout/') && ($block->getRequest()->getRequestUri() != '/checkout/cart/')): ?>  
+	<a href="javascript::void(0)" class="bold best-price"><?php echo __('FREE SHIPPING') ?></a>
+	<span class="separator">|</span>
+	<a href="javascript::void(0)" class="bold custom-fit"><?php echo __('CUSTOM MADE') ?></a>
+	<span class="separator">|</span>
+	<img class="link-usa" src="<?php echo $this->getViewFileUrl('images/usa-flag.png'); ?>" alt="Made in the USA" title="Made in the USA: American Made Matters" />
+	<span class="separator">|</span>
+    <a href="https://www.mcafeesecure.com/verify?host=cover.world" target="_new"><img class="link-usa" src="<?php echo $this->getViewFileUrl('images/mcafee-secure.png'); ?>" alt="Cover World is McAfee SECURE" title="McAfee SECURE > Click to Verify" /></a>
+
+	<div id="best-price-modal" style="display:none;">
+	    <?php echo $block->getChildHtml('best-price-popup'); ?>
+	</div>
+	<div id="custom-fit-modal" style="display:none;">
+	    <?php echo $block->getChildHtml('custom-fit-popup'); ?>
+	</div>  
+
+	<script>
+	    require(
+	        [
+	            'jquery',
+	            'Magento_Ui/js/modal/modal'
+	        ],
+	        function(
+	            $,
+	            modal
+	        ) {
+	            var bestPriceOptions = {
+	                type: 'popup',
+	                responsive: true,
+	                innerScroll: true,
+	                title: 'Free Shipping!',
+	                modalClass: 'best-price-popup',
+	                buttons: [{
+	                }]
+	            };
+
+	            var bestPricePopup = modal(bestPriceOptions, $('#best-price-modal'));
+	            $(".best-price").on('click',function(){
+	                $("#best-price-modal").modal("openModal");
+	            });
+
+
+	            var customFitOptions = {
+	                type: 'popup',
+	                responsive: true,
+	                innerScroll: true,
+	                title: 'Custom Made!',
+	                modalClass: 'custom-fit-popup',
+	                buttons: [{
+	                }]
+	            };
+
+	            var customFitPopup = modal(customFitOptions, $('#custom-fit-modal'));
+	            $(".custom-fit").on('click',function(){
+	                $("#custom-fit-modal").modal("openModal");
+	            });
+
+	        }
+	    );
+	</script>
+<?php  else: ?> 
+	<a href="#" class="bold best-price"><?php echo __('FAST FREE SHIPPING') ?></a>
+	<span class="separator">|</span>
+	<a href="#" class="bold custom-fit"><?php echo __('CUSTOM MADE') ?></a>
+	<span class="separator">|</span>
+	<img class="link-usa" src="<?php echo $this->getViewFileUrl('images/usa-flag.png'); ?>" alt="Made in the USA" title="Made in the USA" /> 
+	<span class="separator">|</span>
+    <img class="link-usa" src="<?php echo $this->getViewFileUrl('images/mcafee-secure.png'); ?>" alt="McAfee SECURE" title="McAfee SECURE" />
+<?php endif; ?>

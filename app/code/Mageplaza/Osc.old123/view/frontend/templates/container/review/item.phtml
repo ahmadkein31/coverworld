@@ -1,0 +1,70 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php $_helperConfig = $block->getHelperConfig(); ?>
+<?php $isShow = $_helperConfig->isEnabledReviewCartSection() ?>
+<div id="one-step-checkout-review-items">
+    <div id="one-step-checkout-review-items-table">
+        <?php if ($isShow) : ?>
+            <table class="one-step-checkout-cart-table">
+                <col/>
+                <col width="1"/>
+                <col width="1"/>
+                <thead>
+                <tr>
+                    <th class="name a-center" style="width:70%;"><?php echo __('Product Name') ?></th>
+                    <th class="a-center qty" style="width:16%;"><?php echo __('Qty') ?></th>
+                    <th class="total" style="width:30%"><?php echo __('Subtotal') ?></th>
+                    <th class="hidden-col-remove">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($block->getItems() as $_item): ?>
+                    <?php echo $block->getItemHtml($_item) ?>
+                <?php endforeach ?>
+                </tbody>
+                <?php echo $block->getChildHtml('totals'); ?>
+            </table>
+        <?php else: ?>
+            <div class="grand-total col-mg mg-12">
+            <span>
+                <?php echo __('Grand Total: ') ?>
+            </span>
+                <?php echo $block->getGrandTotal(); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+<script>
+    //<![CDATA[
+    require(['mageplaza/osc/review/cart'], function (MageplazaOscReviewCart) {
+        new MageplazaOscReviewCart({
+            removeProductLinks: '#one-step-checkout-review-items a.remove',
+            removeProductConfirmMessage: '<?php echo __('Are you sure you would like to remove this item from the shopping cart?');?>',
+            plusProductLinks: '#one-step-checkout-review-items a.plus',
+            minusProductLinks: '#one-step-checkout-review-items a.minus',
+            updateProductInput: '#one-step-checkout-review-items .input-text.update',
+            ajaxCartItemUrl: '<?php echo $block->getAjaxCartItemUrl()?>'
+        });
+    });
+
+    //]]>
+</script>

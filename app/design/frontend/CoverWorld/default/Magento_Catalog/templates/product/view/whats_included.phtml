@@ -1,0 +1,60 @@
+<?php 
+
+if($block->getRequest()->getParam('secure') && isset($GLOBALS['breadcrumbs'])){
+	
+
+	  foreach ($GLOBALS['breadcrumbs'] as $crumbName => $crumbInfo) { 
+		     if(in_array('Vehicle', $crumbInfo, true)){
+		        $finderPageTitleVehicle = substr($crumbInfo['label'], 0, -1);
+		     }  
+		     if(in_array('Make', $crumbInfo, true)){
+		        $categoryRootID = str_replace('category', '', $crumbName);
+		        $finderPageTitle = $crumbInfo['label'].' '.$finderPageTitleVehicle;
+		     }  
+		  } 
+
+		if(isset($finderPageTitle)){
+			$finderSearchButton = 1;
+			$finderLevels = 2;
+			$finderLabels = 'Model,Year';	
+			
+		}else{
+			$finderPageTitle = 'Cover World';
+			$finderSearchButton = 1;
+			$finderLevels = 3;
+			$finderLabels = 'Make,Model,Year';	
+			$categoryRootID = 3;
+				
+		}
+			
+			echo'<div class="whats-included product-fit-finder-wi">';
+		    		 echo '<div class="fit-finder-product-title">Looking for a different year or model?</div>';
+		    		 echo '<div class="fit-finder-product-subtitle">Use our Fit Finder Here:</div>';
+				    echo '<div class="page-header-cover-finder-wi">';
+				    	 echo '<div class="banner-search-icon-wi">&nbsp;</div>';		    	 
+						    	echo $this->getLayout()->createBlock("MageArray\CategoryFilter\Block\Navigation")
+																	    ->setTitle("$finderPageTitle<br/>Fit Finder™")
+																	    ->setLevels("$finderLevels")
+																	    ->setSelectLabels("$finderLabels")
+																	    ->setLabelsEmbedded("embedded")
+																	    ->setRootCategory("category/$categoryRootID")
+																	    ->setTemplate("sidebar.phtml")
+																	    ->toHtml();  															    
+						 echo '<div class="banner-search-button1">&nbsp;</div>';
+				    echo '</div>';
+			echo '</div>';
+
+	
+}else{
+
+	$block->getChildBlock('whats.included.cms')->setBlockId($block->getProduct()->getMaterialWhatsIncluded());
+	echo $block->getChildHtml('whats.included.cms'); 
+
+
+}
+
+
+
+
+
+?>

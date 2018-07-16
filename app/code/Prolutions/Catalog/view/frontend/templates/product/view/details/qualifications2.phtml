@@ -1,0 +1,46 @@
+<?php
+$qualifications = $block->getProductQualifications();
+$i = 0;
+?>
+<div class="clearfix"></div>
+<div class="qualifications">
+    <table>
+        <tr>
+            <?php foreach($qualifications as $key => $qualification): ?>
+                <td class="qualifyhovereffect">
+                    <div class="img-container">
+                        <div class="<?php echo $qualification['code']; ?>"></div>
+                        <p class="name"><?php echo __($qualification['code']) ?></p>
+                    </div>
+                    <div class="rating-container">
+                        <div class="rating-box">
+                            <div class="rating" style="width:<?php echo $qualification['value'];?>%"></div>
+                        </div>
+                    </div>
+                    <div class="qualifyhoverdiv">
+                        <?php echo __($qualification['code']) ?> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    </div>
+                </td>
+            <?php endforeach; ?>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+require(['jquery'], function(jQuery) {
+
+jQuery(document).ready(function(){
+    jQuery('.qualifyhovereffect').mouseover(function(){
+        var newSrc = jQuery(this).find('img').attr("src").replace("_out.png", "_hover.png");
+        jQuery(this).find('img').attr("src", newSrc); 
+    });
+    jQuery('.qualifyhovereffect').mouseout(function(){
+        var newSrc = jQuery(this).find('img').attr("src").replace("_hover.png", "_out.png");
+        jQuery(this).find('img').attr("src", newSrc); 
+    });
+});
+       
+    });
+
+
+
+</script>

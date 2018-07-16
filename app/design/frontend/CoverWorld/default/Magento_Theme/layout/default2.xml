@@ -1,0 +1,95 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--Set custom logo-->
+        <referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                <argument name="logo_img_width" xsi:type="number">225</argument>
+                <argument name="logo_img_height" xsi:type="number">45</argument>
+            </arguments>
+        </referenceBlock>
+
+        <!--Custom left links in top bar-->
+        <referenceContainer name="header.panel">
+            <block class="Magento\Framework\View\Element\Template" name="top.left.links" as="top_left_links" template="top/left/links.phtml">
+                <block class="Magento\Cms\Block\Block" name="best-price-popup">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">best_price_popup</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Cms\Block\Block" name="custom-fit-popup">
+                    <arguments>
+                        <argument name="block_id" xsi:type="string">custom_fit_popup</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+
+        <!--Remove Welcome message-->
+        <referenceBlock name="header" remove="true"/>
+
+        <!--Customize top links-->
+        <referenceBlock name="top.links">
+            <block class="Magento\Framework\View\Element\Template" name="top.right.links" after="my-account-link" template="top/right/links.phtml"/>
+            <referenceBlock name="wish-list-link" remove="true"/>
+            <referenceBlock name="register-link" remove="true"/>
+            <referenceBlock name="authorization-link" remove="true"/>
+        </referenceBlock>
+
+        <!--Remove search bar-->
+        <referenceBlock name="top.search" remove="true"/>
+
+        <!--Build header structure-->
+        <referenceContainer name="header-wrapper">
+            <container name="header-wrapper-right" label="Page Header" as="header-wrapper-right" htmlTag="div" htmlClass="content-right">
+            </container>
+            <container name="header-wrapper-left" label="Page Header" as="header-wrapper-left" htmlTag="div" htmlClass="content-left" after="header-wrapper-right">
+                <block class="Magento\Theme\Block\Html\Header\Logo" name="logo">
+                    <arguments>
+                        <argument name="logo_file" xsi:type="string">images/logo.png</argument>
+                        <argument name="logo_img_width" xsi:type="number">225</argument>
+                        <argument name="logo_img_height" xsi:type="number">45</argument>
+                    </arguments>
+                </block>
+            </container>
+        </referenceContainer>
+        <move element="navigation.sections" destination="header-wrapper-left" after="logo" />
+        <move element="minicart" destination="header-wrapper-right" after="-" />
+
+        <move element="copyright" destination="page.wrapper" after="footer-container" />
+
+        <referenceContainer name="page.wrapper">
+            <block class="Magento\Framework\View\Element\Template" name="header-pre-container" before="page.top" template="header/wrapper.phtml"/>
+        </referenceContainer>
+
+        <move element="header.container" destination="header-pre-container" />
+
+        <referenceContainer name="footer">
+            <referenceBlock name="footer_links" remove="true"/>
+            <referenceBlock name="report.bugs" remove="true"/>
+            <block class="Magento\Cms\Block\Block" name="cvw-footer-links" before="form.subscribe">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">cover_world_footer_links</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Framework\View\Element\Template" name="footer-social" after="form.subscribe" template="footer/social.phtml"/>
+            <block class="Magento\Framework\View\Element\Template" name="footer-logos" after="footer-social" template="footer/logos.phtml"/>
+        </referenceContainer>
+
+        <referenceContainer name="header.container">
+            <block class="Magento\Cms\Block\Block" name="header.banner" after="header-wrapper">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">header_banner</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="main.content">
+            <block class="Magento\Cms\Block\Block" name="sale.banner.mobile" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">sale_banner_mobile</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

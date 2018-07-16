@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2016 Amasty (https://www.amasty.com)
+ * @package Amasty_Feed
+ */
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+
+    <update handle="formkey"/>
+    <update handle="amfeed_feed_grid_block"/>
+    <head>
+        <css src="Amasty_Feed::feed/index.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="\Amasty\Feed\Block\Adminhtml\Feed\Template" name="form" template="feed/template.phtml">
+                <uiComponent name="amfeed_feed_grid"/>
+                <!--<block class="Amasty\Feed\Block\Adminhtml\Feed" name="amfeed.block.feed.grid.container">-->
+                <!--</block>-->
+            </block>
+        </referenceContainer>
+    </body>
+</page>

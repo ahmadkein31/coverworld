@@ -1,0 +1,106 @@
+<div class="copyright">
+    <span><?php echo $block->getCopyright() ?></span> | <a href="<?php echo $this->getBaseUrl().'terms_of_use'; ?>"><?php echo __('Terms of Use') ?></a>
+    <img class="sale-graphic saveupto" id="saveupto" src="<?php echo $this->getViewFileUrl('images/price-match.png'); ?>" />
+</div>
+<div id="saveupto-modal" style="display:none;">
+    <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('saveupto')->toHtml(); ?>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+			 'jquery/jquery.cookie'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var saveuptoOptions = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Factory Direct Pricing!',
+                modalClass: 'best-price-popup',
+                buttons:false
+            };
+
+            var saveupto = modal(saveuptoOptions, $('#saveupto-modal'));
+            $("#saveupto").on('click',function(){
+                $("#saveupto-modal").modal("openModal");
+            });
+
+
+            // JS for category subcategory dropdown open on page back requesst ---- 29-03-2018----
+
+
+            jQuery("#navigation_01").change(function(){
+                var category_val    =   jQuery(this).val();
+                jQuery.cookie('category_val', category_val, {path: '/' });
+            });
+
+            jQuery("#navigation_02").change(function(){
+                var subcategory_val =   jQuery(this).val();
+                jQuery.cookie('subcategory_val', subcategory_val, {path: '/' });
+            });
+            
+            jQuery("#navigation_03").change(function(){
+                var sub_subcategory_val =   jQuery(this).val();
+                jQuery.cookie('sub_subcategory_val', sub_subcategory_val, {path: '/' });
+            });
+
+
+            var selected_cat    =   $("#navigation_01").val();
+            var category        =   $.cookie('category_val');
+            var subcategory     =  $.cookie('subcategory_val');
+            var sub_subcategory =  $.cookie('sub_subcategory_val');
+
+            if(selected_cat != ''){
+                if(category){
+                    var url = 'https://cover.world/categoryfinder/index/change/';
+
+                    jQuery.ajax({
+                        type: 'get',
+                        url: url,
+                        data: {selectedValue: category, dataId: 1},
+                        dataType: 'json',
+                        success: function(response) {
+                            var options =   '';
+                            jQuery.each(response, function(index,jsonObject){
+                                if(subcategory && jsonObject.id == subcategory){
+                                    options += '<option value="'+jsonObject.id+'" dataurl="'+jsonObject.url+'" selected="">'+jsonObject.name+'</option>';
+                                }else{
+                                    options += '<option value="'+jsonObject.id+'" dataurl="'+jsonObject.url+'">'+jsonObject.name+'</option>';
+                                }
+                            });
+                            jQuery("#navigation_02").append(options);
+                        }
+                    });
+                }
+                
+                if(subcategory){
+                    var url = 'https://cover.world/categoryfinder/index/change/';
+
+                    jQuery.ajax({
+                        type: 'get',
+                        url: url,   
+                        data: {selectedValue: subcategory, dataId: 2},
+                        dataType: 'json',
+                        success: function(response) {
+                            var options =   '';
+                            jQuery.each(response, function(index,jsonObject){
+                                if(sub_subcategory && jsonObject.id == sub_subcategory){
+                                    options += '<option value="'+jsonObject.id+'" dataurl="'+jsonObject.url+'" selected="">'+jsonObject.name+'</option>';
+                                }else{
+                                    options += '<option value="'+jsonObject.id+'" dataurl="'+jsonObject.url+'">'+jsonObject.name+'</option>';
+                                }
+                            }); 
+                            jQuery("#navigation_03").append(options);
+                        }
+                    });  
+                }
+            }
+
+        }
+    );
+</script>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * http://mageplaza.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://mageplaza.com/)
+ * @license     http://mageplaza.com/license-agreement/
+
+ -->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root">
+        <block class="Mageplaza\Osc\Block\Container\Shipping\Method" name="secure-checkout-shipping-method"
+               as="shipping.method" template="container/shipping/method.phtml">
+            <block class="Mageplaza\Osc\Block\Container\Shipping\Method\Available" name="secure-checkout-shipping-method-available"
+                   as="shipping.method.available" template="container/shipping/method/available.phtml"/>
+        </block>
+        <block class="Mageplaza\Osc\Block\Container\Payment\Method" name="secure-checkout-payment-method"
+               as="payment.method" template="container/payment/method.phtml">
+            <block class="Mageplaza\Osc\Block\Container\Payment\Method\Available" name="secure-checkout-payment-method-available"
+                   as="payment.method.available" template="container/payment/method/available.phtml"/>
+        </block>
+
+        <block class="Mageplaza\Osc\Block\Container\Review" name="secure-checkout-review"
+               as="order.review" template="container/review.phtml">
+            <block class="Mageplaza\Osc\Block\Container\Review\Item"
+                   template="Mageplaza_Osc::container/review/item.phtml" name="secure-checkout-review-item" as="review.item">
+                <block class="Mageplaza\Osc\Block\Container\Review\Item\Price\Renderer"
+                       name="review.item.price.unit.excl"
+                       template="Mageplaza_Osc::container/review/item/renderer/price/unit_excl_tax.phtml"/>
+                <block class="Mageplaza\Osc\Block\Container\Review\Item\Price\Renderer"
+                       name="checkout.onepage.review.item.price.unit.incl"
+                       template="Mageplaza_Osc::container/review/item/renderer/price/unit_incl_tax.phtml"/>
+                <block class="Mageplaza\Osc\Block\Container\Review\Item\Price\Renderer"
+                       name="checkout.onepage.review.item.price.rowtotal.excl"
+                       template="Mageplaza_Osc::container/review/item/renderer/price/row_excl_tax.phtml"/>
+                <block class="Mageplaza\Osc\Block\Container\Review\Item\Price\Renderer"
+                       name="checkout.onepage.review.item.price.rowtotal.incl"
+                       template="Mageplaza_Osc::container/review/item/renderer/price/row_incl_tax.phtml"/>
+                <block class="Magento\Framework\View\Element\RendererList"
+                       name="review.item.renderer" as="renderer.list">
+                    <block class="Magento\Checkout\Block\Cart\Item\Renderer"
+                           as="default" template="Mageplaza_Osc::container/review/item/renderer/default.phtml"/>
+                    <block class="Magento\ConfigurableProduct\Block\Cart\Item\Renderer\Configurable"
+                           as="configurable" template="Mageplaza_Osc::container/review/item/renderer/default.phtml"
+                           cacheable="false"/>
+                    <block class="Magento\Bundle\Block\Checkout\Cart\Item\Renderer"
+                           as="bundle" template="Mageplaza_Osc::container/review/item/renderer/default.phtml"/>
+                    <block class="Magento\GroupedProduct\Block\Cart\Item\Renderer\Grouped"
+                           as="grouped" template="Mageplaza_Osc::container/review/item/renderer/default.phtml"/>
+                    <block class="Magento\Downloadable\Block\Checkout\Cart\Item\Renderer"
+                           as="downloadable" template="Mageplaza_Osc::container/review/item/renderer/default.phtml"/>
+                </block>
+
+                <block class="Magento\Checkout\Block\Cart\Totals" name="totals" as="totals"
+                       template="Mageplaza_Osc::container/review/totals.phtml"/>
+            </block>
+            <block class="Mageplaza\Osc\Block\Container\Review\Coupon" name="secure-checkout-review-coupon"
+                   as="review.coupon" template="container/review/coupon.phtml"/>
+            <block class="Magento\Framework\View\Element\Text\ListText" name="secure-checkout-review-discount"
+                   as="review.discount"/>
+
+            <block class="Mageplaza\Osc\Block\Container\Review\Comment" name="secure-checkout-review-comment"
+                   as="review.comment" template="container/review/comment.phtml"/>
+
+            <block class="Mageplaza\Osc\Block\Container\Review\Giftmessage" name="secure-checkout-review-giftmessage"
+                   as="review.giftmessage" template="container/review/addition/giftmessage.phtml"/>
+            <block class="Mageplaza\Osc\Block\Container\Review\Giftwrap" name="secure-checkout-review-giftwrap"
+                   as="review.giftwrap" template="container/review/addition/giftwrap.phtml"/>
+            <block class="Mageplaza\Osc\Block\Container\Review\Newsletter" name="secure-checkout-review-newsletter"
+                   as="review.newsletter" template="container/review/addition/newsletter.phtml"/>
+
+            <block class="Mageplaza\Osc\Block\Container\Review\Term" name="secure-checkout-review-term"
+                   as="review.term" template="container/review/term.phtml"/>
+            <block class="Mageplaza\Osc\Block\Container\Review\PlaceOrder" name="secure-checkout-review-place-order"
+                   as="review.place.order" template="container/review/order.phtml"/>
+            <block class="Magento\Framework\View\Element\Text\ListText" name="secure-checkout-review-extra"
+                   as="review.extra"/>
+        </block>
+    </container>
+</layout>

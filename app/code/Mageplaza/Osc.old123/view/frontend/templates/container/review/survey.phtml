@@ -1,0 +1,46 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php
+$_helper = $this->_helper;
+?>
+<?php if ($this->canShow()): ?>
+    <?php $question = $_helper->getSurveyQuestion(); ?>
+    <?php if ($question && $question->getId()): ?>
+        <?php $answers = $_helper->getSurveyValues(); ?>
+        <!-- Survey -->
+        <div id="one-step-checkout-order-review-survey-wrapper">
+            <div class="osc-survey input-box">
+                <input type="hidden" name="osc_survey_question"
+                       value="<?php echo $question->getId(); ?>"/>
+                <label for="one-step-checkout-survey"><?php echo $this->escapeHtml($question->getPollTitle()); ?></label>
+                <select style="" name="osc_survey_answer" id="one-step-checkout-survey">
+                    <option value=""><?php echo __('Please choose'); ?></option>
+                    <?php foreach ($answers as $answer):
+                        ?>
+                        <option
+                            value="<?php echo $answer->getId() ?>"><?php echo $this->escapeHtml($answer->getAnswerTitle()) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>

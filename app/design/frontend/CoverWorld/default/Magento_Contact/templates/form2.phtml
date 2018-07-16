@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="title">
+    <h1><?php echo __('Contact Us') ?></h1>
+</div>
+<div class="page-description">
+    <p>For the answers to many commonly asked questions, please review our <a href="/faq">FAQ</a> page. If you still can't find the answer to your question, please feel free to contact us using the form below and one of our customer service representatives will assist you shortly.</p>
+</div>
+<form class="form contact"
+      action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <div class="field firstname required left">
+            <div class="control">
+                <input name="firstname" id="firstname" placeholder="<?php /* @escapeNotVerified */ echo __('First Name') ?>" title="<?php /* @escapeNotVerified */ echo __('First Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field lastname required right">
+            <div class="control">
+                <input name="lastname" id="lastname" placeholder="<?php /* @escapeNotVerified */ echo __('Last Name') ?>" title="<?php /* @escapeNotVerified */ echo __('Last Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field email required left">
+            <div class="control">
+                <input name="email" id="email" placeholder="<?php /* @escapeNotVerified */ echo __('Email Address') ?>" title="<?php /* @escapeNotVerified */ echo __('Email Address') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>" class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+            </div>
+        </div>
+        <div class="field telephone right">
+            <div class="control">
+                <input name="telephone" id="telephone" placeholder="<?php /* @escapeNotVerified */ echo __('Phone') ?>" title="<?php /* @escapeNotVerified */ echo __('Phone') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="input-text" type="text" />
+            </div>
+        </div>
+        <div class="field department left">
+            <div class="control">
+                <select required name   ="department" id="department">
+                    <option value="" disabled selected hidden>Department</option>
+                    <option value="1">A</option>
+                    <option value="2">B</option>
+                    <option value="3">C</option>
+                    <option value="4">D</option>
+                </select>
+            </div>
+        </div>
+        <div class="field ordernumber right">
+            <div class="control">
+                <input name="ordernumber" id="ordernumber" placeholder="<?php /* @escapeNotVerified */ echo __('Order Number') ?>" title="<?php /* @escapeNotVerified */ echo __('Order Number') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('ordernumber')) ?>" class="input-text" type="text" />
+            </div>
+        </div>
+        <div class="field comment required">
+            <div class="control">
+                <textarea name="comment" id="comment" placeholder="<?php /* @escapeNotVerified */ echo __('Message') ?>" title="<?php /* @escapeNotVerified */ echo __('Message') ?>" class="input-text" cols="5" rows="5" data-validate="{required:true}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('comment')) ?></textarea>
+            </div>  
+        </div>
+        <?php echo $block->getChildHtml('form.additional.info'); ?>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <input type="hidden" name="hideit" id="hideit" value="" />
+                <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
+                    <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>

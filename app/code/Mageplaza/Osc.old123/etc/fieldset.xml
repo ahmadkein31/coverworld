@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Object/etc/fieldset.xsd">
+  <scope id="global">
+    <fieldset id="sales_convert_quote_address">
+      <field name="mc_giftwrap_amount">
+        <aspect name="to_order"/>
+      </field>
+      <field name="mc_giftwrap_base_amount">
+        <aspect name="to_order"/>
+      </field>
+    </fieldset>
+    <fieldset id="sales_convert_quote_item">
+      <field name="mc_giftwrap_amount">
+        <aspect name="to_order_item"/>
+      </field>
+      <field name="mc_giftwrap_base_amount">
+        <aspect name="to_order_item"/>
+      </field>
+    </fieldset>
+  </scope>
+</config>

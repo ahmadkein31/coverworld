@@ -1,0 +1,100 @@
+<?php
+
+$qualifications = $block->getProductQualifications();
+$iterator = $block->getProductID();
+$i = 0;
+?>
+<div class="clearfix"></div>
+<div class="qualifications"> 
+    <table>
+        <tr>
+            <?php foreach($qualifications as $key => $qualification): ?>
+                <td class="qualifyhovereffect qualifyhovereffect-<?php echo $iterator ?>">
+                    <div class="img-container">
+                        <div class="<?php echo $qualification['code']; ?>"></div>
+                        <p class="name"><?php echo __($qualification['code']) ?></p>
+                    </div>
+                    <div class="rating-container">
+                        <div class="rating-box">
+                            <div class="rating" style="width:<?php echo $qualification['value'];?>%"></div>
+                        </div>
+                    </div>
+                    <div class="qualifyhoverdiv">
+                        <?php 
+                        	switch($qualification['code']){
+                        		case 'rating_fade_resistant': 
+                        			echo 'Color is part of the fiber itself, rather than a dye adhering to its surface.';
+                        			break;
+                        		
+                        		case 'rating_waterproof':  
+                        			echo 'Made from 100% Waterproof, breathable fabrics with double stitched rot-proof seams.';
+                        			break;
+                        		
+                        		case 'rating_uv_rays':  
+                        			echo 'Blocks 99% of UV Rays prventing fading and interior heat build-up damage.';
+                        			break;
+                        		
+                        		case 'rating_breathable':  
+                        			echo 'Breathable fabric with antimicrobial finish for mold and mildew resistance.';
+                        			break;
+                        		
+                        		case 'rating_overall': 
+                        			echo  'Overall superior fabric offers advanced protection while retaining color & strength.';
+                        			break;
+                        		
+                        		case 'rating_mildew':  
+                        			echo 'Antimicrobial agents prevent mildew and mold build-up throughout the material.';
+                        			break;
+                        		
+                        		case 'rating_sap_pollen':  
+                        			echo 'Custom treated materials resist Sap, Dirt, Bug Residue and Pollen.';
+                        			break;
+                        		
+                        		case 'rating_snow':  
+                        			echo 'Strong waterproof fabric repels rain, hail, snow, and ice.';
+                        			break;
+                        		
+                        		case 'rating_weather':  
+                        			echo 'Anti-wick thread throughout construction gives protection from all elements.';
+                        			break;
+                        		
+                        		case 'rating_trailerable':  
+                        			echo 'Specifically designed to withstand the stresses of trailering and transport.';
+                        			break;
+                        		
+                        		case 'rating_custom_fit':  
+                        			echo 'Made to fit specific PWC sizes the steering, seats and curves are snug and protected.';
+                        			break;
+                        		
+                        		case 'rating_strength':  
+                        			echo 'Proprietery interwoven design yields extemley high tensile strength-to-weight ratios.';
+                        			break;
+                        		
+                        		default :  
+                        			echo $qualification['code'];
+                        			break;
+                        	}      
+                        ?>
+                    </div>
+                </td>
+           
+            <?php endforeach; ?>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+require(['jquery'], function(jQuery){
+	jQuery(document).ready(function(){              
+	    jQuery('.qualifyhovereffect-<?php echo $iterator ?>').mouseover(function(){
+	        var newSrc = jQuery(this).find('.img-container div').css('background-image').replace(".png", "_hover.png");
+	        jQuery(this).find('.img-container div').css("background-image", newSrc); 
+	    });
+	    jQuery('.qualifyhovereffect-<?php echo $iterator ?>').mouseout(function(){                                     
+	        var newSrc = jQuery(this).find('.img-container div').css('background-image').replace("_hover.png", ".png");
+	        jQuery(this).find('.img-container div').css("background-image", newSrc);         
+	    });
+	});
+       
+});
+
+</script>

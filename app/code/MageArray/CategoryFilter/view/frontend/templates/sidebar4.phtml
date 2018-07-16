@@ -1,0 +1,60 @@
+<?php
+$config = $this->getConfigJson ();
+$categories = $config['categories'];
+$currentCategoryID = $config['current_category_id'];
+?>
+<div class="block block-categoryfilters">
+    <?php if ($this->getTitle ()): ?>
+        <div class="block-title">
+            <strong><span><?php echo __ ( $this->getTitle () ) ?></span></strong>
+        </div>
+    <?php endif ?>
+
+    <form action="" name="categoryform" method="post">
+        <div id="cd-<?php echo $this->getNameInLayout () ?>" class="block-content">
+            <?php for ($i = 0; $i < $this->getLevels (); $i++): ?>
+            
+                <?php $j = $i + 1; ?>
+                <select 
+                		dataId="<?php echo $j; ?>" 
+                		id="<?php echo $this->getNameInLayout () ?><?php echo $j; ?>" 
+                		<?php if($j==1){echo ' class="dropdown-selected"';}else{echo ' class="dropdown"';} ?>
+                	>
+                    <option value=""><?php if($j==1){echo 'Select ';} echo $this->getSelectLabel($i); ?></option>
+
+                    <?php if ($j == 1): ?>
+                        <?php $nowMakes = FALSE; ?>
+                        <?php foreach ($categories as $cat): ?>
+                            <?php if(($currentCategoryID == 3 || $currentCategoryID == 5) && $i == 0): ?>
+	                            <?php if($nowMakes): ?>
+		                            <option value="<?php echo $cat['id']; ?>"
+		                                    dataUrl="<?php echo $cat['url']; ?>"><?php echo $cat['name']; ?></option>
+	                            <?php else: ?>
+	                            	<?php $nowMakes = ($cat['name']=='makes')?TRUE:FALSE; ?>
+	                            <?php endif; ?>
+                            <?php else: ?>
+	                            <option value="<?php echo $cat['id']; ?>"
+	                                    dataUrl="<?php echo $cat['url']; ?>"><?php echo $cat['name']; ?></option>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+
+            <?php endfor; ?>
+        </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+    requirejs(['jquery', 'categoryFilter'], function (jQuery) {
+
+        var categoryFilters = {
+            'levels': '<?php echo $this->getLevels (); ?>',
+            'nameInLayout': '<?php echo $this->getNameInLayout () ?>',
+            'url': '<?php echo $this->getBaseUrl (); ?>categoryfinder/index/change/'
+        };
+        var mainDivId = '#cd-<?php echo $this->getNameInLayout () ?>';
+        jQuery(mainDivId).categoryfilter(categoryFilters);
+    });
+</script>

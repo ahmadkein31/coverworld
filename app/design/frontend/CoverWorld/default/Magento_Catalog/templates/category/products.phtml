@@ -1,0 +1,14 @@
+<?php
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if (($block->getRequest()->getParam('find') || $block->getCurrentCategory()->getLevel() > 2) && (!$block->isContentMode() || $block->isMixedMode())): ?>
+    <?php echo $block->getProductListHtml() ?>
+<?php endif; ?>

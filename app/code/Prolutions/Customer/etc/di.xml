@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Block\Form\Login" type="Prolutions\Customer\Block\Form\Login" />
+    <preference for="Magento\Customer\Block\Form\Register" type="Prolutions\Customer\Block\Form\Register" />
+    <preference for="Magento\Customer\Block\Widget\Name" type="Prolutions\Customer\Block\Widget\Name" />
+</config>

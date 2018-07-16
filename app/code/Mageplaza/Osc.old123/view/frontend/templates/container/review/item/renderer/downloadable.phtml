@@ -1,0 +1,106 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php $_item = $block->getItem() ?>
+<?php $_product = $_item->getProduct() ?>
+<?php $_helperConfig = $this->helper('Mageplaza\Osc\Helper\Config') ?>
+<?php $_helperImage = $this->helper('Magento\Catalog\Helper\Image') ?>
+<?php $_helperTax = $this->helper('Magento\Tax\Helper\Data') ?>
+<tr>
+    <td>
+        <?php if ($_helperConfig->isShowProductImage()): ?>
+            <?php if ($block->hasProductUrl()): ?>
+                <a href="<?php echo $block->getProductUrl() ?>" title="<?php echo $block->escapeHtml($block->getProductName()) ?>"
+                class="product-image-review">
+            <?php endif; ?>
+            <?php $imgWidth = $_helperConfig->getProductImageWidth() ?>
+            <?php $imgHeight = $_helperConfig->getProductImageHeight() ?>
+            <img
+                src="<?php echo $_helperImage->init($_product, 'category_page_grid')->resize($imgWidth, $imgHeight)->getUrl(); ?>"
+                alt="<?php echo $block->escapeHtml($block->getProductName()) ?>"
+                style="width: <?php echo $imgWidth ?>px; height: <?php echo $imgHeight ?>px"
+                />
+            <?php if ($block->hasProductUrl()): ?>
+                </a>
+            <?php endif; ?>
+        <?php endif; ?>
+        <div class="detail-product <?php echo $_helperConfig->isShowProductImage() ? 'has-image' : '' ?>">
+            <h3 class="product-name">
+                <?php if ($block->hasProductUrl()): ?>
+                    <a href="<?php echo $block->getProductUrl() ?>"><?php echo $block->escapeHtml($block->getProductName()) ?></a>
+                <?php else: ?>
+                    <?php echo $block->escapeHtml($block->getProductName()) ?>
+                <?php endif; ?>
+            </h3>
+            <?php if ($_options = $block->getOptionList()): ?>
+                <dl class="item-options">
+                    <?php foreach ($_options as $_option) : ?>
+                        <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                        <dt><?php echo $block->escapeHtml($_option['label']) ?></dt>
+                        <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+                            <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                <div class="truncated_full_value">
+                                    <dl class="item-options">
+                                        <dt><?php echo $block->escapeHtml($_option['label']) ?></dt>
+                                        <dd><?php echo $_formatedOptionValue['full_view'] ?></dd>
+                                    </dl>
+                                </div>
+                            <?php endif; ?>
+                        </dd>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+            <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+            <?php if ($addInfoBlock): ?>
+                <?php echo $addInfoBlock->setItem($_item)->toHtml() ?>
+            <?php endif; ?>
+        </div>
+    </td>
+    <td class="a-center">
+        <div class="qty-wrapper">
+            <a href="javascript:void(0);" id="<?php echo $_item->getId() ?>" class="button-action minus"
+               title="<?php echo __('Minus') ?>"><?php echo __('Minus') ?></a>
+
+            <div class="qty-wrap">
+                <input class="input-text update" name="item_qty" id="<?php echo $_item->getId() ?>"
+                       value="<?php echo $_item->getQty() ?>"/>
+            </div>
+            <a href=" javascript:void(0);" class="button-action plus" id="<?php echo $_item->getId() ?>"
+               title="<?php echo __('Plus') ?>"><?php echo __('Plus') ?></a>
+        </div>
+    </td>
+    <td class="a-right last">
+        <span class="cart-price">
+            <?php
+            if ($_helperTax->displayCartPriceInclTax() || $_helperTax->displayCartBothPrices()) {
+                echo $block->getRowTotalInclTaxHtml($_item);
+            }
+            if ($_helperTax->displayCartPriceExclTax() || $_helperTax->displayCartBothPrices()) {
+                echo $block->getRowTotalExclTaxHtml($_item);
+            }
+            ?>
+        </span>
+    </td>
+    <td class="delete-product a-center hidden-col-remove">
+        <a href="javascript:void(0);" class="button-action remove" id="<?php echo $_item->getId() ?>"
+           title="<?php echo __('Remove item') ?>"></a>
+    </td>
+</tr>

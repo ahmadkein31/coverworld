@@ -1,0 +1,106 @@
+<?php 
+	   
+	if(!$block->getRequest()->getParam('find')): 
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+	$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category'); //get current category  
+    $_page_config = $objectManager->get('Magento\Framework\View\Page\Config');
+	
+	$currentCategory = $block->getCurrentCategory(); 
+	$categoryTitle = $currentCategory->getName();   
+	$categoryLevel = $block->getCurrentCategory()->getLevel(); 
+	$maxChildLevel = $block->getMaxChildLevel(); 
+	$categoryHelper = $block->getCategoryHelper(); 
+	$parentCategories = $block->getParentCategories(); 
+	$categoryID = $category->getId();
+	$isPrimaryCategory = ($categoryID == 3 || $categoryID == 4 || $categoryID == 5 || $categoryID == 6) ? TRUE : FALSE;    
+	
+	$subtitle = 'Shop by';
+	$subtitle .= str_replace('Select', '', $block->getFirstStepTitle());
+        if($maxChildLevel == 4):
+            $subtitle .= ' and Size ';
+        endif;
+        $subtitle .= ' instead';
+    ?>
+    
+    <h1><?php echo $_page_config->getTitle()->getShort()  //$block->getCategoryTitle(); //$category->getName(); ?></h1>
+    <p class="subtitle">&nbsp;<?php //echo __($subtitle); ?></p>
+    <!--
+    <div class="tabs">
+        <?php $i = 1; ?>                                 
+        <ul>               
+            <li class="steps-tab first <?php if($categoryLevel-1 == $i) echo 'active'; if($maxChildLevel != 4) echo ' half';?> ">
+                <span class="number"><?php echo $i; ?></span><span class="title"><?php echo $block->getFirstStepTitle() ?></span>
+            </li>                                                                                
+            <?php $i++; ?>
+            <?php if($maxChildLevel == 4): ?>                
+                <?php if(count($parentCategories) > 1): ?>
+                    <a href="<?php echo $categoryHelper->getCategoryUrl($parentCategories[$i-2]) ?>">
+                <?php endif; ?>
+                <li class="steps-tab <?php if($categoryLevel-1 == $i) echo 'active'; ?>">
+                    <span class="number"><?php echo $i; ?></span><span class="title"><?php echo __('Select Size') ?></span>
+                </li>       
+                <?php if(count($parentCategories) > 1): ?>
+                    </a>
+                <?php endif; ?>
+                <?php $i++; ?>
+            <?php endif; ?>
+            <li class="steps-tab last <?php if($categoryLevel-1 == $i) echo 'active'; if($maxChildLevel != 4) echo ' half';?>">
+                <span class="number"><?php echo $i; ?></span><span class="title"><?php echo __('View Covers') ?></span>
+            </li>
+        </ul>
+    </div>
+    -->
+
+    <?php if(!$isPrimaryCategory): ?>
+            <div class="boat-type">
+                <p class="name"><?php echo $currentCategory->getName() ?></p>
+                <div class="img-container">
+                    <img src="<?php echo $currentCategory->getImageUrl(); ?>" />
+                </div>
+            </div> 
+            <div class="material-description">                                 
+                <?php echo $currentCategory->getDescription(); ?>
+                <a href="<?php echo $currentCategory->getParentCategory()->getUrl(); ?>" class="action primary">
+                    <span class="change-model">Change <?php echo $currentCategory->getcontent_subtitle(); ?></span>
+                </a>
+                <div class="made-in-usa">
+                    <img src="<?php echo $this->getViewFileUrl('images/made-in-usa.png'); ?>" />
+                </div>
+            </div>
+    <?php endif; ?>
+    <ul class="category-grid">
+                                      
+    
+        <?php
+        $i = 0;
+        $columnsClass = $block->getColumnsClass();
+        $subCategories = $block->getSubcategories();          
+        
+        foreach($subCategories as $subCategory):
+            $i++;
+            
+            if($subCategory->getName()=='makes'){
+                echo '</ul>';
+                echo '<ul class="category-grid">';
+                echo '<p class="title">Select Your Manufacturer</p>';
+                continue;
+            }
+            
+            ?>
+            <a href="<?php echo $categoryHelper->getCategoryUrl($subCategory) ?>" class="<?php echo $columnsClass; ?>">
+                <li class="category-item <?php if($categoryLevel != 2) echo 'no-blue-tab'; ?>">
+                    <div class="name-container"><p class="name"><?php echo $subCategory->getName() ?></p></div>
+                       <div class="img-container">
+                            <img src="<?php echo $subCategory->getImageUrl(); ?>" />
+                        </div>       
+                </li>
+            </a>
+        <?php endforeach; ?>           
+    </ul>
+
+    <?php if($categoryLevel != 2): ?>
+        <?php echo $block->getInformationTabsHtml(); ?>
+    <?php endif; ?>
+<?php endif; ?>
+
+                                       

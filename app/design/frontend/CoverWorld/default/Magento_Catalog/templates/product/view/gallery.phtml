@@ -1,0 +1,256 @@
+<div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder">
+    <div data-role="loader" class="loading-mask">
+        <div class="loader">
+
+            <img src="<?php echo $block->getGalleryImages()->getFirstItem()->getData('medium_image_url') ?>" style="max-width: 100%; max-height: 100%">
+                                                                                                               
+        </div>
+    </div>
+</div>
+
+
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('note-for-product-image')->toHtml();
+
+$_objectManager     =   \Magento\Framework\App\ObjectManager::getInstance(); 
+$storeManager       =   $_objectManager->get('Magento\Store\Model\StoreManagerInterface'); 
+$currentStore       =   $storeManager->getStore();
+ $mediaUrl           =   $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+
+$product            =   $_objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+$moter_type         =   $product->getMotor();
+
+$gallar_arry        =   json_decode($block->getGalleryImagesJson(), true);
+if(isset($gallar_arry[0]['thumb']) && strpos($gallar_arry[0]['thumb'],'placeholder')){
+   // echo $mediaUrl.$product->getData('small_image');
+    $imgUelNew = $mediaUrl.'catalog/product'.$product->getData('small_image');
+    $gallar_arry[0]['thumb'] = $imgUelNew;
+    $gallar_arry[0]['img'] = $imgUelNew;
+    $gallar_arry[0]['full'] = $imgUelNew;
+}
+
+
+$full_image_path    =   $gallar_arry[0]['thumb'];
+$exp                =   explode("/", $full_image_path);
+$image_name         =   end($exp);
+$pieces             =   explode("-cover-", $image_name);
+
+$actual_image_name  =   isset($pieces[1])?$pieces[1]:'';
+
+if($actual_image_name){
+    $actual_image_name      =  substr($actual_image_name, 0, strpos($actual_image_name, "."));
+}
+
+$swatch_image               =  $mediaUrl."catalog/product/default_gallary_image/Color-Swatches/swatch-".$actual_image_name.".jpg";
+$swatch_thumb_img           =  $mediaUrl."catalog/product/default_gallary_image/Color-Swatches/50x50/swatch-".$actual_image_name.".jpg";
+$fit_img                    =  $mediaUrl."catalog/product/default_gallary_image/Fit/fit-".$actual_image_name.".jpg";
+$fit_thumb_img              =  $mediaUrl."catalog/product/default_gallary_image/Fit/50x50/fit-".$actual_image_name.".jpg";
+$outboard_image             =  $mediaUrl."catalog/product/default_gallary_image/Outboard-Motor-Covers/outboard-cover-".$actual_image_name.".jpg";
+$outboard_thumb_img         =  $mediaUrl."catalog/product/default_gallary_image/Outboard-Motor-Covers/outboard-cover-".$actual_image_name.".jpg";
+
+$i = 1;
+$swatch_image_name = "";
+
+if((@fopen($swatch_image,"r") == true)){
+    $gallar_arry[$i]['thumb']    =   $swatch_thumb_img;
+    $gallar_arry[$i]['img']      =   $swatch_image; 
+    $gallar_arry[$i]['full']     =   $swatch_image; 
+    $gallar_arry[$i]['caption']  =   "Product Swatch image default"; 
+    $gallar_arry[$i]['position'] =   $i;
+    $gallar_arry[$i]['isMain']   =   false;
+    $i += $i;
+	
+	/*** Custom ***/	
+	$swatch_image_name = explode("/",$swatch_image);	
+	$swatch_image_name = end($swatch_image_name);
+	/*** Custom Ends ***/
+	
+}
+
+if((@fopen($fit_img,"r") == true)){
+    $gallar_arry[$i]['thumb']    =   $fit_thumb_img;
+    $gallar_arry[$i]['img']      =   $fit_img; 
+    $gallar_arry[$i]['full']     =   $fit_img; 
+    $gallar_arry[$i]['caption']  =   "Product Fit image default"; 
+    $gallar_arry[$i]['position'] =   $i;
+    $gallar_arry[$i]['isMain']   =   false;
+    $i += 1;
+}
+
+
+
+if($moter_type == 'Outboard'){	
+	$swatch_image_name_out = explode("/",$outboard_image); //Custom Code
+	$swatch_image_name_out = end($swatch_image_name_out);
+	if($swatch_image_name_out!=$swatch_image_name){ //Custom Code
+		$gallar_arry[$i]['thumb']    =   $outboard_thumb_img;
+		$gallar_arry[$i]['img']      =   $outboard_image; 
+		$gallar_arry[$i]['full']     =   $outboard_image; 
+		$gallar_arry[$i]['caption']  =   "Outboard Motor Covers"; 
+		$gallar_arry[$i]['position'] =   $i;
+		$gallar_arry[$i]['isMain']   =   false;
+		$i += 1;
+	}
+}
+
+
+/*** Custom Code ***/
+$material_final_name = strtolower("-".$product->getMaterialFinalName());
+if(strpos($material_final_name,"jet ski cover")>0){ 
+    $image_name_arr = explode('-',$image_name);
+    if(count($image_name_arr) > 1){
+    $fileSystem = $_objectManager->create('\Magento\Framework\Filesystem');
+    $mediaPath=$fileSystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath();
+                
+    
+    $image_name_str = $image_name_arr[count($image_name_arr)-1];
+    $actual_image_name  =   $image_name_str;
+    if($actual_image_name){
+        $actual_image_name      =  substr($actual_image_name, 0, strpos($actual_image_name, "."));
+    }
+    //echo $mediaPath."catalog/product/default_gallary_image/Color-Swatches/swatch-".$actual_image_name.'.jpg';
+    if(!file_exists($mediaPath."catalog/product/default_gallary_image/Color-Swatches/swatch-".$actual_image_name.'.jpg')){
+        $image_name_str = $image_name_arr[count($image_name_arr)-2].'-'.$image_name_arr[count($image_name_arr)-1];
+    }
+    
+    $actual_image_name  =   $image_name_str;
+    if($actual_image_name){
+        $actual_image_name      =  substr($actual_image_name, 0, strpos($actual_image_name, "."));
+    }
+    if(!file_exists($mediaPath."catalog/product/default_gallary_image/Color-Swatches/swatch-".$actual_image_name.'.jpg')){
+        $image_name_str = 'performance-'.$image_name_arr[count($image_name_arr)-2].'-'.$image_name_arr[count($image_name_arr)-1];
+    }
+    $actual_image_name  =   $image_name_str;
+    if($actual_image_name){
+        $actual_image_name      =  substr($actual_image_name, 0, strpos($actual_image_name, "."));
+    }
+    $swatch_image               =  $mediaUrl."catalog/product/default_gallary_image/Color-Swatches/swatch-".$actual_image_name.".jpg";
+    $swatch_thumb_img           =  $mediaUrl."catalog/product/default_gallary_image/Color-Swatches/50x50/swatch-".$actual_image_name.".jpg";
+    $fit_img                    =  $mediaUrl."catalog/product/default_gallary_image/Fit/fit-".$actual_image_name.".jpg";
+    $fit_thumb_img              =  $mediaUrl."catalog/product/default_gallary_image/Fit/50x50/fit-".$actual_image_name.".jpg";
+    $outboard_image             =  $mediaUrl."catalog/product/default_gallary_image/Outboard-Motor-Covers/swatch-".$actual_image_name.".jpg";
+    $outboard_thumb_img         =  $mediaUrl."catalog/product/default_gallary_image/Outboard-Motor-Covers/50x50/swatch-".$actual_image_name.".jpg";
+	$gallar_arry[$i]['thumb']    =   $swatch_thumb_img;
+	$gallar_arry[$i]['img']      =   $swatch_image; 
+	$gallar_arry[$i]['full']     =   $swatch_image; 
+	$gallar_arry[$i]['caption']  =   "Product image default"; 
+	$gallar_arry[$i]['position'] =   $i;
+	$gallar_arry[$i]['isMain']   =   false;
+	$i += 1;
+    }
+}
+
+
+/*** Custom Code Ends ***/
+
+
+$gallar_arry[$i]['thumb']    =   $mediaUrl."catalog/product/default_gallary_image/product5_thumbnail.jpg";
+$gallar_arry[$i]['img']      =   $mediaUrl."catalog/product/default_gallary_image/product5_image.jpg";
+$gallar_arry[$i]['full']     =   $mediaUrl."catalog/product/default_gallary_image/product5_image.jpg";
+$gallar_arry[$i]['caption']  =   "Product image default"; 
+$gallar_arry[$i]['position'] =   $i;
+$gallar_arry[$i]['isMain']   =   false;
+
+$i += 1;
+$gallar_arry[$i]['thumb']    =   $mediaUrl."catalog/product/default_gallary_image/product6_thumbnail.jpg";
+$gallar_arry[$i]['img']      =   $mediaUrl."catalog/product/default_gallary_image/product6_image.jpg"; 
+$gallar_arry[$i]['full']     =   $mediaUrl."catalog/product/default_gallary_image/product6_image.jpg"; 
+$gallar_arry[$i]['caption']  =   "Product image default"; 
+$gallar_arry[$i]['position'] =   $i;
+$gallar_arry[$i]['isMain']   =   false;
+
+$ne_json = json_encode($gallar_arry);
+
+
+?>
+
+
+<!--Fix for jumping content. Loader must be the same size as gallery.-->
+<script>
+    var config = {
+            "width": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>,
+            "thumbheight": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_small', 'height')
+                        ?: $block->getImageAttribute('product_page_image_small', 'width'); ?>,
+            "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>",
+            "height": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height'); ?>
+        },
+        thumbBarHeight = 0,
+        loader = document.querySelectorAll('[data-gallery-role="gallery-placeholder"] [data-role="loader"]')[0];
+
+    if (config.navtype === 'horizontal') {
+        thumbBarHeight = config.thumbheight;
+    }
+
+    loader.style.paddingBottom = ( config.height / config.width * 100) + "%";
+</script>
+<script type="text/x-magento-init">
+    {
+        "[data-gallery-role=gallery-placeholder]": {
+            "mage/gallery/gallery": {
+                "mixins":["magnifier/magnify"],
+                "magnifierOpts": <?php /* @escapeNotVerified */ echo $block->getMagnifier(); ?>,
+              
+                "data": <?php /* @escapeNotVerified */ echo $ne_json ?>,
+                "options": {
+                    "nav": "<?php /* @escapeNotVerified */ echo $block->getVar("gallery/nav"); ?>",
+                    <?php if (($block->getVar("gallery/loop"))): ?>
+                        "loop": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/loop"); ?>,
+                    <?php endif; ?>
+                    <?php if (($block->getVar("gallery/keyboard"))): ?>
+                        "keyboard": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/keyboard"); ?>,
+                    <?php endif; ?>
+                    <?php if (($block->getVar("gallery/arrows"))): ?>
+                        "arrows": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/arrows"); ?>,
+                    <?php endif; ?>
+                    <?php if (($block->getVar("gallery/allowfullscreen"))): ?>
+                        "allowfullscreen": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/allowfullscreen"); ?>,
+                    <?php endif; ?>
+                    <?php if (($block->getVar("gallery/caption"))): ?>
+                        "showCaption": <?php /* @escapeNotVerified */ echo $block->getVar("gallery/caption"); ?>,
+                    <?php endif; ?>
+                    "width": "<?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>",
+                    "thumbwidth": "<?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_small', 'width'); ?>",
+                    <?php if ($block->getImageAttribute('product_page_image_small', 'height') || $block->getImageAttribute('product_page_image_small', 'width')): ?>
+                        "thumbheight": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_small', 'height')
+                        ?: $block->getImageAttribute('product_page_image_small', 'width'); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getImageAttribute('product_page_image_medium', 'height') || $block->getImageAttribute('product_page_image_medium', 'width')): ?>
+                        "height": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height')
+                        ?: $block->getImageAttribute('product_page_image_medium', 'width'); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/transition/duration")): ?>
+                        "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/duration"); ?>,
+                    <?php endif; ?>
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/transition/effect"); ?>",
+                    <?php if (($block->getVar("gallery/navarrows"))): ?>
+                        "navarrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/navarrows"); ?>,
+                    <?php endif; ?>
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>",
+                    "navdir": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navdir"); ?>"
+                },
+                "fullscreen": {
+                    "nav": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/nav"); ?>",
+                    <?php if ($block->getVar("gallery/fullscreen/loop")): ?>
+                        "loop": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/loop"); ?>,
+                    <?php endif; ?>
+                    "navdir": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navdir"); ?>",
+                    <?php if ($block->getVar("gallery/transition/navarrows")): ?>
+                        "navarrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navarrows"); ?>,
+                    <?php endif; ?>
+                    "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/navtype"); ?>",
+                    <?php if ($block->getVar("gallery/fullscreen/arrows")): ?>
+                        "arrows": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/arrows"); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/fullscreen/caption")): ?>
+                        "showCaption": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/caption"); ?>,
+                    <?php endif; ?>
+                    <?php if ($block->getVar("gallery/fullscreen/transition/duration")): ?>
+                        "transitionduration": <?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/duration"); ?>,
+                    <?php endif; ?>
+                    "transition": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/fullscreen/transition/effect"); ?>"
+                },
+                "breakpoints": <?php /* @escapeNotVerified */ echo $block->getBreakpoints(); ?>
+            }
+        }
+    }
+</script>

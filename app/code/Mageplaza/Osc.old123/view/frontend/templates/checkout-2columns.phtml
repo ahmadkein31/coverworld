@@ -1,0 +1,111 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php echo $block->getChildHtml('generator.css'); ?>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo-mKnM_Iw2tLzTTjeb5o8i5N1aYcQnWo&v=3.exp&signed_in=true&libraries=places"></script>
+    <script>
+        //<![CDATA[
+        require(['mageplaza/osc'], function () {
+            MageplazaOsc.setConfig({
+                blockMapping: <?php echo $block->getBlockMapping()?>,
+                loadingClass: 'one-step-checkout-ajax-loading',
+                showNumber: <?php echo $block->getNumbering()===false?0: 1;?>,
+                actionPattern: <?php echo $block->getActionPattern()?>,
+                saveFormUrl: '<?php echo $block->getSaveFormUrl();?>',
+                form_key: '<?php echo $block->getFormKey();?>'
+            })
+        });
+        //]]>
+    </script>
+    <div id="mageplaza-one-step-checkout">
+        <ol class="one-step-checkout-wrapper">
+            <li>
+                <div>
+                    <?php echo $block->getChildHtml('custom.top'); ?>
+                </div>
+            </li>
+            <li>
+                <div class="one-step-checkout-title-wrapper">
+                    <h1 class="checkout-title"><?php echo $block->getCheckoutTitle(); ?></h1>
+
+                    <p class="checkout-description"><?php echo $block->getCheckoutDescription(); ?></p>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <?php echo $block->getChildHtml('form.login'); ?>
+                </div>
+            </li>
+            <li>
+                <div class="wrapper2columns row-mg" class="one-step-checkout-container">
+                    <form id="one-step-checkout-form" method="post" action="#">
+                        <input name="form_key" type="hidden" value="<?php echo $this->getFormKey(); ?>"/>
+
+                        <div
+                            class="col-mg mg-lg-6 mg-md-6 mg-sm-5 mg-xs-12">
+                            <div id="one-step-checkout-wrapper">
+                                <?php echo $block->getChildHtml('address'); ?>
+                            </div>
+                        </div>
+
+                        <div class=" col-mg mg-lg-6 mg-md-6 mg-sm-7 mg-xs-12">
+                            <div class="row-mg">
+                                <div class="col-mg mg-lg-12 mg-md-12 mg-sm-12 mg-xs-12">
+                                    <div id="one-step-checkout-shipping-method">
+                                        <?php echo $block->getChildHtml('shipping.method'); ?>
+                                    </div>
+                                </div>
+                                <div class="col-mg mg-lg-12 mg-md-12 mg-sm-12 mg-xs-12">
+                                    <div id="one-step-checkout-payment-method">
+                                        <?php echo $block->getChildHtml('payment.method'); ?>
+                                    </div>
+                                </div>
+                                <div
+                                    class="col-mg mg-lg-12 mg-md-12 mg-sm-12 mg-xs-12">
+                                    <?php echo $block->getChildHtml('order.review'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="mc-clear"></div>
+                </div>
+            </li>
+            <li>
+                <div id="one-step-checkout-related-wrapper">
+                    <?php echo $block->getChildHtml('related'); ?>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <?php echo $block->getChildHtml('custom.bottom'); ?>
+                </div>
+            </li>
+        </ol>
+    </div>
+<?php echo $block->getChildHtml('form.js') ?>
+<script type="text/x-magento-init">
+    {
+        "#one-step-checkout-form": {
+            "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
+    echo $block->getJsLayout(); ?>
+        }
+    }
+</script>

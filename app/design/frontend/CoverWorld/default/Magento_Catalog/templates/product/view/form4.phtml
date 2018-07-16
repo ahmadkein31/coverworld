@@ -1,0 +1,94 @@
+<?php
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product view template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View
+ */
+?>
+<?php $_helper = $this->helper('Magento\Catalog\Helper\Output'); ?>
+<?php $_product = $block->getProduct(); ?>
+
+<div class="product-add-form">
+    <form action="<?php /* @escapeNotVerified */ echo $block->getSubmitUrl($_product) ?>" method="post"
+          id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+        <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $_product->getId() ?>" />
+        <input type="hidden" name="selected_configurable_option" value="" />
+        <input type="hidden" name="related_product" id="related-products-field" value="" />
+        <?php 
+        if (isset($GLOBALS['breadcrumbs'])) {  
+		     $fitmentTitle = '';
+		     foreach ($GLOBALS['breadcrumbs'] as $crumbName => $crumbInfo) { 
+		        ${$crumbInfo['type']} = $crumbInfo['label']; 
+		     } 
+		     
+		     $fitmentTitle = isset($Year)?$Year.' ':''; 
+		     $fitmentTitle .= isset($Make)?$Make.' ':''; 
+		     $fitmentTitle .= isset($Model)?$Model.' ':'';
+		     $fitmentTitle .= isset($Option)?$Option.' ':''; 
+		     $fitmentTitle .= isset($Category)?$Category:'';
+		     $fitmentTitle = trim($fitmentTitle); 		     
+		 }
+        echo $fitmentTitle != ''?'<input type="hidden" name="fitment" id="fitment" value="'.$fitmentTitle.'" />':'';
+		  ?>
+        <?php echo $block->getBlockHtml('formkey')?>
+        <?php echo $block->getChildHtml('form_top'); ?>
+        <?php if (!$block->hasOptions()):?>
+            <?php echo $block->getChildHtml('product_info_form_content'); ?>
+        <?php else:?>
+            <?php if ($_product->isSaleable() && $block->getOptionsContainer() == 'container1'):?>
+                <?php echo $block->getChildChildHtml('options_container') ?>
+            <?php endif;?>
+        <?php endif; ?>
+
+        <?php if ($_product->isSaleable() && $block->hasOptions() && $block->getOptionsContainer() == 'container2'):?>
+            <?php echo $block->getChildChildHtml('options_container') ?>
+        <?php endif;?>
+        <?php echo $block->getChildHtml('form_bottom'); ?>
+    </form>
+</div>
+<script>
+    require([
+        'jquery',
+        'Magento_Catalog/js/price-box'
+    ], function($){
+        var priceBoxes = $('.product-info-price [data-role=priceBox]');
+
+        priceBoxes = priceBoxes.filter(function(index, elem){
+            return !$(elem).find('.price-from').length;
+        });
+
+        priceBoxes.priceBox({'priceConfig': <?php /* @escapeNotVerified */ echo $block->getJsonConfig() ?>});
+    });
+
+    require([
+        "jquery",
+        "mage/mage"
+    ], function($){
+        var dataForm = $('#product_addtocart_form');
+        dataForm.mage('validation', {
+            errorPlacement: function(error, element) {
+                var errorPlacement = element;
+                if (element.hasClass('swatch-input')) {
+                    var destElement = $('.swatches-price-addform-container');
+                    if(!destElement.hasClass('mage-error')){
+                        //error.prependTo('#product-options-wrapper .fieldset');
+                        $('#product-options-wrapper').wrap(error);                                                              
+                        destElement.addClass('mage-error');
+                    }
+                }
+                else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+
+        $('#product-addtocart-button').on('click', function(){
+            $('#product-options-wrapper .fieldset').removeClass('mage-error');
+//            $('.swatch-attribute .mage-error').hide();
+            $('#product-options-wrapper .fieldset .mage-error').remove();
+        });
+    });
+</script>

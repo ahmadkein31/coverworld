@@ -1,0 +1,118 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.z
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('mcafee-header-content')->toHtml();?>
+
+
+<div id="checkout" data-bind="scope:'checkout'" class="checkout-container">
+    <div id="checkout-loader" data-role="checkout-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+        <div class="loader">
+            <img src="<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+                 alt="<?php /* @escapeNotVerified */ echo __('Loading...'); ?>"
+                 style="position: absolute;">
+        </div>
+    </div>
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "#checkout": {
+                "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            }
+        }
+    </script>
+    <script>
+        window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+        // Create aliases for customer.js model from customer module
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+    </script>
+    <script>
+        require([
+            'mage/url',
+            'Magento_Ui/js/block-loader'
+        ], function(url, blockLoader) {
+            blockLoader("<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>");
+            return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
+        });
+       require([ 'jquery'],function(jQuery){
+        jQuery(document).on('click','.close',function(){
+             jQuery('.mcafee-footer').hide();
+        });
+        })
+    </script>
+</div>
+
+
+<div id='popup-modal' style='display:none;'>
+<div class="modals-wrapper"><aside class="modal-popup card-decline-msg            modal-slide            _inner-scroll _show" data-role="modal" data-type="popup" tabindex="0" style="z-index: 900;"><div data-role="focusable-start" tabindex="0"></div><div class="modal-inner-wrap" data-role="focusable-scope"><header class="modal-header"> <button class="action-close" id='closemodaldeclinecard' type="button"><span>Close</span></button> </header><div class="modal-content" data-role="content"><div id="best-price-modal" style=""><p><?php echo __('Card Declined: Please review the billing address, card number or CVC code. You may also call us at 888-756-5673 for additional help.');?></p>	</div></div></div><div data-role="focusable-end" tabindex="0"></div></aside></div></div>
+
+<div id='pleasewaitmsg' style='display:none;'>
+   <div class="modals-wrapper"><aside class="modal-popup card-decline-msg            modal-slide            _inner-scroll _show" data-role="modal" data-type="popup" tabindex="0" style="z-index: 900;"><div data-role="focusable-start" tabindex="0"></div><div class="modal-inner-wrap" data-role="focusable-scope"><header class="modal-header"><button class="action-close" id='closemodaldeclinecard' type="button"><span>Close</span></button> </header><div class="modal-content" data-role="content"><div id="best-price-modal" style=""><p><?php echo __('Please wait up to 15 seconds while your order is submitted.');?></p>	</div></div></div><div data-role="focusable-end" tabindex="0"></div></aside></div>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+			$("#closemodaldeclinecard").click(function(){ 
+				$('#popup-modal').css('display','none');
+			});
+			$("#closemodalwait").click(function(){ 
+				$('#pleasewaitmsg').css('display','none');
+			});
+			$('body').click(function() {
+				if (!$(this.target).is('#pleasewaitmsg')) {
+					$('#pleasewaitmsg').css('display','none');
+				}
+			});
+		}
+    );
+</script>
+</div>
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('mcafee-footer-content')->toHtml();?>
+
+
+<style>
+.card-decline-msg{
+	background-color: #0e0d0d8c;
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.35);
+    opacity: 1;
+    pointer-events: auto;
+}
+.card-decline-msg .modal-inner-wrap{
+	width:35% !important;
+	    border-radius: 10px;
+}
+.checkout-index-index #checkout .messages{
+	max-width: 1100px;
+    z-index: 999;
+    position: absolute;
+    width: 100%;
+}
+
+.checkout-index-index #checkout .message.error{
+	height: 150px;
+    opacity: 0.9;
+    font-size: 22px;
+    margin-top: 150px;
+    padding-top: 100px;
+	text-align: center;
+}
+.checkout-index-index #checkout .message.error > *:first-child:before{
+	margin: -18px 0 0 -139px;
+    left: auto;
+    padding: 100px;
+}
+.payment-method {display:block !important}
+</style>
+

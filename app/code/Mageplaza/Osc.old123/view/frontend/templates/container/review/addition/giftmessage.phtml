@@ -1,0 +1,47 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php $_helper = $block->getMessageHelper(); ?>
+<?php if ($block->canShow()): ?>
+    <div id="one-step-checkout-order-review-giftmessage">
+        <div class="osc-giftmessage">
+            <?php if (!$block->getQuote()->isVirtual()): ?>
+                <?php echo $_helper->getInline('onepage_checkout', $block->getQuote(), $block->getDontDisplayContainer()) ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <script>
+        //<![CDATA[
+        require(['mageplaza/osc/review/giftmessage'], function (MageplazaOscReviewGiftmessage) {
+            var secureCheckoutGiftMessage = new MageplazaOscReviewGiftmessage({
+                giftMessageUrl: '<?php echo $block->getGiftMessageUrl()?>',
+                giftMessageContainer: '#one-step-checkout-order-review-giftmessage',
+                giftMessageForm: '#use-gift-message-form',
+                useGiftmessageCheckbox: '#use_gift_messages',
+                isUsedGiftMessage: '#is_used_gift_messages',
+                inputElementIds: ['gift-message-whole-from', 'gift-message-whole-to', 'gift-message-whole-message']
+
+            });
+        })
+
+        //]]>
+    </script>
+<?php endif; ?>

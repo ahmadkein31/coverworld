@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_cart_item_renderers"/>
+    <body>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Home</item>
+                    <item name="label" xsi:type="string">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Shopping Cart</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string">Shopping Cart</item>
+                    <item name="label" xsi:type="string">Shopping Cart</item>
+                    <item name="link" xsi:type="string">/checkout/cart</item>
+                </argument>
+            </action>
+        </referenceBlock>
+
+        <referenceContainer name="checkout.cart.container">
+            <container name="checkout.cart.section2" after="checkout.cart.form" htmlTag="div" htmlClass="cart-section2">
+                <block class="Magento\Framework\View\Element\Template" name="help-block" before="-" template="cart/help-block.phtml"/>
+                <container name="checkout.cart.section2.middle" after="help-block" htmlTag="div" htmlClass="middle-container" />
+            </container>
+        </referenceContainer>
+
+        <referenceBlock name="checkout.cart.form">
+            <block class="Magento\Checkout\Block\Onepage\Link" name="checkout.cart.form.submit" template="onepage/link.phtml" />
+        </referenceBlock>
+
+        <referenceContainer name="cart.summary">
+            <block class="Magento\Framework\View\Element\Template" name="paypal-link" after="-" template="cart/summary/paypal-link.phtml"/>
+        </referenceContainer>
+        
+        <move element="checkout.cart.coupon" destination="checkout.cart.section2.middle" before="-" />
+        <move element="checkout.cart.crosssell" destination="checkout.cart.section2" after="cart.summary" />
+        <move element="cart.summary" destination="checkout.cart.section2" after="checkout.cart.coupon" />
+
+        <referenceBlock name="checkout.cart.order.actions.gift_options" remove="true" />
+    </body>
+</page>

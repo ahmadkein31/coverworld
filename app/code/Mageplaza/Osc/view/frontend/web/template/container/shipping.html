@@ -1,0 +1,90 @@
+<!--
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+-->
+
+<!--Shipping method template-->
+<div id="opc-shipping_method"
+     class="checkout-shipping-method"
+     data-bind="fadeVisible: visible()"
+     role="presentation">
+    <div class="checkout-shipping-method">
+        <div class="step-title" data-role="title">
+            <i class="fa fa-truck"></i>
+            <span data-bind="i18n: 'Shipping Method'"></span>
+        </div>
+        <!-- ko foreach: getRegion('before-shipping-method-form') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!-- /ko -->
+        <div id="checkout-step-shipping_method"
+             class="step-content col-mp mp-12"
+             data-role="content"
+             role="tabpanel"
+             aria-hidden="false"
+             data-bind="blockLoader: isLoading">
+            <!-- ko if: rates().length  -->
+            <form class="form methods-shipping" id="co-shipping-method-form" data-bind="submit: setShippingInformation" novalidate="novalidate">
+                <div id="checkout-shipping-method-load">
+                    <table class="table-checkout-shipping-method">      
+                        <tbody>
+                        <!-- <tr class="row"> -->
+                        	<!-- <td class="col col-method"> -->
+                        	<!-- <i class="fa fa-check fa-1"></i> -->
+                        	<!-- Free Shipping - $0.00 -->
+                        	<!-- </td> -->
+                        <!-- </tr> -->
+                        <!--ko foreach: { data: rates(), as: 'method'}-->
+                        <tr  data-bind="click: $parent.selectShippingMethod, style: {cursor: 'pointer'}">
+                            <td class="col col-method">
+                                <!-- ko ifnot: method.error_message -->
+                               
+                                <input class="radio"
+                                       type="radio"
+                                       data-bind="attr: {
+                                                    checked: $parent.rates().length == 1,
+                                                    'value' : method.carrier_code + '_' + method.method_code,
+                                                    'id': 's_method_' + method.method_code,
+                                                    'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code
+                                                 }" />
+                                <!-- /ko -->                                   
+                        
+                            </td> 
+							<td class="col col-price">
+                                <!-- ko foreach: $parent.getRegion('price') -->
+                                <!-- ko template: getTemplate() --><!-- /ko -->
+                                <!-- /ko -->
+                            </td>
+
+                            <td class="col col-method"
+                                    data-bind="text: method.method_title, attr: {'id': 'label_method_' + method.method_code + '_' + method.carrier_code}"></td>
+
+                            <td class="col col-carrier"
+                                    data-bind="text: method.carrier_title, attr: {'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code}"></td>
+                        </tr>
+                        <!-- /ko -->
+                        </tbody>
+                    </table>
+                </div>
+               
+            </form>
+            <!-- /ko -->                                                                                                                                                                     
+        </div>
+    </div>
+</div>

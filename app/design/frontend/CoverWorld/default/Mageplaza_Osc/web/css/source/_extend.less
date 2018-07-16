@@ -1,0 +1,250 @@
+& when (@media-common = true) {
+  #mageplaza-one-step-checkout {
+    .one-step-checkout-wrapper {
+      .one-step-checkout-title-wrapper {
+        .checkout-title {
+          text-transform: uppercase;
+        }
+      }
+    }
+    #one-step-checkout-form {
+      .col-wrapper {
+        background-color: #fff;
+      }
+      .onestep-title {
+        background-color: #FFF;
+        h2 {
+          color: @link_blue;
+          text-transform: capitalize;
+          i {
+            display: none;
+          }
+          &:before {
+            background: @link_blue;
+            color: #FFF;
+            -webkit-border-radius: 50px;
+            -moz-border-radius: 50px;
+            border-radius: 50px;
+            width: 22px;
+            display: inline-block;
+            text-align: center;
+            font-weight: 600;
+            margin-right: 5px;
+            font-size: 16px;
+            line-height: 21px;
+          }
+        }
+      }
+      .one-step-checkout-address {
+        .onestep-title {
+          h2:before {
+            content: '1';
+          }
+        }
+        .billing-address {
+          border: solid 1px @light_grey;
+          .input-box select {
+            width: 100% !important;
+          }
+          #billing-address-fields {
+            .input-box {
+              width: 60%;
+              float: right;
+            }
+          }
+        }
+      }
+      .shipping-container {
+        border: solid 1px @light_grey;
+        border-bottom: none;
+        #one-step-checkout-shipping-method {
+          .onestep-title {
+            h2:before {
+              content: '2';
+            }
+          }
+        }
+      }
+      .payment-container {
+        border: solid 1px @light_grey;
+        border-top: none;
+        #one-step-checkout-payment-method {
+          .col-wrapper {
+            padding: 12px 0;
+            margin: 0 12px 20px;
+            border-top: solid 1px @light_grey;
+            border-bottom: solid 1px @light_grey;
+          }
+          .onestep-title {
+            h2:before {
+              content: '3';
+            }
+          }
+          .protect-link {
+            cursor: pointer;
+            text-align: center;
+            p {
+              color: @blue_breadcrumbs;
+              &:before {
+                content: url('../images/lock-icon-blue.png');
+                padding-right: 5px;
+              }
+            }
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+      }
+      #one-step-checkout-order-review {
+        border: solid 1px @light_grey;
+        background: @lighter_grey;
+        .onestep-title {
+          background-color: @lighter_grey;
+          h2:before {
+            content: '4';
+          }
+        }
+        .one-step-checkout-order-review-cart {
+          #one-step-checkout-review-items {
+           #one-step-checkout-review-items-table {
+             .one-step-checkout-cart-table {
+               background-color: transparent;
+               border: none;
+               tbody {
+                 .detail-product {
+                   text-align: left;
+                   padding: 20px 0;
+                   .product-name, .item-options li {
+                     margin: 0;
+                   }
+                 }
+                 tr {
+                   td {
+                     padding: 0;
+                   }
+                 }
+               }
+               thead {
+                 .total {
+                   min-width: 60px;
+                 }
+               }
+               tfoot {
+                 tr {
+                   th {
+                     text-align: left;
+                     padding: 5px 15px 5px 25%;
+                     font-weight: 300;
+                     border-right: none;
+                     border-bottom: solid 1px #dcd8d8;
+                   }
+                   td {
+                     color: @link_green;
+                     border-bottom: solid 1px #dcd8d8;
+                   }
+                   &.empty-row, &.grand.totals {
+                     td, th {
+                       border: none;
+                     }
+                   }
+                 }
+               }
+               .qty-wrapper {
+                 min-width: 10px;
+                 padding: 20px 0;
+               }
+               .cart-price {
+                 padding: 20px 0;
+                 display: inline-block;
+               }
+             }
+           }
+          }
+        }
+        #one-step-checkout-review-coupon {
+          .block-wrapper {
+            background-color: transparent;
+            border: none;
+            .discount-form {
+              label {
+                display: block;
+              }
+              .input-box {
+                width: 55%;
+                float: left;
+                margin-right: 10px;
+              }
+              .ac-button {
+                .button {
+                  padding: 8px 30px;
+                  background-color: @link_blue;
+                  -webkit-border-radius: 5px;
+                  -moz-border-radius: 5px;
+                  border-radius: 5px;
+                }
+              }
+            }
+          }
+        }
+        .last-row {
+          display: inline-block;
+          width: 100%;
+          .place-order-container {
+            display: inline-block;
+            width: 100%;
+            #one-step-checkout-place-order {
+              .button {
+                background-color: @link_blue;
+                font-size: 13px;
+                padding: 7px 15px;
+                width: 266px;
+                line-height: 2.2rem;
+                max-height: 40px;
+                span {
+                  position: relative;
+                  padding-left: 20px;
+                  text-transform: uppercase;
+                  &:before {
+                    content: url('../images/lock-icon.png');
+                    left: 0;
+                    position: absolute;
+                  }
+                }
+                &:hover {
+                  &:hover {
+                    background: @link_green;
+                    border: solid 1px @link_green;
+                    opacity: 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__d) {
+  #mageplaza-one-step-checkout {
+    #one-step-checkout-form {
+      #one-step-checkout-order-review {
+        .last-row {
+          .place-order-container {
+            #one-step-checkout-place-order {
+              .button {
+                float: right;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

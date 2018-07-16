@@ -1,0 +1,68 @@
+<?php if ($block->getHelper()->supportCookieDirective()):?>
+	<?php if (!$block->getHelper()->isCookieConsentAccepted()): ?>
+		<script>
+			require(['jquery'],function($)
+			{
+				var endpoints = 
+				{
+					type: 			'json',
+					cookie: 		'<?php echo $block->getUrl('datalayer/index/cookie') ?>',
+					cookieContent:  '<?php echo $this->getUrl('datalayer/index/cookieContent') ?>'
+				};
+				
+				(function($, dataLayer, endpoint)
+				{
+					$(document).ready(function()
+					{
+						$.get(endpoints.cookieContent,function(response)
+						{
+							if (!response.cookie)
+							{
+								if (response.cookieContent !== null)
+								{
+									var directive = $('body').append(response.cookieContent).end().find('.ec-gtm-cookie-directive');
+		
+									directive.find('a.accept').off('click.ec').on('click.ec', function()
+									{
+										var message = $(this).attr('data-confirm');
+										
+										$(this).text(message);
+										
+										$.get(endpoints.cookie,function(response)
+										{
+											dataLayer.push(
+											{
+												event: '<?php echo \Anowave\Ec\Helper\Constants::COOKIE_CONSENT_GRANTED_EVENT ?>'
+											});
+											
+											directive.remove();
+										}, endpoints.type);
+									});
+								}
+							}
+							else 
+							{
+								dataLayer.push(
+								{
+									event: '<?php echo \Anowave\Ec\Helper\Constants::COOKIE_CONSENT_GRANTED_EVENT ?>'
+								});
+							}
+							
+						}, endpoints.type);
+					});
+				})($, dataLayer, endpoints);
+			});
+		</script>
+	<?php else: ?>
+		
+		<script>
+
+			dataLayer.push(
+			{
+				event: '<?php echo \Anowave\Ec\Helper\Constants::COOKIE_CONSENT_GRANTED_EVENT ?>'
+			});
+		
+		</script>
+	
+	<?php endif ?>
+<?php endif ?>

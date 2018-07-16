@@ -1,0 +1,94 @@
+<div class="shipping-dates">
+    <!-- <span class="ship-label"><?php //echo __('Ships') ?>: </span><span class="dates">6/17/16 - 6/25/16</span> -->                                    
+	<span class="ship-label">Ready By: </span><span class="dates"><?php echo addWorkingDays(date("c"), 4); ?> - <?php echo addWorkingDays(date("c"), 5); ?></span> 
+</div>
+
+
+<?php
+
+function addWorkingDays($startDate,$numWorkingDays){   
+	$timestamp = time();                
+	date_default_timezone_set('America/Chicago');
+    $endDate = strtotime($startDate);
+
+    // Cutoff Time: 5:00 PM = 17:00 
+    if(date("G", $timestamp) < 17){$t = 0;}else{$t = -1;}
+    //return date("G", $timestamp);
+    
+    // Calcuate the ending date for the number of working days
+    for ($i = $t; $i < $numWorkingDays; $i++){
+        $endDate = addHolidays($endDate);
+        $endDate = addWeekend($endDate);
+        $endDate += 86400;
+    }
+    $endDate = addHolidays($endDate);
+    $endDate = addWeekend($endDate);
+
+    $endDate = date("m/d",$endDate);
+
+    return $endDate;
+}
+
+
+function addHolidays($thisDate){     
+	$timestamp = time();                           
+	
+    // add 1 day for each holiday     
+    $holidays = array(                                                               
+                    date("Y", $timestamp)."-02-20",           // President's day
+                    date("Y", $timestamp)."-04-14",           // Good Friday                      
+                    date("Y", $timestamp)."-05-29",           // Memorial Day
+                    date("Y", $timestamp)."-07-04",           // Independence Day
+                    date("Y", $timestamp)."-09-04",           // Labor Day
+                    date("Y", $timestamp)."-11-23",           // Thanksgiving
+                    date("Y", $timestamp)."-11-24",           // Thanksgiving
+                    date("Y", $timestamp)."-12-23",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-24",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-25",           // Cumulative Holiday
+                    date("Y", $timestamp)."-12-26",           // Cumulative Holiday      
+                    date("Y", $timestamp)."-12-31");          // New Year's Eve
+    $nextNewYears = array(
+                    (date("Y", $timestamp) + 1)."-01-01");     // New Year
+    $thisNewYears = array(
+                    date("Y", $timestamp)."-01-01");           // New Year                      
+
+    if(date("M", $timestamp) == "Jan"){
+        $allHolidays = array_merge($holidays,$thisNewYears);
+    }else{
+        $allHolidays = array_merge($holidays,$nextNewYears);
+    }
+
+    $thisDateFormated = date("Y-m-d",$thisDate);
+    if(in_multi_array($thisDateFormated, $allHolidays)){
+        $thisDate += 86400;
+        $thisDate = addHolidays($thisDate);
+    }
+return $thisDate;
+}
+
+function addWeekend($thisDate){
+     // add 1 day for each weekend day
+     $dateDOW = date("D",$thisDate);
+     if ($dateDOW == "Sat"){
+        $thisDate += 86400;
+        $thisDate = addWeekend($thisDate);
+     }elseif($dateDOW == "Sun"){
+        $thisDate += 86400;
+     }
+return $thisDate;
+}
+
+function in_multi_array($value, $array){
+    foreach ($array as $key => $item){
+        if (!is_array($item)){
+            if ($item == $value) return true;
+        }
+        else{
+            if (in_array($value, $item)) return $item;
+            else if (in_multi_array($value, $item)) return $item;
+        }
+    }
+    return false;
+}
+
+?>

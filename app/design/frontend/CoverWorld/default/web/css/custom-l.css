@@ -1,0 +1,105 @@
+.block block-customer-login {margin-top: 19px !important;}   
+.page-title-wrapper {margin-top: -47px;}
+.page-wrapper .page-main h1{color: #FFFF;}    
+.whats_sidebar{float:right;}
+
+
+
+.login-container .block-new-customer { margin-top: 0; }
+/*.page-layout-2columns-left .sidebar-main {	margin-top: 0px !important;}*/
+/*.columns .column.main {	margin-top: 40px;}*/
+
+.cms-page-view .columns .sidebar.sidebar-main {
+    margin-top: 10px;
+}
+
+.contact-index-index .columns .sidebar.sidebar-main {
+    margin-top: 10px;
+}
+
+
+.cms-page-view .columns .title h1{
+    display: none;
+}
+
+.contact-index-index .columns .title h1{
+    display: none;
+}
+
+.cms-faq .column.main {
+    margin-top: 11px;
+}
+
+
+
+.copyright .sale-graphic {display: block;bottom: 15px;right: 15px;left: auto;margin: auto; width: 6%;}
+.header-banner .row2 span {	    color: #fff;    font-size: 2.4rem;    padding-top: 0;    text-transform: uppercase;    display: block;    font-weight: bold;    position: absolute;    left: 0;
+    right: 0;    top: 50%;    max-width: 1110px;    width: 96%;    margin: 0 auto;    transform: translateY(-50%);    bottom: auto;
+}
+
+.header-banner .row2 {
+	position: relative;
+}
+
+.page-product-configurable .header-banner .row2 {
+    position: static;
+}
+
+.sales-guest-form .page-title span.base {display: none;}
+
+.columns .sidebarbanner {	position: fixed;	z-index: 9;	left: -5px;	top: 50%;	transform: translate(0, -50%);	bottom: auto;} 
+
+
+
+/* checkout mcafee-footer */
+.mcafee-footer { overflow: hidden; border: 1px solid #d7d7d7; border-radius: 3px;  padding: 15px; position:relative; }
+.mcafee-footer p { margin: 0; float: right; width: 85%; }
+.mcafee-footer .close {	position: absolute;	right: 8px; top: 8px;}
+/* checkout mcafee-header */
+.mcafee-header-checkout h2 {   float: left; color: #1979c3; margin-top: 15px; font-weight: bold; font-size: 22px; margin-bottom: 0; }
+.mcafee-header-checkout img {    float: right;}
+.mcafee-header-content h2 { float: left;color: #1979c3 !important; } .mcafee-header-content img { float: right;}
+/* product description declimer not */
+.product-image-note span{background-color: #1979C3; border: none; color: white; padding: 2px 8px; text-align: center; text-decoration: none; display: inline-block; font-size: 13px; border-radius: 5px; float: left !important; padding: 2px 5px; line-height: normal; font-weight: bold; margin: 7px 5px 0 6px;}
+.product-image-note { font-size: 11px; border: 1px solid #d7d7d7; height: 35px; line-height: 35px; border-radius: 3px;} 
+/* product result page  declimer not */
+ol.products .product-image-note {    overflow: hidden; margin-right: 8px; font-size: 10px; border: 1px solid #d7d7d7; height: 35px; line-height: 35px; border-radius: 3px;}
+.leftbar { float: left; width: 20%;} 
+.image-and-info .leftbar .product-image-note { line-height: 1.8em;} 
+.gallery-placeholder .fotorama__stage { left: 0 !important; max-height: 370px !important;}
+.sidebarbanner {	position: fixed;	z-index: 9;	left: -5px;	top: 50%;	transform: translate(0, -50%);	bottom: auto;} 
+.sidebarbanner img {	width: 60%;} 
+.onestepcheckout-index-index .sidebarbanner {	display: none;}
+.checkout-cart-index .sidebarbanner {	display: none;}
+
+/*22-3-2018*/
+.checkout-shipping-address .form .fieldset .field .control {	width: 100% !important;}
+#checkout-step-shipping select {	width: 100% !important;}
+.mcafee-footer img {	margin-top: 5px;}
+.mcafee-footer p {	margin-top: 0px;	float: right;	width: 85%;}
+#billing-new-address-form .control {	width: 100% !important;}
+@media screen and (min-width:992px) and (max-width:1023px)
+{
+	.mcafee-footer p {	width: 80%;	padding-right: 30px;}	
+}
+@media screen and (min-width:768px) and (max-width:991px)
+{
+	.mcafee-footer p {	width: 100%;}	
+}
+@media screen and (max-width:767px)
+{
+	.mcafee-footer p {	width: 100%;}	
+}
+
+
+.product-images-6n5 { text-align: center; } .product-6th-image { display: inline-block; width: 50%; }
+.product-5th-image { display: inline-block; width: 50%; }
+.ie10 .page-wrapper, .ie11 .page-wrapper{ height:auto !important; }
+
+@media screen and (min-width:568px) and (max-width:868px)
+{
+	.cms-index-index .page-main .hero-home .left-container, .cms-home .page-main .hero-home .left-container{
+		margin-left:50px!important;
+	}
+}
+

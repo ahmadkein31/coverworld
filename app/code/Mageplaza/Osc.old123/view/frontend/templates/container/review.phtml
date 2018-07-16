@@ -1,0 +1,90 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<div class="col-wrapper" id="one-step-checkout-order-review">
+    <?php $blockNumber = $block->getNumbering(true); ?>
+    <?php $isNoColspanLayout = $block->isNoColspanLayout(); ?>
+    <?php if ($blockNumber): ?>
+        <div class="onestep-title-number">
+            <span class="one-step-checkout-number"><?php echo $blockNumber; ?></span>
+
+            <h2>
+                <?php echo __('ORDER REVIEW'); ?></h2>
+        </div>
+    <?php else: ?>
+        <div class="onestep-title">
+            <h2>
+                <i class="fa fa-check-square"></i>
+                <?php echo __('ORDER REVIEW'); ?></h2>
+        </div>
+    <?php endif; ?>
+    <div class="one-step-checkout-order-review-cart">
+        <?php echo $block->getChildHtml('review.item') ?>
+    </div>
+    <?php if ($block->getHelperConfig()->isShowEditCartLink()): ?>
+        <p class="col-wide forgot-item">
+            <span>
+                 <?php echo __('Forgot an item?') ?>&nbsp;<a
+                    href="<?php echo $block->getUrl('checkout/cart') ?>"><?php echo __('Edit your cart') ?></a>
+            </span>
+        </p>
+    <?php endif; ?>
+    <div class="mc-clear"></div>
+    <?php if ($isNoColspanLayout) {
+        $colClass = 'mg-lg-12 mg-md-12 mg-sm-12 mg-xs-6';
+    } else {
+        $colClass = 'mg-lg-6 mg-md-6 mg-sm-12 mg-xs-6';
+    } ?>
+    <div class="row-mg discount-section">
+        <div class="col-mg <?php echo $colClass ?>">
+            <div id="one-step-checkout-review-coupon">
+                <?php echo $block->getChildHtml('review.coupon') ?>
+            </div>
+        </div>
+        <?php echo $block->getChildHtml('review.discount') ?>
+        <?php echo $block->getChildHtml('review.comment') ?>
+    </div>
+    <div class="row-mg mc-clear">
+        <div class="col-mg <?php echo $colClass ?>">
+            <?php
+            $giftMessageHtml = $block->getChildHtml('review.giftmessage');
+            $giftWrapHtml    = $block->getChildHtml('review.giftwrap');
+            $newsletterHtml  = $block->getChildHtml('review.newsletter');
+            ?>
+            <?php if ($giftMessageHtml || $giftWrapHtml || $newsletterHtml): ?>
+                <div class="block-wrapper">
+                    <?php echo $giftMessageHtml; ?>
+                    <?php echo $giftWrapHtml; ?>
+                    <?php echo $newsletterHtml; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="col-mg <?php echo $colClass ?>">
+            <div class="block-wrapper block-order">
+                <?php echo $block->getChildHtml('review.term'); ?>
+                <?php echo $block->getChildHtml('review.place.order') ?>
+            </div>
+        </div>
+    </div>
+    <div id="one-step-checkout-order-review-extra-wrapper">
+        <?php echo $block->getChildHtml('review.extra'); ?>
+    </div>
+</div>

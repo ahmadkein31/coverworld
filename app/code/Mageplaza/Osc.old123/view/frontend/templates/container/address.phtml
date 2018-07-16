@@ -1,0 +1,127 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<div class="one-step-checkout-address">
+    <div class="billing-address">
+        <?php echo $block->getChildHtml('billing.address'); ?>
+    </div>
+    <?php if ($block->allowShipToDifferent()): ?>
+        <div class="shipping-address"
+            <?php if ($block->allowShipToDifferentChecked()): ?>
+                style="display: none;"
+            <?php endif; ?>
+            >
+            <?php echo $block->getChildHtml('shipping.address'); ?>
+        </div>
+    <?php endif; ?>
+</div>
+<?php echo $this->getChildHtml('pca.address'); ?>
+<?php echo $this->getChildHtml('address.extra'); ?>
+<script type="text/javascript">
+    //<![CDATA[
+    require(['mageplaza/osc/address', 'mageplaza/osc/address/google-auto-complete'], function (MageplazaOscAddress, MageplazaOscAddressDetect) {
+        var secureCheckoutAddress = new MageplazaOscAddress({
+            addressContainer: '.one-step-checkout-address',
+            saveAddressUrl: '<?php echo $block->getChangeAddressUrl()?>',
+            billingAddress: {
+                container: '.billing-address',
+                emailAddress: '#billing\\:email',
+                addressSelect: '#billing-address-select',
+                newAddressContainer: '#billing-address-fields',
+                createAccountCheckbox: '#billing\\:create_account',
+                passwordContainer: '#one-step-checkout-billing-password',
+                useSameAddressCheckbox: '#billing\\:use_for_shipping',
+                triggerElements: <?php echo $block->getBillingTriggerElements()?>,
+                countryRegionElements: {
+                    'countrySelect': 'billing:country_id',
+                    'regionSelect': 'billing:region',
+                    'regionInput': 'billing:region_id'
+                }
+            },
+            shippingAddress: {
+                container: '.shipping-address',
+                addressSelect: '#shipping-address-select',
+                newAddressContainer: '#shipping-address-fields',
+                triggerElements: <?php echo $block->getShippingTriggerElements()?>,
+                countryRegionElements: {
+                    'countrySelect': 'shipping:country_id',
+                    'regionSelect': 'shipping:region',
+                    'regionInput': 'shipping:region_id'
+                }
+            }
+        });
+        <?php if ($block->getHelperConfig()->isAutoDetectedAddress()): ?>
+        var billingUpdater = typeof billingRegionUpdater !== 'undefined' ? billingRegionUpdater : null;
+        new MageplazaOscAddressDetect(
+            {
+                inputSelector: "billing:street1",
+                addressType: "billing",
+                addressElementsIds: [
+                    'street1', 'city', 'region_id', 'region', 'country_id', 'postcode'
+                ],
+                componentForm: {
+                    street_number: 'short_name',
+                    route: 'long_name',
+                    neighborhood: 'short_name',
+                    sublocality_level_1: 'short_name',
+//                    administrative_area_level_2: 'short_name',
+                    locality: 'long_name',
+                    administrative_area_level_1: 'short_name',
+                    country: 'short_name',
+                    postal_code: 'short_name',
+                    sublocality: 'long_name'
+                },
+                regionUpdater: billingUpdater,
+                secureCheckoutAddress: secureCheckoutAddress,
+                geolocation: 'mc-geolocation',
+                specificCountry: '<?php echo $block->getGoogleSpecificCountry()?>'
+            }
+        );
+        var shippingUpdater = typeof shippingRegionUpdater !== 'undefined' ? shippingRegionUpdater : null;
+        new MageplazaOscAddressDetect(
+            {
+                inputSelector: "shipping:street1",
+                addressType: "shipping",
+                addressElementsIds: [
+                    'street1', 'city', 'region_id', 'region', 'country_id', 'postcode'
+                ],
+                componentForm: {
+                    street_number: 'short_name',
+                    route: 'long_name',
+                    neighborhood: 'short_name',
+                    sublocality_level_1: 'short_name',
+//                    administrative_area_level_2: 'short_name',
+                    locality: 'long_name',
+                    administrative_area_level_1: 'short_name',
+                    country: 'short_name',
+                    postal_code: 'short_name',
+                    sublocality: 'long_name'
+                },
+                regionUpdater: shippingUpdater,
+                secureCheckoutAddress: secureCheckoutAddress,
+                specificCountry: '<?php echo $block->getGoogleSpecificCountry()?>'
+            }
+        );
+        <?php endif;?>
+    });
+
+    //]]>
+</script>

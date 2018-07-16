@@ -1,0 +1,44 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_Osc
+ * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php if (!$block->isVirtualQuote()) : ?>
+    <div class="col-wrapper">
+        <?php $blockNumber = $block->getNumbering(false); ?>
+        <?php if ($blockNumber): ?>
+            <div class="onestep-title-number">
+                <span class="one-step-checkout-number"><?php echo $blockNumber; ?></span>
+
+                <h2>
+                    <?php echo __('SHIPPING METHOD'); ?></h2>
+            </div>
+        <?php else: ?>
+            <div class="onestep-title">
+                <h2>
+                    <i class="fa fa-truck"></i>
+                    <?php echo __('SHIPPING METHOD'); ?></h2>
+            </div>
+        <?php endif; ?>
+        <div class="shipping-methods">
+            <?php echo $block->getChildHtml('shipping.method.available'); ?>
+        </div>
+    </div>
+    <?php echo $block->getChildHtml('extra'); ?>
+<?php endif; ?>

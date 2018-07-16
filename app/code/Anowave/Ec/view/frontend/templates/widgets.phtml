@@ -1,0 +1,7 @@
+<?php if (null !== $data = $this->getImpressions()): ?>
+
+	<script>
+		dataLayer.push(<?php echo $data ?>);
+	</script>
+	
+<?php endif ?>
